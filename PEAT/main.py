@@ -6,4 +6,11 @@ import board
 import busio
 import adafruit_rfm9x
 
+def move():
+    return random.randrange(-90, 90)
+
 print("hello world")
+random.seed()
+direction = move()
+
+print(direction)
