@@ -22,7 +22,7 @@ def encrypt(msg):
     # `ssh-keygen` to generate RSA key pairs
     # `ssh-keygen -f /path/to/your/public-key -e -m pem > /path/to/your/public-key{.pem}`
     # to convert the public key into pem format
-    fkey = open('/Users/anmolsaini/.ssh/controller.pub.pem','rb')
+    fkey = open('/Users/anmolsaini/.ssh/controller.pub.pem','rb') # modify path
     public_key = rsa.PublicKey.load_pkcs1(fkey.read())
     encoded_msg = msg.encode('utf8')
     encrypted_msg = rsa.encrypt(encoded_msg, public_key)
@@ -41,7 +41,7 @@ def decrypt(encrypted_msg):
     """
 
     # `ssh-keygen -p -m PEM -f /path/to/your/private-key` to convert the private key into pem format
-    fkey = open('/Users/anmolsaini/.ssh/peat', 'rb')
+    fkey = open('/Users/anmolsaini/.ssh/peat', 'rb') # modify path
     private_key = rsa.PrivateKey.load_pkcs1(fkey.read())
     decrypted_msg = rsa.decrypt(encrypted_msg, private_key)
     decoded_msg = decrypted_msg.decode('utf8')
