@@ -19,10 +19,31 @@ rorl = True
 constant = 20
 
 def turning(direction):
+    """
+    Turns the rudder of PEAT to allow for turning
+    Takes the direction from the input and moves the servo motor to there
+
+    Args:
+        direction (int): the direction where the rudder will turn (-90 - 90)
+
+    Returns:
+        None
+    """
     # This is untested and probably wont work
     GPIO.output(13, direction)
 
 def edgeOfPond():
+    """
+    Determines if the edge of the pond is detected
+    If so it will turn the boat and move it a constant time
+    After moving this constant time it will turn back in the direction it came from
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     # If edge of pond detected
     if(GPIO.input(24)):
 
@@ -56,6 +77,16 @@ def edgeOfPond():
         edgeOfPond()
 
 def move():
+    """
+    This begins the movement of the rudder of PEAT
+    It selects a random direction and moves there
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     turning(random.randrange(-90, 90))
     GPIO.output(20, GPIO.HIGH)
     GPIO.output(21, GPIO.LOW)
