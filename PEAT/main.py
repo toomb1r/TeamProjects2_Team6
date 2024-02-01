@@ -16,12 +16,8 @@ GPIO.setup(24, GPIO.IN)
 
 random.seed()
 
-rorl = True
-constant = 20
-
 def turning(direction):
-    """
-    Turns the rudder of PEAT to allow for turning
+    """Turns the rudder of PEAT to allow for turning
     Takes the direction from the input and moves the servo motor to there
 
     Args:
@@ -33,18 +29,20 @@ def turning(direction):
     # This is untested and probably wont work
     GPIO.output(13, direction)
 
-def edgeOfPond():
-    """
+def edgeOfPond(rorl):
+    """Turns PEAT if the edge of the pond is detected
     Determines if the edge of the pond is detected
     If so it will turn the boat and move it a constant time
     After moving this constant time it will turn back in the direction it came from
 
     Args:
-        None
+        rorl (bool) - determines the direction PEAT will turn when the edge of the pond is detected
 
     Returns:
         None
     """
+    constant = 20
+    
     # If edge of pond detected
     if(GPIO.input(24)):
 
@@ -78,9 +76,8 @@ def edgeOfPond():
         edgeOfPond()
 
 def move():
-    """
-    This begins the movement of the rudder of PEAT
-    It selects a random direction and moves there
+    """Begins the movement of the rudder of PEAT
+    Selects a random direction and moves there
 
     Args:
         None
@@ -138,13 +135,15 @@ def decrypt(encrypted_msg):
 def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+
     # This is to start the servo motor in the center of the 180 degrees
-# To allow -90 and 90 degrees of motion
+    # To allow -90 and 90 degrees of motion
     turning(90)
 
     move()
+    rorl = True
     while(True):
-        edgeOfPond()
+        edgeOfPond(rorl)
         move()
 
 if __name__ == "__main__":
