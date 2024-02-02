@@ -70,6 +70,7 @@ def decrypt(encrypted_msg):
 def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+    emergencyStop()
 
 if __name__ == "__main__":
     main()
