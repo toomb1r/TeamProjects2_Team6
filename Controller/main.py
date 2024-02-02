@@ -5,6 +5,28 @@ import busio
 import adafruit_rfm9x
 import rsa
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(17, INPUT)
+
+def emergencyStop():
+    """
+    Sends a signal to PEAT to stop all functions
+    Reads in the signal from the emergency stop button
+    If the button is pressed it will encrypt and send the message to PEAT
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    # If the button has been pressed
+    # Encrypt the word "stop" and send it
+    if(GPIO.input(17)):
+        signal = encrypt("stop")
+        # Send signal
+
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
     Gets the RSA public key of PEAT. Encodes the message in UTF-8 and encrypts it.
