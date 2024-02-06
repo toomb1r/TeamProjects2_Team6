@@ -58,11 +58,7 @@ def get_gps_data():
                 sleep(1)
     finally:
         return csv_file_path
-        
 # def send_gps_data():
-
-if __name__ == "__main__":
-    get_gps_data()
 
 
 def turning(direction):
