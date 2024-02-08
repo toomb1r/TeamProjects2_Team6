@@ -1,9 +1,9 @@
 import RPi.GPIO as GPIO          
 from time import sleep
 
-in1 = 24
-in2 = 23
-en = 25
+in1 = 20
+in2 = 21
+en = 18
 temp1=1
 
 GPIO.setmode(GPIO.BCM)
@@ -21,7 +21,7 @@ print("\n")
 
 while(1):
 
-    x=raw_input()
+    x=input()
     
     if x=='r':
         print("run")
@@ -59,42 +59,42 @@ while(1):
 
     elif x=='set1':
         print("low1")
-        p.ChangeDutyCycle(10)
+        p.ChangeDutyCycle(50)
         x='z'
 
     elif x=='set2':
         print("low2")
-        p.ChangeDutyCycle(20)
+        p.ChangeDutyCycle(55)
         x='z'
 
     elif x=='set3':
         print("low1")
-        p.ChangeDutyCycle(30)
+        p.ChangeDutyCycle(60)
         x='z'
 
     elif x=='set4':
         print("medium1")
-        p.ChangeDutyCycle(40)
+        p.ChangeDutyCycle(65)
         x='z'
 
     elif x=='set5':
         print("medium2")
-        p.ChangeDutyCycle(50)
+        p.ChangeDutyCycle(70)
         x='z'
 
     elif x=='set6':
         print("medium3")
-        p.ChangeDutyCycle(60)
+        p.ChangeDutyCycle(75)
         x='z'
 
     elif x=='set7':
         print("high1")
-        p.ChangeDutyCycle(70)
+        p.ChangeDutyCycle(80)
         x='z'
 
     elif x=='set8':
         print("high2")
-        p.ChangeDutyCycle(80)
+        p.ChangeDutyCycle(85)
         x='z'
 
     elif x=='set9':
