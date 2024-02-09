@@ -5,6 +5,8 @@ import digitalio
 import board
 import busio
 import adafruit_rfm9x
+import signal
+import sys
 import rsa # pip install rsa
 from time import sleep
 
@@ -13,8 +15,28 @@ GPIO.setup(13, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(24, GPIO.IN)
+GPIO.setup(9, GPIO.IN)
 
 random.seed()
+
+def signal_handler(sig, frame):
+    """
+    Handles CTRL+C inputs
+
+    This will clean up GPIO whenever the command CTRL+C is sent
+    This will allow us to actually use CTRL+C without erroring next time the code is run
+
+    Args:
+        sig: ??
+        frame: ??
+
+    Returns:
+        None
+
+    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    """
+    GPIO.cleanup()
+    sys.exit(0)
 
 def turning(direction):
     """Turns the rudder of PEAT to allow for turning
@@ -42,7 +64,7 @@ def edgeOfPond(rorl):
         None
     """
     constant = 20
-    
+
     # If edge of pond detected
     if(GPIO.input(24)):
 
@@ -133,6 +155,9 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def main():
+    # This is how to make an interrupt, this is commented out because idk how to get
+    # the string from what is being called in from the controller...
+    # GPIO.add_event_detect(9, GPIO.FALLING, callback=decrypt())
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
 
@@ -142,6 +167,11 @@ def main():
 
     move()
     rorl = True
+
+    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    signal.signal(signal.SIGINT, signal_handler)
+    # signal.pause()
+
     while(True):
         edgeOfPond(rorl)
         move()
