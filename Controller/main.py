@@ -70,6 +70,7 @@ def decrypt(encrypted_msg):
 def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+    GPIO.add_event_detect(17, GPIO.FALLING, callback=emergencyStop(), bouncetime=100)
     emergencyStop()
 
 if __name__ == "__main__":
