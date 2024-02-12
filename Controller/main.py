@@ -3,7 +3,27 @@ import digitalio
 import board
 import busio
 import adafruit_rfm9x
+import signal
 import rsa
+
+def signal_handler(sig, frame):
+    """
+    Handles CTRL+C inputs
+
+    This will clean up GPIO whenever the command CTRL+C is sent
+    This will allow us to actually use CTRL+C without erroring next time the code is run
+
+    Args:
+        sig: ??
+        frame: ??
+
+    Returns:
+        None
+
+    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    """
+    GPIO.cleanup()
+    sys.exit(0)
 
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
@@ -48,6 +68,9 @@ def decrypt(encrypted_msg):
 def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    signal.signal(signal.SIGINT, signal_handler)
+    # signal.pause()
 
 if __name__ == "__main__":
     main()
