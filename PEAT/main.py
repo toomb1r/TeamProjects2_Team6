@@ -11,10 +11,14 @@ from time import sleep
 import csv
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(13, GPIO.OUT)
+pwm = GPIO.setup(13, GPIO.OUT)
+pwm.start(0)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(24, GPIO.IN)
+pwm_frequency = 50  # Hz
+pwm_range_min = 1000  # Microseconds (1 ms)
+pwm_range_max = 2000  # Microseconds (2 ms)
 
 random.seed()
 
@@ -71,8 +75,27 @@ def turning(direction):
     Returns:
         None
     """
+    # Move the servo back and forth
+    set_angle(direction)    # Move to direction degrees
+
     # This is untested and probably wont work
     GPIO.output(13, direction)
+
+def set_angle(angle):
+    """
+    Sets the angle that the servo is at
+
+    Arg: 
+        Angle - Int
+
+    Returns:
+        None
+    """
+    # Convert the angle to a duty cycle within the specified range
+    duty_cycle = (angle / 120.0) * (pwm_range_max - pwm_range_min) + pwm_range_min
+    pwm.ChangeDutyCycle(duty_cycle)
+    time.sleep(0.5)  # Allow time for the servo to reach the desired position
+
 
 def edgeOfPond(rorl):
     """Turns PEAT if the edge of the pond is detected
@@ -130,9 +153,10 @@ def move():
     Returns:
         None
     """
-    turning(random.randrange(-90, 90))
+    turning(random.randrange(0, 120))
     GPIO.output(20, GPIO.HIGH)
     GPIO.output(21, GPIO.LOW)
+    pwm.stop() # comment out later?
 
 # Im pretty sure this is needed although I need to figure out how to add it in
 # GPIO.cleanup()
