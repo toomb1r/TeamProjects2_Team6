@@ -8,6 +8,13 @@ from utils.communications import *
 from utils.movement import *
 
 def main():
+    """Executes the main functionality of the Controller
+
+    Args: None
+
+    Returns: None
+    """
+
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
 
