@@ -7,7 +7,7 @@ import RPi.GPIO
 from utils.communications import *
 
 def main():
-    """Executes the main functionality of PEAT
+    """Executes the main functionality of the Controller
 
     Args: None
 

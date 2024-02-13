@@ -8,7 +8,7 @@ from utils.communications import *
 from utils.movement import *
 
 def main():
-    """Executes the main functionality of the Controller
+    """Executes the main functionality of PEAT
 
     Args: None
 
