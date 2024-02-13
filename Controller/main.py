@@ -4,6 +4,7 @@ import board
 import busio
 import adafruit_rfm9x
 import signal
+import sys
 import rsa
 
 def signal_handler(sig, frame):
@@ -68,9 +69,11 @@ def decrypt(encrypted_msg):
 def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
     signal.signal(signal.SIGINT, signal_handler)
-    # signal.pause()
+    # This only exists in unix
+    signal.pause()
 
 if __name__ == "__main__":
     main()
