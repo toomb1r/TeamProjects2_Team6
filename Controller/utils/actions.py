@@ -3,7 +3,7 @@ from utils.communications import *
 
 GPIO.setup(17, INPUT)
 
-def emergencyStop():
+def emergency_stop():
     """
     Sends a signal to PEAT to stop all functions
     Reads in the signal from the emergency stop button
