@@ -1,6 +1,6 @@
 import random
 import RPi.GPIO as GPIO
-from time import sleep
+from time import sleep, time
 
 random.seed()
 
@@ -9,6 +9,11 @@ GPIO.setup(13, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(24, GPIO.IN)
+
+TRIG = 23
+ECHO = 24
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO, GPIO.IN)
 
 def turning(direction):
     """Turns the rudder of PEAT to allow for turning
@@ -85,3 +90,39 @@ def move():
 
 # Im pretty sure this is needed although I need to figure out how to add it in
 # GPIO.cleanup()
+
+def detect_dist():
+    """
+    """
+    
+    # import RPi.GPIO as GPIO
+    # import time
+    # GPIO.setmode(GPIO.BCM)
+
+    # TRIG = 23
+    # ECHO = 24
+
+    print("Distance Measurement In Progress")
+
+    # GPIO.setup(TRIG, GPIO.OUT)
+    # GPIO.setup(ECHO, GPIO.IN)
+
+    GPIO.output(TRIG, False)
+    print("Waiting For Sensor To Settle")
+    sleep(2)
+
+    GPIO.output(TRIG, True)
+    sleep(0.00001)
+    GPIO.output(TRIG, False)
+
+    while GPIO.input(ECHO) == 0:
+        pulse_start = time()
+
+    while GPIO.input(ECHO) == 1:
+        pulse_end = time()
+
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150
+    distance = round(distance, 2)
+    print(f"Distance: {distance} cm")
+    GPIO.cleanup()
