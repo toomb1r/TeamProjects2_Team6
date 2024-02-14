@@ -18,6 +18,8 @@ def main():
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
 
+    detect_dist()
+
     # This is to start the servo motor in the center of the 180 degrees
     # To allow -90 and 90 degrees of motion
     turning(90)
