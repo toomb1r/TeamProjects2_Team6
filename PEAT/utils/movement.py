@@ -91,6 +91,7 @@ GPIO.setup(ECHO, GPIO.IN)
 # Im pretty sure this is needed although I need to figure out how to add it in
 # GPIO.cleanup()
 
+# https://thepihut.com/blogs/raspberry-pi-tutorials/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
 def detect_dist():
     """
     """
