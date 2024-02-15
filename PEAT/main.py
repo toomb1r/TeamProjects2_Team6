@@ -6,6 +6,7 @@ from gps3 import gps3
 
 from utils.communications import *
 from utils.movement import *
+from utils.gps import *
 
 def main():
     """Executes the main functionality of PEAT
@@ -31,5 +32,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
+    
