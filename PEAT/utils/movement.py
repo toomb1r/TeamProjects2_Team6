@@ -10,8 +10,8 @@ GPIO.setmode(GPIO.BOARD)
 # GPIO.setup(21, GPIO.OUT)
 # GPIO.setup(24, GPIO.IN)
 
-TRIG = 12
-ECHO = 16
+TRIG = 32
+ECHO = 36
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
@@ -117,9 +117,11 @@ def detect_dist():
 
     while GPIO.input(ECHO) == 0:
         pulse_start = time()
+        print("stuck in start")
 
     while GPIO.input(ECHO) == 1:
         pulse_end = time()
+        print("stuck in end")
 
     pulse_duration = pulse_end - pulse_start
     distance = pulse_duration * 17150
