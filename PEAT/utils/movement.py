@@ -124,7 +124,8 @@ def detect_dist():
         print("stuck in end")
 
     pulse_duration = pulse_end - pulse_start
-    distance = pulse_duration * 17150
+    # distance = pulse_duration * 17150 # speed of sound in air
+    distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
     print(f"Distance: {distance} cm")
     GPIO.cleanup()
