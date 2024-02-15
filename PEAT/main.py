@@ -4,7 +4,7 @@
 # import digitalio
 # from gps3 import gps3
 
-from utils.communications import *
+# from utils.communications import *
 from utils.movement import *
 
 def main():
@@ -15,8 +15,8 @@ def main():
     Returns: None
     """
 
-    enc_msg = encrypt("this is encrypted")
-    dec_msg = decrypt(enc_msg)
+    # enc_msg = encrypt("this is encrypted")
+    # dec_msg = decrypt(enc_msg)
 
     detect_dist()
 
