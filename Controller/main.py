@@ -14,8 +14,8 @@ def main():
     Returns: None
     """
 
-    enc_msg = encrypt("this is encrypted")
-    dec_msg = decrypt(enc_msg)
+    # enc_msg = encrypt("this is encrypted")
+    # dec_msg = decrypt(enc_msg)
 
     transmit()
 
