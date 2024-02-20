@@ -156,7 +156,6 @@ def transmit():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    prev_packet = None
 
     data = bytes("This is data!\r\n","utf-8")
     rfm9x.send(data)
