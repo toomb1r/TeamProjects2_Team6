@@ -5,8 +5,9 @@ import busio
 from digitalio import DigitalInOut
 import board
 import adafruit_rfm9x
+import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
 def encrypt(msg):
     """Encrypts a message using the controller's public key
