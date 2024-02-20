@@ -19,6 +19,7 @@ def main():
     # dec_msg = decrypt(enc_msg)
 
     receive()
+    transmit()
 
     # # This is to start the servo motor in the center of the 180 degrees
     # # To allow -90 and 90 degrees of motion

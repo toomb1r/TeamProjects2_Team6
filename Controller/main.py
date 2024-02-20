@@ -18,6 +18,7 @@ def main():
     # dec_msg = decrypt(enc_msg)
 
     transmit()
+    receive()
 
 if __name__ == "__main__":
     main()
