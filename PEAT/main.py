@@ -5,7 +5,7 @@ import digitalio
 from gps3 import gps3
 
 from utils.communications import *
-from utils.movement import *
+# from utils.movement import *
 
 def main():
     """Executes the main functionality of PEAT
