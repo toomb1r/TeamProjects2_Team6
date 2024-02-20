@@ -147,3 +147,33 @@ def transmit_and_receive():
 
         # display.show()
         time.sleep(0.1)
+
+def transmit():
+    # Configure LoRa Radio
+    CS = DigitalInOut(board.CE1)
+    RESET = DigitalInOut(board.D25)
+    spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+    rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+    rfm9x.tx_power = 23
+    prev_packet = None
+
+    data = bytes("This is data!\r\n","utf-8")
+    rfm9x.send(data)
+
+def receive():
+    # Configure LoRa Radio
+    CS = DigitalInOut(board.CE1)
+    RESET = DigitalInOut(board.D25)
+    spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+    rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+    rfm9x.tx_power = 23
+    prev_packet = None
+
+    packet = rfm9x.receive()
+    if packet is None:
+        print("packet = None")
+    else:
+        prev_packet = packet
+        packet_text = str(prev_packet, "utf-8")
+        print(f"packet = {packet_text}")
+        time.sleep(1)
