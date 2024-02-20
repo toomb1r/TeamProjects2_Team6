@@ -17,10 +17,10 @@ def main():
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
-    # transmit()
+    transmit()
     # receive()
 
-    transmit_and_receive()
+    #transmit_and_receive()
 
 if __name__ == "__main__":
     main()

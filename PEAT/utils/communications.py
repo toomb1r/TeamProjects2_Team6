@@ -171,11 +171,12 @@ def receive():
     rfm9x.tx_power = 23
     prev_packet = None
 
-    packet = rfm9x.receive()
-    if packet is None:
-        print("packet = None")
-    else:
-        prev_packet = packet
-        packet_text = str(prev_packet, "utf-8")
-        print(f"packet = {packet_text}")
-        time.sleep(1)
+    while True:
+        packet = rfm9x.receive()
+        if packet is None:
+            print("packet = None")
+        else:
+            prev_packet = packet
+            packet_text = str(prev_packet, "utf-8")
+            print(f"packet = {packet_text}")
+            time.sleep(1)

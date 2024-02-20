@@ -158,9 +158,12 @@ def transmit():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
+    num_sends = 0
 
-    data = bytes("This is data!\r\n","utf-8")
-    rfm9x.send(data)
+    while num_sends <= 5:
+        data = bytes("This is data!\r\n","utf-8")
+        rfm9x.send(data)
+        num_sends+=1
 
 def receive():
     # Configure LoRa Radio
