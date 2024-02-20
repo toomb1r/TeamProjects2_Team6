@@ -5,7 +5,9 @@ import busio
 from digitalio import DigitalInOut
 import board
 import adafruit_rfm9x
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
 
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
