@@ -7,7 +7,15 @@ import board
 import adafruit_rfm9x
 import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BCM)
+# GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
+
+CS = GPIO.setup(7, GPIO.IN)
+RESET = GPIO.setup(25, GPIO.IN)
+# MOSI = GPIO.setup(10, GPIO.MOSI)
+# MISO = GPIO.setup(9, GPIO.MISO)
+# CLK = GPIO.setup(11, GPIO.CLK)
+
 
 def encrypt(msg):
     """Encrypts a message using the controller's public key
@@ -99,8 +107,8 @@ def transmit_and_receive():
     # height = display.height
 
     # Configure LoRa Radio
-    CS = DigitalInOut(board.CE1)
-    RESET = DigitalInOut(board.D25)
+    # CS = DigitalInOut(board.CE1)
+    # RESET = DigitalInOut(board.D25)
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
@@ -153,8 +161,8 @@ def transmit_and_receive():
 
 def transmit():
     # Configure LoRa Radio
-    CS = DigitalInOut(board.CE1)
-    RESET = DigitalInOut(board.D25)
+    # CS = DigitalInOut(board.CE1)
+    # RESET = DigitalInOut(board.D25)
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
@@ -164,8 +172,8 @@ def transmit():
 
 def receive():
     # Configure LoRa Radio
-    CS = DigitalInOut(board.CE1)
-    RESET = DigitalInOut(board.D25)
+    # CS = DigitalInOut(board.CE1)
+    # RESET = DigitalInOut(board.D25)
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
