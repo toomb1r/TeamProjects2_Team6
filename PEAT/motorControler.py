@@ -1,9 +1,10 @@
 import RPi.GPIO as GPIO          
 from time import sleep
 
-in1 = 20
-in2 = 21
-en = 18
+in1 = 17
+in2 = 27
+butt = 21
+en = 4
 temp1=1
 
 GPIO.setmode(GPIO.BCM)
@@ -12,12 +13,26 @@ GPIO.setup(in2,GPIO.OUT)
 GPIO.setup(en,GPIO.OUT)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 p=GPIO.PWM(en,1000)
 p.start(25)
 print("\n")
 print("The default speed & direction of motor is LOW & Forward.....")
 print("r-run s-stop f-forward b-backward l-low m-medium h-high e-exit")
 print("\n")    
+
+stopped = False
+def stop(channel):
+	global stopped
+	if not stopped:
+		GPIO.output(in1,GPIO.LOW)
+		GPIO.output(in2,GPIO.LOW)
+		stopped = True
+	else:
+		GPIO.output(in1,GPIO.HIGH)
+		GPIO.output(in2,GPIO.LOW)
+		stopped = False
+GPIO.add_event_detect(21,GPIO.FALLING,callback=stop,bouncetime=200)
 
 while(1):
 
