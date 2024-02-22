@@ -6,10 +6,11 @@ GPIO.setmode(GPIO.BOARD)
 
 # GPIO pin number
 gpio_pin = 13
+GPIO.setup(gpio_pin, GPIO.OUT)
 
 def turnOnLight():
     # Setup the GPIO pin as output
-    GPIO.setup(gpio_pin, GPIO.OUT)
+
 
     # Turn on the light
     GPIO.output(gpio_pin, GPIO.HIGH)
