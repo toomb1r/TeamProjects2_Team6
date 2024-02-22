@@ -4,14 +4,14 @@ from time import sleep, time
 
 # random.seed()
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 # GPIO.setup(13, GPIO.OUT)
 # GPIO.setup(20, GPIO.OUT)
 # GPIO.setup(21, GPIO.OUT)
 # GPIO.setup(24, GPIO.IN)
 
-TRIG = 32
-ECHO = 36
+TRIG = 23
+ECHO = 24
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
