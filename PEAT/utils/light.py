@@ -11,23 +11,15 @@ def turnOnLight():
     # Setup the GPIO pin as output
     GPIO.setup(gpio_pin, GPIO.OUT)
 
-    try:
-        # Turn on the light
-        GPIO.output(gpio_pin, GPIO.HIGH)
-        print("Light is ON")
+    # Turn on the light
+    GPIO.output(gpio_pin, GPIO.HIGH)
+    print("Light is ON")
 
-        # Wait for some time
-        time.sleep(1)  # Adjust the time as needed
-
+    # Wait for some time
+    time.sleep(1)  # Adjust the time as needed
 
 
-    finally:
-        GPIO.cleanup()
 
 def turnOffLight():
-    try:
-            # Turn off the light
-        GPIO.output(gpio_pin, GPIO.LOW)
-        print("Light is OFF")
-    finally:
-        GPIO.cleanup()
+    GPIO.output(gpio_pin, GPIO.LOW)
+    print("Light is OFF")

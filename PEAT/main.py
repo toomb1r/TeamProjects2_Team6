@@ -3,7 +3,7 @@ import board
 import busio
 import digitalio
 from gps3 import gps3
-
+from utils.light import *
 from utils.communications import *
 from utils.movement import *
 
@@ -27,6 +27,9 @@ def main():
     while(True):
         edgeOfPond(rorl)
         move()
+        turnOnLight()
+        turnOffLight()
+
 
 if __name__ == "__main__":
     main()
