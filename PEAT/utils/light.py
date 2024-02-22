@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 #https://robocraze.com/blogs/post/turning-on-an-led-with-your-raspberry-pi-s-gpio-pins 
 # Set the GPIO mode
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
 # GPIO pin number
 gpio_pin = 13
