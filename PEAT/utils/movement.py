@@ -4,7 +4,7 @@ from time import sleep
 
 random.seed()
 
-# GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 # GPIO.setup(13, GPIO.OUT)
 # GPIO.setup(20, GPIO.OUT)
 # GPIO.setup(21, GPIO.OUT)
