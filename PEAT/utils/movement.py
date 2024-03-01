@@ -41,7 +41,7 @@ GPIO.setup(ECHO, GPIO.IN)
 #         None
 #     """
 #     constant = 20
-    
+
 #     # If edge of pond detected
 #     if(GPIO.input(24)):
 
@@ -130,3 +130,4 @@ def detect_dist():
     distance = round(distance, 2)
     print(f"Distance: {distance} cm")
     GPIO.cleanup()
+    return distance
