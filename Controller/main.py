@@ -72,7 +72,7 @@ def main():
 
     GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=set_home_button_pressed_callback, bouncetime=200)
     GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=return_to_home_button_pressed_callback, bouncetime=200)
-    GPIO.add_event_detect(START_STOP_MOVE, GPIO.FALLING, callback=start_stop_move_button_pressed_callback, bouncetime=200)
+    # GPIO.add_event_detect(START_STOP_MOVE, GPIO.FALLING, callback=start_stop_move_button_pressed_callback, bouncetime=200)
     GPIO.add_event_detect(START_STOP_DISPENSING, GPIO.FALLING, callback=start_stop_dispensing_button_pressed_callback, bouncetime=200)
     GPIO.add_event_detect(EMERGENCY_STOP, GPIO.FALLING, callback=emergency_stop_button_pressed_callback, bouncetime=200)
     GPIO.add_event_detect(DISPENSE_RATE, GPIO.FALLING, callback=dispense_rate_button_pressed_callback, bouncetime=200)
