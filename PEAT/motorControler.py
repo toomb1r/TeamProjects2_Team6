@@ -3,7 +3,7 @@ from time import sleep
 
 in1 = 17
 in2 = 27
-butt = 21
+#butt = 21
 en = 4
 temp1=1
 
@@ -21,18 +21,18 @@ print("The default speed & direction of motor is LOW & Forward.....")
 print("r-run s-stop f-forward b-backward l-low m-medium h-high e-exit")
 print("\n")    
 
-stopped = False
-def stop(channel):
-	global stopped
-	if not stopped:
-		GPIO.output(in1,GPIO.LOW)
-		GPIO.output(in2,GPIO.LOW)
-		stopped = True
-	else:
-		GPIO.output(in1,GPIO.HIGH)
-		GPIO.output(in2,GPIO.LOW)
-		stopped = False
-GPIO.add_event_detect(21,GPIO.FALLING,callback=stop,bouncetime=200)
+#stopped = False
+#def stop(channel):
+#	global stopped
+#	if not stopped:
+#		GPIO.output(in1,GPIO.LOW)
+#		GPIO.output(in2,GPIO.LOW)
+#		stopped = True
+#	else:
+#		GPIO.output(in1,GPIO.HIGH)
+#		GPIO.output(in2,GPIO.LOW)
+#		stopped = False
+#GPIO.add_event_detect(21,GPIO.FALLING,callback=stop,bouncetime=200)
 
 while(1):
 
