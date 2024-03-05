@@ -1,3 +1,5 @@
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
 import adafruit_rfm9x
 import board
 import busio
@@ -8,6 +10,15 @@ from time import sleep
 from utils.communications import *
 
 GPIO.setmode(GPIO.BCM)
+
+# Initialize the I2C interface
+i2c = busio.I2C(board.SCL, board.SDA)
+
+# Create an  ADS1115 object
+ads = ADS. ADS1115(i2c)
+
+# Define the analog input channel
+channel = AnalogIn(ads, ADS.P0)
 
 IMMOBILIZED = 21
 OUT_OF_ALGAECIDE = 20
@@ -84,6 +95,9 @@ def main():
         GPIO.output(IMMOBILIZED, GPIO.LOW)
         GPIO.output(OUT_OF_ALGAECIDE, GPIO.HIGH)
         sleep(1)
+
+        print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
+        sleep(0.2)
 
 if __name__ == "__main__":
     main()
