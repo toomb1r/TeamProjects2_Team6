@@ -15,7 +15,7 @@ GPIO.setmode(GPIO.BCM)
 i2c = busio.I2C(board.SCL, board.SDA)
 
 # Create an  ADS1115 object
-ads = ADS. ADS1115(i2c)
+ads = ADS.ADS1115(i2c)
 
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
