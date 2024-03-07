@@ -24,7 +24,7 @@ def encrypt(msg):
     # `ssh-keygen` to generate RSA key pairs
     # `ssh-keygen -f /path/to/your/public-key -e -m pem > /path/to/your/public-key{.pem}`
     # to convert the public key into pem format
-    fkey = open('/home/Controller/.ssh/controller.pub.pem','rb')
+    fkey = open('/home/PEAT/.ssh/controller.pub.pem','rb')
     public_key = rsa.PublicKey.load_pkcs1(fkey.read())
     encoded_msg = msg.encode('utf8')
     encrypted_msg = rsa.encrypt(encoded_msg, public_key)
