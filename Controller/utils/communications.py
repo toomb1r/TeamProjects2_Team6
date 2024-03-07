@@ -163,7 +163,7 @@ def transmit():
     while num_sends <= 2:
         # data = encrypt("This is data")
         # data = bytes("This is data!\r\n","utf-8")
-        data = bytes("faejiinjaewfiaefiafewihefwahieafwhiefwhifaewhaewhfhbwaefhifaeifaewhefhwabfbahwhabfwefbheiawehwbawfbfbhewafhbfeijafeaijnefwfaehaefwhjaefwjaefwbhjiwaefbhijefwijnwehbjewfakejiwafnjifjnkfwjknfeqwnbjkefqwjknefwqbhjkewjnbkewnjkaefwbnjkewnjjknewrajkbhjkjnkefw\r\n","utf-8")
+        data = bytes("ejiinjaewfiaefiafewihefwahieafwhiefwhifaewhaewhfhbwaefhifaeifaewhefhwabfbahwhabfwefbheiawehwbawfbfbhewafhbfeijafeaijnefwfaehaefwhjaefwjaefwbhjiwaefbhijefwijnwehbjewfakejiwafnjifjnkfwjknfeqwnbjkefqwjknefwqbhjkewjnbkewnjkaefwbnjkewnjjknewrajkbhjkjnkefw\r\n","utf-8")
         rfm9x.send(data)
         num_sends+=1
 
