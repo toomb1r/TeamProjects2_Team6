@@ -177,7 +177,7 @@ def receive():
             print("packet = None")
         else:
             prev_packet = packet
-            # packet_text = decrypt(prev_packet)
-            packet_text = str(prev_packet, "utf-8")
+            packet_text = decrypt(prev_packet)
+            # packet_text = str(prev_packet, "utf-8")
             print(f"packet = {packet_text}")
             # time.sleep(1)
