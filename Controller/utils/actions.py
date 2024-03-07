@@ -3,25 +3,28 @@ from utils.communications import *
 from time import sleep
 
 GPIO.setmode(GPIO.BCM)
-# GPIO.setup(20, GPIO.OUTPUT)
-GPIO.setup(21, GPIO.OUTPUT)
+#GPIO.setup(20, GPIO.OUT)
+#GPIO.setup(21, GPIO.OUT)
+#GPIO.setup(15, GPIO.IN)
+#GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#stop = False
 
-stop = False
+#def emergency_stop(channel):
+ #   global stop
 
-def emergency_stop():
-    global stop
-
-    GPIO.output(20, GPIO.HIGH)
-    GPIO.output(21, GPIO.HIGH)
-    stop = not stop
-    if stop:
-        GPIO.output(20, GPIO.HIGH)
-        GPIO.output(21, GPIO.HIGH)
-        while True:
-            sleep(1)
-    else:
-        GPIO.output(20, GPIO.LOW)
-        GPIO.output(21, GPIO.LOW)
+  #  GPIO.output(20, GPIO.HIGH)
+   # GPIO.output(21, GPIO.HIGH)
+    #stop = not stop
+#    if stop:
+ #       GPIO.output(20, GPIO.HIGH)
+  #      GPIO.output(21, GPIO.HIGH)
+   #     while True:
+    #        print("hello")
+     #       sleep(1)
+#    else:
+ #       GPIO.output(20, GPIO.LOW)
+  #      GPIO.output(21, GPIO.LOW)
+   #     print("exit")
     # """
     # Sends a signal to PEAT to stop all functions
     # Reads in the signal from the emergency stop button
@@ -40,3 +43,4 @@ def emergency_stop():
     #     signal = encrypt("stop")
     #     # Send signal
     #     return signal
+GPIO.add_event_detect(15,GPIO.FALLING,callback=emergency_stop,bouncetime=200)
