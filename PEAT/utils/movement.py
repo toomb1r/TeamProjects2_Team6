@@ -97,7 +97,7 @@ def get_gps_data():
         none
 
     Returns: 
-        csv file path
+        csv_file_path (string) - file path to the csv 
     """
     #connection to the socket
     gpsd_connection = gps3.GPSDSocket()
