@@ -9,11 +9,14 @@ en = 4
 in1 = 20
 in2 = 21
 turn = 13
+left = 24
+right = 25
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
 GPIO.setup(in2, GPIO.OUT)
-GPIO.setup(24, GPIO.IN)
+GPIO.setup(left, GPIO.IN)
+GPIO.setup(right, GPIO.IN)
 
 turnpwm=GPIO.PWM(turn,50)
 movepwm=GPIO.PWM(en,1000)
@@ -28,22 +31,10 @@ movepwm.ChangeDutyCycle(75)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
-def turning(direction):
-    """Turns the rudder of PEAT to allow for turning
-    Takes the direction from the input and moves the servo motor to there
-
-    Args:
-        direction (int): the direction where the rudder will turn (-90 - 90)
-
-    Returns:
-        None
-    """
-
-    turnpwm.ChangeDutyCycle(direction)
-
 def stop():
     """
     Ceases motion for the movement motors
+    
     Turns off the output for both inputs of the motor, which turns the motor off
 
     Args:
@@ -58,6 +49,7 @@ def stop():
 def start():
     """
     Beings motion for the movement motors
+
     Turns on the output for both inputs of the motor, which turns the motor on
 
     Args:
@@ -69,14 +61,45 @@ def start():
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
-def edgeOfPond(rorl):
-    """Turns PEAT if the edge of the pond is detected
+def turn_left():
+    '''
+    Turns PEAT to the left
+
+    moves the rudder so PEAT can move to the left
+
+    Args:
+        None
+    Returns:
+        None
+    '''
+    turnpwm.ChangeDutyCycle(10)
+    sleep(10)
+    turnpwm.ChangeDutyCycle(5)
+
+def turn_right():
+    '''
+    Turns PEAT to the right
+    moves the rudder so PEAT can move to the right
+
+    Args:
+        None
+    Returns:
+        None
+    '''
+    turnpwm.ChangeDutyCycle(0)
+    sleep(10)
+    turnpwm.ChangeDutyCycle(5)
+
+def edgeOfPond():
+    """
+    Turns PEAT if the edge of the pond is detected
+
     Determines if the edge of the pond is detected
     If so it will turn the boat and move it a constant time
     After moving this constant time it will turn back in the direction it came from
 
     Args:
-        rorl (bool) - determines the direction PEAT will turn when the edge of the pond is detected
+        None
 
     Returns:
         None
@@ -87,36 +110,38 @@ def edgeOfPond(rorl):
 
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
-    if(GPIO.input(24)):
-
+    if(GPIO.input(left)):
+        turn_left()
+    if(GPIO.input(right)):
+        turn_right()
         # Stop all movement and turn the correct direction
-        stop()
-        if(rorl):
-            turning(10)
-        else:
-            turning(0)
+        # stop()
+        # if(rorl):
+        #     turning(10)
+        # else:
+        #     turning(0)
 
-        # Move for a constant time
-        start()
+        # # Move for a constant time
+        # start()
 
         # Uncomment this if constant is needed
         # sleep(constant)
 
         # Stop all movement and turn the correct direction
-        stop()
-        turning(5)
+        # stop()
+        # turning(5)
         # if(rorl):
         #     turning(10)
         # else:
         #     turning(0)
 
         # Change the turning direction unless the edge of pond is still in front of PEAT
-        rorl = not rorl
-        if(GPIO.input(24)):
-            rorl = not rorl
+        # rorl = not rorl
+        # if(GPIO.input(24)):
+        #     rorl = not rorl
 
         # Check if the edge of pond is still in front of PEAT
-        edgeOfPond()
+        # edgeOfPond()
 
 def move():
     """Begins the movement of the rudder of PEAT
@@ -128,6 +153,6 @@ def move():
     Returns:
         None
     """
-    turning(round(random.uniform(0, 10), 1))
+    turnpwm.ChangeDutyCycle(round(random.uniform(0, 10), 1))
     GPIO.output(in1, GPIO.HIGH)
     GPIO.output(in2, GPIO.LOW)
