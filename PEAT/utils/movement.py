@@ -1,6 +1,6 @@
 import random
 import RPi.GPIO as GPIO
-from time import sleep
+from time import sleep, time
 
 random.seed()
 
@@ -11,6 +11,10 @@ in2 = 21
 turn = 13
 left = 24
 right = 25
+TRIGl = 50
+ECHOl = 51
+TRIGr = 52
+ECHOr = 53
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
@@ -31,10 +35,89 @@ movepwm.ChangeDutyCycle(75)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
+def left_dist():
+    """
+    Returns distance of left ultrasonic sensor
+
+    Measures the distance in front of the left ultrasonic sensor
+    returns the distance in the form of cms
+
+    Args:
+        None
+    Returns:
+        distance (int): Distance in front of ultrasonic sensor in cm
+    """
+    distance = 0
+
+    print("Distance Measurement In Progress")
+
+    GPIO.output(TRIGl, False)
+    print("Waiting For Sensor To Settle")
+    sleep(2)
+
+    GPIO.output(TRIGl, True)
+    sleep(0.00001)
+    GPIO.output(TRIGl, False)
+
+    while GPIO.input(ECHOl) == 0:
+        pulse_start = time()
+        print("stuck in start")
+
+    while GPIO.input(ECHOl) == 1:
+        pulse_end = time()
+        print("stuck in end")
+
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150 # speed of sound in air
+    # distance = pulse_duration * 75000 # speed of sound in water
+    distance = round(distance, 2)
+    print(f"Distance: {distance} cm")
+    return distance
+
+def right_dist():
+    """
+    Returns distance of right ultrasonic sensor
+
+    Measures the distance in front of the right ultrasonic sensor
+    returns the distance in the form of cms
+
+    Args:
+        None
+    Returns:
+        distance (int): Distance in front of ultrasonic sensor in cm
+    """
+
+    distance = 0
+
+    print("Distance Measurement In Progress")
+
+    GPIO.output(TRIGr, False)
+    print("Waiting For Sensor To Settle")
+    sleep(2)
+
+    GPIO.output(TRIGr, True)
+    sleep(0.00001)
+    GPIO.output(TRIGr, False)
+
+    while GPIO.input(ECHOr) == 0:
+        pulse_start = time()
+        print("stuck in start")
+
+    while GPIO.input(ECHOr) == 1:
+        pulse_end = time()
+        print("stuck in end")
+
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150 # speed of sound in air
+    # distance = pulse_duration * 75000 # speed of sound in water
+    distance = round(distance, 2)
+    print(f"Distance: {distance} cm")
+    return distance
+
 def stop():
     """
     Ceases motion for the movement motors
-    
+
     Turns off the output for both inputs of the motor, which turns the motor off
 
     Args:
@@ -110,9 +193,9 @@ def edgeOfPond():
 
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
-    if(GPIO.input(left)):
+    if(left_dist() <= 200):
         turn_left()
-    if(GPIO.input(right)):
+    if(right_dist() <= 200):
         turn_right()
         # Stop all movement and turn the correct direction
         # stop()
