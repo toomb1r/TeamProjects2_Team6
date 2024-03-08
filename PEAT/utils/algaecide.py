@@ -79,6 +79,7 @@ def detect_out():
     out = False
     if ultson_algae > 6:
         out = True
+        print("Out of algaecide")
     return out
 
 def dispense_algae():

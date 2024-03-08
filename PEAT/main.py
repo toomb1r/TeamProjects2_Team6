@@ -6,6 +6,7 @@ from gps3 import gps3
 
 from utils.communications import *
 from utils.movement import *
+from utils.algaecide import *
 
 def main():
     """Executes the main functionality of PEAT
@@ -24,7 +25,10 @@ def main():
 
     move()
     rorl = True
+    dispense_algae()
+
     while(True):
+        detect_out()
         edgeOfPond(rorl)
         move()
 
