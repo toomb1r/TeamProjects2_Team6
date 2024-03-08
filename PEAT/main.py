@@ -6,6 +6,7 @@ from gps3 import gps3
 
 from utils.communications import *
 from utils.movement import *
+from utils.gps import *
 
 def main():
     """Executes the main functionality of PEAT
@@ -17,6 +18,7 @@ def main():
 
     enc_msg = encrypt("this is encrypted")
     dec_msg = decrypt(enc_msg)
+    home_csv_path = get_gps_data()
 
     # This is to start the servo motor in the center of the 180 degrees
     # To allow -90 and 90 degrees of motion
@@ -30,3 +32,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
