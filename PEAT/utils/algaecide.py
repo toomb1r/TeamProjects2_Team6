@@ -1,10 +1,14 @@
 import RPi.GPIO as GPIO
+from time import sleep
+
 auger_en = 13
 auger1 = 1
 auger2 = 2
 dispenser_en = 14
 dispenser1 = 3
 dispenser2 = 4
+TRIG = 17
+ECHO = 18
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(auger1, GPIO.OUT)
@@ -34,6 +38,40 @@ def ultson_algae():
         distance (int): distance from the ultrasonic sensor
     """
     distance = 0
+        # import RPi.GPIO as GPIO
+    # import time
+    # GPIO.setmode(GPIO.BCM)
+
+    # TRIG = 23
+    # ECHO = 24
+
+    print("Distance Measurement In Progress")
+
+    # GPIO.setup(TRIG, GPIO.OUT)
+    # GPIO.setup(ECHO, GPIO.IN)
+
+    GPIO.output(TRIG, False)
+    print("Waiting For Sensor To Settle")
+    sleep(2)
+
+    GPIO.output(TRIG, True)
+    sleep(0.00001)
+    GPIO.output(TRIG, False)
+
+    while GPIO.input(ECHO) == 0:
+        pulse_start = time()
+        print("stuck in start")
+
+    while GPIO.input(ECHO) == 1:
+        pulse_end = time()
+        print("stuck in end")
+
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150 # speed of sound in air
+    # distance = pulse_duration * 75000 # speed of sound in water
+    distance = round(distance, 2)
+    print(f"Distance: {distance} cm")
+    return distance
 
 def detect_out():
     """
