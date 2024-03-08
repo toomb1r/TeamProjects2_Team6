@@ -7,6 +7,13 @@ from gps3 import gps3
 from utils.communications import *
 from utils.movement import *
 
+stop = 20
+
+def emergency_stop():
+    GPIO.wait_for_edge(stop, GPIO.FALLING)
+
+GPIO.add_event_detect(stop, GPIO.FALLING, callback=emergency_stop(), bouncetime=200)
+
 def main():
     """Executes the main functionality of PEAT
 
