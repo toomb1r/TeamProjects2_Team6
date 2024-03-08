@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from time import sleep
+from time import sleep, time
 
 auger_en = 13
 auger1 = 1
@@ -38,17 +38,8 @@ def ultson_algae():
         distance (int): distance from the ultrasonic sensor
     """
     distance = 0
-        # import RPi.GPIO as GPIO
-    # import time
-    # GPIO.setmode(GPIO.BCM)
-
-    # TRIG = 23
-    # ECHO = 24
 
     print("Distance Measurement In Progress")
-
-    # GPIO.setup(TRIG, GPIO.OUT)
-    # GPIO.setup(ECHO, GPIO.IN)
 
     GPIO.output(TRIG, False)
     print("Waiting For Sensor To Settle")
