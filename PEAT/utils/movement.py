@@ -5,22 +5,23 @@ from time import sleep, time
 random.seed()
 
 # This is incorrect figure this out before merge
-en = 4
-in1 = 20
-in2 = 21
+en = 26
+in1 = 22
+in2 = 6
 turn = 13
-left = 24
-right = 25
-TRIGl = 50
-ECHOl = 51
-TRIGr = 52
-ECHOr = 53
+TRIGl = 12
+ECHOl = 16
+TRIGr = 23
+ECHOr = 24
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
 GPIO.setup(in2, GPIO.OUT)
-GPIO.setup(left, GPIO.IN)
-GPIO.setup(right, GPIO.IN)
+GPIO.setup(TRIGl, GPIO.OUT)
+GPIO.setup(ECHOl, GPIO.IN)
+GPIO.setup(TRIGr, GPIO.OUT)
+GPIO.setup(ECHOr, GPIO.IN)
 
 turnpwm=GPIO.PWM(turn,50)
 movepwm=GPIO.PWM(en,1000)
@@ -49,11 +50,11 @@ def left_dist():
     """
     distance = 0
 
-    print("Distance Measurement In Progress")
+    #print("Distance Measurement In Progress")
 
     GPIO.output(TRIGl, False)
-    print("Waiting For Sensor To Settle")
-    sleep(2)
+    #print("Waiting For Sensor To Settle")
+    sleep(0.5)
 
     GPIO.output(TRIGl, True)
     sleep(0.00001)
@@ -61,17 +62,17 @@ def left_dist():
 
     while GPIO.input(ECHOl) == 0:
         pulse_start = time()
-        print("stuck in start")
+        #print("stuck in start")
 
     while GPIO.input(ECHOl) == 1:
         pulse_end = time()
-        print("stuck in end")
+        #print("stuck in end")
 
     pulse_duration = pulse_end - pulse_start
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    print(f"Distance: {distance} cm")
+    print(f"left Distance: {distance} cm")
     return distance
 
 def right_dist():
@@ -89,10 +90,10 @@ def right_dist():
 
     distance = 0
 
-    print("Distance Measurement In Progress")
+    #print("Distance Measurement In Progress")
 
     GPIO.output(TRIGr, False)
-    print("Waiting For Sensor To Settle")
+    #print("Waiting For Sensor To Settle")
     sleep(2)
 
     GPIO.output(TRIGr, True)
@@ -101,17 +102,17 @@ def right_dist():
 
     while GPIO.input(ECHOr) == 0:
         pulse_start = time()
-        print("stuck in start")
+        #print("stuck in start")
 
     while GPIO.input(ECHOr) == 1:
         pulse_end = time()
-        print("stuck in end")
+        #print("stuck in end")
 
     pulse_duration = pulse_end - pulse_start
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    print(f"Distance: {distance} cm")
+    print(f"right Distance: {distance} cm")
     return distance
 
 def stop():
@@ -156,7 +157,7 @@ def turn_left():
         None
     '''
     turnpwm.ChangeDutyCycle(10)
-    sleep(10)
+    #sleep(1)
     turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
@@ -170,7 +171,7 @@ def turn_right():
         None
     '''
     turnpwm.ChangeDutyCycle(0)
-    sleep(10)
+    sleep(1)
     turnpwm.ChangeDutyCycle(5)
 
 def edgeOfPond():
@@ -195,8 +196,8 @@ def edgeOfPond():
     # consult Anmol about progress on the ultrasonic sensor code
     if(left_dist() <= 200):
         turn_left()
-    if(right_dist() <= 200):
-        turn_right()
+    #if(right_dist() <= 200):
+        #turn_right()
         # Stop all movement and turn the correct direction
         # stop()
         # if(rorl):
@@ -236,6 +237,9 @@ def move():
     Returns:
         None
     """
-    turnpwm.ChangeDutyCycle(round(random.uniform(0, 10), 1))
+    #turnpwm.ChangeDutyCycle(round(random.uniform(0, 10), 1))
     GPIO.output(in1, GPIO.HIGH)
     GPIO.output(in2, GPIO.LOW)
+    #sleep(5)
+    #turnpwm.ChangeDutyCycle(5)
+
