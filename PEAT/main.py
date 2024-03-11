@@ -26,9 +26,10 @@ def main():
     move()
     rorl = True
     dispense_algae()
+    change_dispense_speed(100)
 
     while(True):
-        detect_out()
+        # detect_out()
         edgeOfPond(rorl)
         move()
 

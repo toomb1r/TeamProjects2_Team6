@@ -23,7 +23,7 @@ augerpwm.start(25)
 dispenserpwm.start(25)
 
 augerpwm.ChangeDutyCycle(75)
-dispenserpwm.ChangeDutyCycle(75)
+dispenserpwm.ChangeDutyCycle(50)
 
 def ultson_algae():
     """
@@ -126,4 +126,3 @@ def change_dispense_speed(speed):
         None
     """
     augerpwm.ChangeDutyCycle(speed)
-    dispenserpwm.ChangeDutyCycle(speed)
