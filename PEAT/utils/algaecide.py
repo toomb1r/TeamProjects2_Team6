@@ -1,20 +1,24 @@
 import RPi.GPIO as GPIO
 from time import sleep, time
 
-auger_en = 13
-auger1 = 1
-auger2 = 2
-dispenser_en = 14
-dispenser1 = 3
-dispenser2 = 4
-TRIG = 17
-ECHO = 18
+auger_en = 4
+auger1 = 17
+auger2 = 27
+dispenser_en = 18
+dispenser1 = 20
+dispenser2 = 21
+TRIG = 2
+ECHO = 3
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(auger1, GPIO.OUT)
 GPIO.setup(auger2, GPIO.OUT)
+GPIO.setup(auger_en, GPIO.OUT)
 GPIO.setup(dispenser1, GPIO.OUT)
 GPIO.setup(dispenser2, GPIO.OUT)
+GPIO.setup(dispenser_en, GPIO.OUT)
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO, GPIO.IN)
 
 augerpwm=GPIO.PWM(auger_en,1000)
 dispenserpwm=GPIO.PWM(dispenser_en,1000)
@@ -23,7 +27,7 @@ augerpwm.start(25)
 dispenserpwm.start(25)
 
 augerpwm.ChangeDutyCycle(75)
-dispenserpwm.ChangeDutyCycle(50)
+dispenserpwm.ChangeDutyCycle(75)
 
 def ultson_algae():
     """
