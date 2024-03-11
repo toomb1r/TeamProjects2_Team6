@@ -35,9 +35,9 @@ EMERGENCY_STOP_BUTTON = 15 # signal 13/14
 GPIO.setup(EMERGENCY_STOP_BUTTON, GPIO.IN)
 GPIO.setup(EMERGENCY_STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-DISPENSE_RATE = 23
-GPIO.setup(DISPENSE_RATE, GPIO.IN)
-GPIO.setup(DISPENSE_RATE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+DISPENSE_RATE_POTENTIOMETER = 23
+GPIO.setup(DISPENSE_RATE_POTENTIOMETER, GPIO.IN)
+GPIO.setup(DISPENSE_RATE_POTENTIOMETER, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Initialize the I2C interface
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -244,15 +244,39 @@ def EMERGENCY_STOP_BUTTON_button_pressed_callback(channel):
     #print("Emergency stop button pressed!")
     transmit("13")
 
-def dispense_rate_button_pressed_callback(channel):
-    print("Dispense rate button pressed!")
+def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
+    #print("Dispense rate button pressed!")
+    # 0.0 - 0.33; 1
+    # 0.33 - 0.66; 2
+    # 0.66 - 0.99; 3
+    # 0.99 - 1.32; 4
+    # 1.32 - 1.65; 5
+    # 1.65 - 1.98; 6
+    # 1.98 - 2.31; 7
+    # 2.31 - 2.64; 8
+    # 2.64 - 2.97; 9
+    # 2.97 - 3.30; 10
+    max_voltage = 3.3
+    num_settings = 10
+    voltage_boundary = max_voltage / num_settings
+    cur_voltage = channel.voltage
+    cur_setting = 1
+    cur_voltage_setting_boundary = voltage_boundary
+
+    while True:
+        if cur_voltage_setting_boundary < cur_voltage:
+            cur_voltage_setting_boundary += voltage_boundary
+            cur_setting += 1
+        else:
+            cur_setting_sig = cur_setting + 20
+            transmit(cur_setting_sig)
 
 GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=set_home_button_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=return_to_home_button_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_button_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_button_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_button_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(DISPENSE_RATE, GPIO.FALLING, callback=dispense_rate_button_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=200)
 
     # while True:
     #     GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
