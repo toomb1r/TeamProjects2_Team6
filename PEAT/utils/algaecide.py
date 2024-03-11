@@ -81,7 +81,7 @@ def detect_out():
         out (boolean): Whether PEAT is out of algaecide
     """
     out = False
-    if ultson_algae > 6:
+    if ultson_algae() > 6:
         out = True
         print("Out of algaecide")
     return out
