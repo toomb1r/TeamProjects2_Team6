@@ -1,6 +1,7 @@
 import random
 import RPi.GPIO as GPIO
 from time import sleep, time
+from gpiozero import DistanceSensor
 
 random.seed()
 
@@ -35,6 +36,11 @@ movepwm.ChangeDutyCycle(75)
 # Consult with team
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
+
+ultson_left = DistanceSensor(echo = ECHOl, trigger = TRIGl, max_distance = 2)
+
+def return_dist():
+    return ultson_left.distance
 
 def left_dist():
     """

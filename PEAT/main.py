@@ -25,7 +25,8 @@ def main():
     move()
     #rorl = True
     while(True):
-        edgeOfPond()
+        print(return_dist())
+        #edgeOfPond()
         #move()
 
 if __name__ == "__main__":
