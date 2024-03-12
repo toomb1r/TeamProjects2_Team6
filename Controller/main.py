@@ -4,6 +4,8 @@ import busio
 import digitalio
 import RPi.GPIO
 
+from time import sleep
+
 from utils.communications import *
 
 def main():
@@ -33,13 +35,19 @@ def main():
         # print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
         # sleep(0.2)
 
+        GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
+        sleep(1)
         received_sig = receive()
         if (received_sig == "1"):
             trigger_IMMOBILIZED_LIGHT()
             print("triggered immobilized light")
+            sleep(5)
         elif (received_sig == "3"):
             trigger_OUT_OF_ALGAECIDE_LIGHT()
             print("triggered out of algaecide light")
+            sleep(5)
+        GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
+        sleep(1)
 
 
 if __name__ == "__main__":
