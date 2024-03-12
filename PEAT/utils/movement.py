@@ -4,12 +4,6 @@ from time import sleep
 
 random.seed()
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT)
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(24, GPIO.IN)
-
 def turning(direction):
     """Turns the rudder of PEAT to allow for turning
     Takes the direction from the input and moves the servo motor to there
