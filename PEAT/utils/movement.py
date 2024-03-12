@@ -119,11 +119,11 @@ def detect_dist():
 
         while GPIO.input(ECHO) == 0:
             pulse_start = time()
-            print("stuck in start")
+            #print("stuck in start")
 
         while GPIO.input(ECHO) == 1:
             pulse_end = time()
-            print("stuck in end")
+            #print("stuck in end")
 
         pulse_duration = pulse_end - pulse_start
         distance = pulse_duration * 17150 # speed of sound in air
