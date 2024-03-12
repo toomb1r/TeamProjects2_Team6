@@ -260,11 +260,12 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     num_settings = 10
     voltage_boundary = max_voltage / num_settings
     #cur_voltage = channel.voltage
+    cur_voltage = ads.read_adc(0, 1)
     cur_setting = 1
     cur_voltage_setting_boundary = voltage_boundary
 
     while True:
-        if cur_voltage_setting_boundary < float(channel.voltage):
+        if cur_voltage_setting_boundary < cur_voltage:
             cur_voltage_setting_boundary += voltage_boundary
             cur_setting += 1
         else:
