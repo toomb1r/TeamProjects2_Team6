@@ -263,7 +263,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     # 2.31 - 2.64; 8
     # 2.64 - 2.97; 9
     # 2.97 - 3.30; 10
-    
+
     max_voltage = 3.3
     num_settings = 10
     voltage_boundary = max_voltage / num_settings
@@ -278,6 +278,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
         else:
             cur_setting_sig = cur_setting + 20
             transmit(cur_setting_sig)
+            break
 
 GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=set_home_button_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=return_to_home_button_pressed_callback, bouncetime=200)
