@@ -1,3 +1,4 @@
+import Adafruit_ADS1x15
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 import adafruit_rfm9x
@@ -45,6 +46,8 @@ i2c = busio.I2C(board.SCL, board.SDA)
 ads = ADS.ADS1115(i2c)
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
+
+adc = Adafruit_ADS1x15.ADS1115()
 
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
@@ -260,7 +263,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     num_settings = 10
     voltage_boundary = max_voltage / num_settings
     #cur_voltage = channel.voltage
-    cur_voltage = ads.read_adc(0, 1)
+    cur_voltage = adc.read_adc(0, gain=1)
     cur_setting = 1
     cur_voltage_setting_boundary = voltage_boundary
 
