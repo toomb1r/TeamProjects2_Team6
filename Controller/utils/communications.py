@@ -245,6 +245,13 @@ def EMERGENCY_STOP_BUTTON_button_pressed_callback(channel):
     transmit("13")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
+    # Initialize the I2C interface
+    i2c = busio.I2C(board.SCL, board.SDA)
+    # Create an  ADS1115 object
+    ads = ADS.ADS1115(i2c)
+    # Define the analog input channel
+    cur_channel = AnalogIn(ads, ADS.P0)
+
     #print("Dispense rate button pressed!")
     # 0.0 - 0.33; 1
     # 0.33 - 0.66; 2
@@ -256,10 +263,11 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     # 2.31 - 2.64; 8
     # 2.64 - 2.97; 9
     # 2.97 - 3.30; 10
+    
     max_voltage = 3.3
     num_settings = 10
     voltage_boundary = max_voltage / num_settings
-    cur_voltage = channel.value
+    cur_voltage = cur_channel.voltage
     cur_setting = 1
     cur_voltage_setting_boundary = voltage_boundary
 
