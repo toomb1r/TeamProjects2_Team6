@@ -107,27 +107,29 @@ def detect_dist():
 
     # GPIO.setup(TRIG, GPIO.OUT)
     # GPIO.setup(ECHO, GPIO.IN)
+    
+    while True:
+        GPIO.output(TRIG, False)
+        print("Waiting For Sensor To Settle")
+        sleep(2)
 
-    GPIO.output(TRIG, False)
-    print("Waiting For Sensor To Settle")
-    sleep(2)
+        GPIO.output(TRIG, True)
+        sleep(0.00001)
+        GPIO.output(TRIG, False)
 
-    GPIO.output(TRIG, True)
-    sleep(0.00001)
-    GPIO.output(TRIG, False)
+        while GPIO.input(ECHO) == 0:
+            pulse_start = time()
+            print("stuck in start")
 
-    while GPIO.input(ECHO) == 0:
-        pulse_start = time()
-        print("stuck in start")
+        while GPIO.input(ECHO) == 1:
+            pulse_end = time()
+            print("stuck in end")
 
-    while GPIO.input(ECHO) == 1:
-        pulse_end = time()
-        print("stuck in end")
+        pulse_duration = pulse_end - pulse_start
+        distance = pulse_duration * 17150 # speed of sound in air
+        # distance = pulse_duration * 75000 # speed of sound in water
+        distance = round(distance, 2)
+        print(f"Distance: {distance} cm")
 
-    pulse_duration = pulse_end - pulse_start
-    distance = pulse_duration * 17150 # speed of sound in air
-    # distance = pulse_duration * 75000 # speed of sound in water
-    distance = round(distance, 2)
-    print(f"Distance: {distance} cm")
     GPIO.cleanup()
-    return distance
+    # return distance
