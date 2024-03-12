@@ -25,9 +25,9 @@ def main():
     sleep(1)
     transmit("3")
     sleep(1)
-    transmit("1")
-    sleep(1)
     transmit("3")
+    sleep(1)
+    transmit("1")
 
     # transmit_and_receive()
 

@@ -36,8 +36,10 @@ def main():
         received_sig = receive()
         if (received_sig == "1"):
             trigger_IMMOBILIZED_LIGHT()
+            print("triggered immobilized light")
         elif (received_sig == "3"):
             trigger_OUT_OF_ALGAECIDE_LIGHT()
+            print("triggered out of algaecide light")
 
 
 if __name__ == "__main__":
