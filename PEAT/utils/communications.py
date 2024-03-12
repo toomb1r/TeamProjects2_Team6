@@ -151,16 +151,22 @@ def decrypt(encrypted_msg):
 #         # display.show()
 #         time.sleep(0.1)
 
-def transmit():
+def transmit(signal):
     # Configure LoRa Radio
     CS = DigitalInOut(board.CE1)
     RESET = DigitalInOut(board.D25)
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
+    num_sends = 0
 
-    data = bytes("This is data!\r\n","utf-8")
-    rfm9x.send(data)
+    while num_sends <= 2:
+        # data = encrypt("This is data")
+        # data = bytes("This is data!\r\n","utf-8")
+        data = bytes(f"{signal}\r\n","utf-8")
+        # data = bytes("ejiinjaewfiaefiafewihefwahieafwhiefwhifaewhaewhfhbwaefhifaeifaewhefhwabfbahwhabfwefbheiawehwbawfbfbhewafhbfeijafeaijnefwfaehaefwhjaefwjaefwbhjiwaefbhijefwijnwehbjewfakejiwafnjifjnkfwjknfeqwnbjkefqwjknefwqbhjkewjnbkewnjkaefwbnjkewnjjknewrajkbhjkjnkefw\r\n","utf-8")
+        rfm9x.send(data)
+        num_sends+=1
 
 def receive():
     # Configure LoRa Radio
@@ -180,4 +186,5 @@ def receive():
             # packet_text = decrypt(prev_packet)
             packet_text = str(prev_packet, "utf-8")
             print(f"packet = {packet_text}")
+            return packet_text
             # time.sleep(1)

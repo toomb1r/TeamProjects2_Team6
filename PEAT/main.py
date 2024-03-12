@@ -4,6 +4,8 @@ import busio
 import digitalio
 from gps3 import gps3
 
+from time import sleep
+
 from utils.communications import *
 # from utils.movement import *
 
@@ -18,8 +20,14 @@ def main():
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
-    receive()
-    # transmit()
+    # receive()
+    transmit("1")
+    sleep(1)
+    transmit("3")
+    sleep(1)
+    transmit("1")
+    sleep(1)
+    transmit("3")
 
     # transmit_and_receive()
 

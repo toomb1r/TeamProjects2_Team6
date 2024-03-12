@@ -223,7 +223,20 @@ def receive():
             # packet_text = decrypt(prev_packet)
             packet_text = str(prev_packet, "utf-8")
             print(f"packet = {packet_text}")
+            return packet_text
             # time.sleep(1)
+
+def trigger_IMMOBILIZED_LIGHT():
+    if GPIO.input(IMMOBILIZED_LIGHT):
+        GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
+    else:
+        GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
+
+def trigger_OUT_OF_ALGAECIDE_LIGHT():
+    if GPIO.input(OUT_OF_ALGAECIDE_LIGHT):
+        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
+    else:
+        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
 
 def set_home_button_pressed_callback(channel):
     #print("Set home button pressed!")

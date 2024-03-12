@@ -17,7 +17,7 @@ def main():
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
-    transmit("hi")
+    # transmit("hi")
     # receive()
 
     #transmit_and_receive()
@@ -31,7 +31,14 @@ def main():
         # sleep(1)
 
         # print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
-        sleep(0.2)
+        # sleep(0.2)
+
+        received_sig = receive()
+        if (received_sig == "1"):
+            trigger_IMMOBILIZED_LIGHT()
+        elif (received_sig == "3"):
+            trigger_OUT_OF_ALGAECIDE_LIGHT()
+
 
 if __name__ == "__main__":
     main()
