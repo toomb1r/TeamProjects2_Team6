@@ -10,8 +10,8 @@ GPIO.setmode(GPIO.BCM)
 # GPIO.setup(21, GPIO.OUT)
 # GPIO.setup(24, GPIO.IN)
 
-TRIG = 23
-ECHO = 24
+TRIG = 12
+ECHO = 16
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
