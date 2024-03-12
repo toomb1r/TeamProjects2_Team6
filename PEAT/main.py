@@ -7,6 +7,8 @@ from gps3 import gps3
 from utils.communications import *
 from utils.movement import *
 
+GPIO.setmode(GPIO.BCM)
+
 def main():
     """Executes the main functionality of PEAT
 

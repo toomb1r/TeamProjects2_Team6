@@ -19,7 +19,6 @@ right_echo = 24
 drive_en = 26
 auger_in2 = 27
 
-GPIO.setmode(GPIO.BCM)
 GPIO.setup(algae_trig, GPIO.OUT)
 GPIO.setup(algae_echo, GPIO.IN)
 GPIO.setup(auger_en, GPIO.OUT)

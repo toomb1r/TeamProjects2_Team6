@@ -9,7 +9,6 @@ immobilized = 21
 change_algaecide = 23
 start_stop_algaecide = 24
 
-GPIO.setmode(GPIO.BCM)
 GPIO.setup(start_stop_move, GPIO.IN)
 GPIO.setup(return_home, GPIO.IN)
 GPIO.setup(emergency_stop, GPIO.IN)
