@@ -30,8 +30,8 @@ def main():
         GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
         sleep(1)
 
-        # print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
-        # sleep(0.2)
+        print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
+        sleep(0.2)
 
 if __name__ == "__main__":
     main()
