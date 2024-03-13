@@ -10,6 +10,41 @@ GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(24, GPIO.IN)
 
+def detect_movement():
+    # This function detects movement using move func
+    # It returns True if movement is detected, False otherwise
+
+    # Perform the movement logi
+    move()
+    
+    time.sleep(5)  # Assuming the robot moves for 5 seconds
+    
+    # Stop the movement
+    GPIO.output(20, GPIO.LOW)
+    GPIO.output(21, GPIO.LOW)
+
+    # Assuming movement is detected if it reached this point
+    return True
+
+# talk to the dudes and see where this logic could go
+# try:
+#     start_time = time.time()
+#     while True:
+#         # Check for movement every second
+#         movement_detected = detect_movement()
+#         print("Movement Detected:", movement_detected)
+        
+#         # If no movement is detected and 3 minutes have passed, immobilize the robot
+#         if not movement_detected and (time.time() - start_time) > 180:
+#             print("Robot immobilized.")
+#             # Add code here to stop the robot or trigger an immobilization mechanism
+#             break
+        
+#         time.sleep(1)
+
+# except KeyboardInterrupt:
+#     GPIO.cleanup()
+
 def turning(direction):
     """Turns the rudder of PEAT to allow for turning
     Takes the direction from the input and moves the servo motor to there
