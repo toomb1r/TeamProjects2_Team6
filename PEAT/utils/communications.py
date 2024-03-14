@@ -1,6 +1,6 @@
 import rsa # pip install rsa
 
-import time
+# import time
 import busio
 from digitalio import DigitalInOut
 import board
