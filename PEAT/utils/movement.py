@@ -130,3 +130,4 @@ def get_gps_data():
                 sleep(1)
     finally:
         return csv_file_path
+
