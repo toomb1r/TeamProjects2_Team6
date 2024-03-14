@@ -4,7 +4,7 @@ import busio
 import digitalio
 from gps3 import gps3
 
-from time import sleep
+from time import sleep, time
 
 from utils.communications import *
 # from utils.movement import *
