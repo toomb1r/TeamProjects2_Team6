@@ -14,7 +14,7 @@ def detect_movement():
     # This function detects movement using move func
     # It returns True if movement is detected, False otherwise
 
-    # Perform the movement logi
+    # Perform the movement logic
     move()
     
     time.sleep(5)  # Assuming the robot moves for 5 seconds
