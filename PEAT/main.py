@@ -9,6 +9,52 @@ from time import sleep
 from utils.communications import *
 # from utils.movement import *
 
+TRIGl = 12
+GPIO.setup(TRIGl, GPIO.OUT)
+
+ECHOl = 16
+GPIO.setup(ECHOl, GPIO.IN)
+
+
+def left_dist():
+    """
+    Returns distance of left ultrasonic sensor
+
+    Measures the distance in front of the left ultrasonic sensor
+    returns the distance in the form of cms
+
+    Args:
+        None
+    Returns:
+        distance (int): Distance in front of ultrasonic sensor in cm
+    """
+    distance = 0
+
+    #print("Distance Measurement In Progress")
+
+    GPIO.output(TRIGl, False)
+    #print("Waiting For Sensor To Settle")
+    sleep(2)
+
+    GPIO.output(TRIGl, True)
+    sleep(0.00001)
+    GPIO.output(TRIGl, False)
+
+    while GPIO.input(ECHOl) == 0:
+        pulse_start = time()
+        #print("stuck in start")
+
+    while GPIO.input(ECHOl) == 1:
+        pulse_end = time()
+        #print("stuck in end")
+
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150 # speed of sound in air
+    # distance = pulse_duration * 75000 # speed of sound in water
+    distance = round(distance, 2)
+    print(f"Distance: {distance} cm")
+    return distance
+
 def main():
     """Executes the main functionality of PEAT
 
@@ -21,13 +67,10 @@ def main():
     # dec_msg = decrypt(enc_msg)
 
     # receive()
-    transmit("1")
-    sleep(5)
-    transmit("3")
-    sleep(5)
-    transmit("3")
-    sleep(5)
-    transmit("1")
+    while True:
+        if left_dist() < 30:
+            transmit("1")
+        sleep(5)
     #sleep(5)
 
     # transmit_and_receive()
