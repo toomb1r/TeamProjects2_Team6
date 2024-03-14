@@ -230,6 +230,7 @@ def receive():
             # time.sleep(1)
 
 def trigger_IMMOBILIZED_LIGHT():
+    print(f"in func: {GPIO.input(IMMOBILIZED_LIGHT)}")
     if GPIO.input(IMMOBILIZED_LIGHT):
         GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
     else:
