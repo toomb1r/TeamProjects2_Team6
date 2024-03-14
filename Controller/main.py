@@ -37,7 +37,7 @@ def main():
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # sleep(1)
-        received_sig = receive()
+        received_sig = receive().strip()
         if (received_sig == "1"):
             trigger_IMMOBILIZED_LIGHT()
             print("triggered immobilized light")
