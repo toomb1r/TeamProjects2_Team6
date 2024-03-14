@@ -44,7 +44,7 @@ def main():
         elif (received_sig == "3"):
             trigger_OUT_OF_ALGAECIDE_LIGHT()
             print("triggered out of algaecide light")
-        sleep(5)
+        # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
 

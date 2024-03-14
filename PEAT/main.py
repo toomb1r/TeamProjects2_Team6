@@ -22,12 +22,13 @@ def main():
 
     # receive()
     transmit("1")
-    sleep(10)
+    sleep(5)
     transmit("3")
-    sleep(10)
+    sleep(5)
     transmit("3")
-    sleep(10)
+    sleep(5)
     transmit("1")
+    sleep(5)
 
     # transmit_and_receive()
 
