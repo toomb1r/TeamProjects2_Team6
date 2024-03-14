@@ -26,6 +26,7 @@ def GPS_Info():
     
     lat_in_degrees = convert_to_degrees(lat)    #get latitude in degree decimal format
     long_in_degrees = convert_to_degrees(longi) #get longitude in degree decimal format
+    return lat_in_degrees, long_in_degrees
     
 #convert raw NMEA string into degree decimal format   
 def convert_to_degrees(raw_value):
@@ -62,3 +63,48 @@ try:
 except KeyboardInterrupt:
     webbrowser.open(map_link)        #open current position information in google map
     sys.exit(0)
+
+
+def save_gps_data():
+    """Gets coordinates at the time of function call.
+    Get GPS data from GPS3 socket. 
+    It then stores it in a Data stream. 
+    After error checking it writes at time coordinates to a CSV file.
+
+    Args: 
+        none
+
+    Returns: 
+        csv_file_path (string) - file path to the csv 
+    """
+    #connection to the socket
+    gpsd_connection = gps3.GPSDSocket()
+    #streaming data from socket
+    data_stream = gps3.DataStream()
+
+    csv_file_path = 'gps_data.csv'
+
+    try:
+        with open(csv_file_path, 'w', newline='') as csvfile:
+            fieldnames = ['Latitude', 'Longitude']
+            csv_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            csv_writer.writeheader()
+
+            for new_data in gpsd_connection:
+                if new_data:
+                    # Parse new GPS data
+                    data_stream.unpack(new_data)
+                    # Check if GPS data is valid
+                    if data_stream.TPV['lat'] and data_stream.TPV['lon']:
+                        latitude = data_stream.TPV['lat']
+                        longitude = data_stream.TPV['lon']
+
+                        # Write data to CSV file
+                        csv_writer.writerow({'Latitude': latitude, 'Longitude': longitude})
+
+                        print(f"Latitude: {latitude}, Longitude: {longitude}")
+                # Wait for 1 second
+                sleep(1)
+    finally:
+        return csv_file_path
