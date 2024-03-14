@@ -29,7 +29,7 @@ movepwm=GPIO.PWM(en,1000)
 movepwm.start(25)
 turnpwm.start(0)
 
-turnpwm.ChangeDutyCycle(5)
+#turnpwm.ChangeDutyCycle(5)
 movepwm.ChangeDutyCycle(75)
 
 # This code probably should be in the main method although this will probably be run first so it doesnt matter?
@@ -37,10 +37,10 @@ movepwm.ChangeDutyCycle(75)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
-ultson_left = DistanceSensor(echo = ECHOl, trigger = TRIGl, max_distance = 2)
+#ultson_left = DistanceSensor(echo = ECHOl, trigger = TRIGl, max_distance = 2)
 
-def return_dist():
-    return ultson_left.distance
+#def return_dist():
+    #return ultson_left.distance
 
 def left_dist():
     """
@@ -60,7 +60,7 @@ def left_dist():
 
     GPIO.output(TRIGl, False)
     #print("Waiting For Sensor To Settle")
-    sleep(0.5)
+    sleep(2)
 
     GPIO.output(TRIGl, True)
     sleep(0.00001)
@@ -162,9 +162,10 @@ def turn_left():
     Returns:
         None
     '''
-    turnpwm.ChangeDutyCycle(10)
+    print("turn left")
+    #turnpwm.ChangeDutyCycle(10)
     #sleep(1)
-    turnpwm.ChangeDutyCycle(5)
+    #turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
     '''
@@ -176,9 +177,10 @@ def turn_right():
     Returns:
         None
     '''
-    turnpwm.ChangeDutyCycle(0)
-    sleep(1)
-    turnpwm.ChangeDutyCycle(5)
+    print("turn right")
+    #turnpwm.ChangeDutyCycle(0)
+    #sleep(1)
+    #turnpwm.ChangeDutyCycle(5)
 
 def edgeOfPond():
     """
@@ -200,10 +202,10 @@ def edgeOfPond():
 
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
-    if(left_dist() <= 200):
+    if(left_dist() <= 30):
         turn_left()
-    #if(right_dist() <= 200):
-        #turn_right()
+    if(right_dist() <= 30):
+        turn_right()
         # Stop all movement and turn the correct direction
         # stop()
         # if(rorl):
@@ -244,8 +246,8 @@ def move():
         None
     """
     #turnpwm.ChangeDutyCycle(round(random.uniform(0, 10), 1))
-    GPIO.output(in1, GPIO.HIGH)
-    GPIO.output(in2, GPIO.LOW)
+    #GPIO.output(in1, GPIO.HIGH)
+    #GPIO.output(in2, GPIO.LOW)
     #sleep(5)
     #turnpwm.ChangeDutyCycle(5)
 
