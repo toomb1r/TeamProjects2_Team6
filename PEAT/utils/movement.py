@@ -146,6 +146,21 @@ def start():
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
+def reverse():
+    """
+    Makes the motor move in reverse
+
+    Turns on the output for both inputs of the motor in reverse order, which reverses the motor
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.HIGH)
+
 def turn_left():
     '''
     Turns PEAT to the left
@@ -158,11 +173,14 @@ def turn_left():
         None
     '''
     #print("turn left")
-    #turnpwm.ChangeDutyCycle(10)
+    #reverse()
+    #sleep(5)
+    #start()
+    turnpwm.ChangeDutyCycle(7.5)
     sleep_time = random.randint(5,10)
     print(f"Sleep time left: {sleep_time}")
     sleep(sleep_time)
-    #turnpwm.ChangeDutyCycle(5)
+    turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
     '''
@@ -175,11 +193,14 @@ def turn_right():
         None
     '''
     #print("turn right")
-    #turnpwm.ChangeDutyCycle(0)
+    #reverse()
+    #sleep(5)
+    #start()
+    turnpwm.ChangeDutyCycle(2.5)
     sleep_time = random.randint(5,10)
     print(f"Sleep time right: {sleep_time}")
     sleep(sleep_time)
-    #turnpwm.ChangeDutyCycle(5)
+    turnpwm.ChangeDutyCycle(5)
 
 def edgeOfPond():
     """
@@ -201,9 +222,11 @@ def edgeOfPond():
 
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
-    if(left_dist() <= 30):
+    left = left_dist()
+    right = right_dist()
+    if(left <= 30 and left > 5):
         turn_left()
-    if(right_dist() <= 30):
+    if(right <= 30 and right > 5):
         turn_right()
         # Stop all movement and turn the correct direction
         # stop()
