@@ -22,10 +22,9 @@ def main():
     # To allow -90 and 90 degrees of motion
     #turning(90)
 
-    move()
+    start()
     #rorl = True
     while(True):
-        #print(return_dist())
         edgeOfPond()
         #move()
 

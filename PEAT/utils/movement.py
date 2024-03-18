@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep, time
 from gpiozero import DistanceSensor
 
-random.seed()
+#random.seed()
 
 # This is incorrect figure this out before merge
 en = 26
@@ -36,11 +36,6 @@ movepwm.ChangeDutyCycle(75)
 # Consult with team
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
-
-#ultson_left = DistanceSensor(echo = ECHOl, trigger = TRIGl, max_distance = 2)
-
-#def return_dist():
-    #return ultson_left.distance
 
 def left_dist():
     """
@@ -162,9 +157,11 @@ def turn_left():
     Returns:
         None
     '''
-    print("turn left")
+    #print("turn left")
     #turnpwm.ChangeDutyCycle(10)
-    #sleep(1)
+    sleep_time = random.randint(5,10)
+    print(f"Sleep time left: {sleep_time}")
+    sleep(sleep_time)
     #turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
@@ -177,9 +174,11 @@ def turn_right():
     Returns:
         None
     '''
-    print("turn right")
+    #print("turn right")
     #turnpwm.ChangeDutyCycle(0)
-    #sleep(1)
+    sleep_time = random.randint(5,10)
+    print(f"Sleep time right: {sleep_time}")
+    sleep(sleep_time)
     #turnpwm.ChangeDutyCycle(5)
 
 def edgeOfPond():
@@ -234,20 +233,3 @@ def edgeOfPond():
 
         # Check if the edge of pond is still in front of PEAT
         # edgeOfPond()
-
-def move():
-    """Begins the movement of the rudder of PEAT
-    Selects a random direction and moves there
-
-    Args:
-        None
-
-    Returns:
-        None
-    """
-    #turnpwm.ChangeDutyCycle(round(random.uniform(0, 10), 1))
-    #GPIO.output(in1, GPIO.HIGH)
-    #GPIO.output(in2, GPIO.LOW)
-    #sleep(5)
-    #turnpwm.ChangeDutyCycle(5)
-
