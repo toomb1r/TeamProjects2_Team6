@@ -7,12 +7,15 @@ import sys
 from gps3 import gps3
 
 from time import sleep, time
+import RPi.GPIO as GPIO
 
 from utils.communications import *
 from utils.movement import *
+from utils.pins import *
 
-GPIO.setmode(GPIO.BCM)
-
+#turn = get_turn()
+#turnpwm = GPIO.PWM(turn,50)
+#turnpwm.start(0)
 def signal_handler(sig, frame):
     """
     Handles CTRL+C inputs
@@ -29,6 +32,7 @@ def signal_handler(sig, frame):
 
     Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
+    turnpwm.ChangeDutyCycle(5)
     GPIO.cleanup()
     sys.exit(0)
 
@@ -47,9 +51,9 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     # receive()
     while True:
-        if left_dist() < 30:
-            transmit("1")
-        sleep(5)
+        var = receive().strip()
+        if var == "9":
+            start()
 
 if __name__ == "__main__":
     main()
