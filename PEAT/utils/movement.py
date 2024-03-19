@@ -31,51 +31,51 @@ def edgeOfPond(rorl):
     """
     constant = 20
     
-    # If edge of pond detected
-    if(GPIO.input(24)):
+#     # If edge of pond detected
+#     if(GPIO.input(24)):
 
-        # Stop all movement and turn the correct direction
-        GPIO.output(20, GPIO.LOW)
-        GPIO.output(21, GPIO.LOW)
-        if(rorl):
-            turning(90)
-        else:
-            turning(-90)
+#         # Stop all movement and turn the correct direction
+#         GPIO.output(20, GPIO.LOW)
+#         GPIO.output(21, GPIO.LOW)
+#         if(rorl):
+#             turning(90)
+#         else:
+#             turning(-90)
 
-        # Move for a constant time
-        GPIO.output(20, GPIO.HIGH)
-        GPIO.output(21, GPIO.LOW)
-        sleep(constant)
+#         # Move for a constant time
+#         GPIO.output(20, GPIO.HIGH)
+#         GPIO.output(21, GPIO.LOW)
+#         sleep(constant)
 
-        # Stop all movement and turn the correct direction
-        GPIO.output(20, GPIO.LOW)
-        GPIO.output(21, GPIO.LOW)
-        if(rorl):
-            turning(90)
-        else:
-            turning(-90)
+#         # Stop all movement and turn the correct direction
+#         GPIO.output(20, GPIO.LOW)
+#         GPIO.output(21, GPIO.LOW)
+#         if(rorl):
+#             turning(90)
+#         else:
+#             turning(-90)
 
-        # Change the turning direction unless the edge of pond is still in front of PEAT
-        rorl = not rorl
-        if(GPIO.input(24)):
-            rorl = not rorl
+#         # Change the turning direction unless the edge of pond is still in front of PEAT
+#         rorl = not rorl
+#         if(GPIO.input(24)):
+#             rorl = not rorl
 
-        # Check if the edge of pond is still in front of PEAT
-        edgeOfPond()
+#         # Check if the edge of pond is still in front of PEAT
+#         edgeOfPond()
 
-def move():
-    """Begins the movement of the rudder of PEAT
-    Selects a random direction and moves there
+# def move():
+#     """Begins the movement of the rudder of PEAT
+#     Selects a random direction and moves there
 
-    Args:
-        None
+#     Args:
+#         None
 
-    Returns:
-        None
-    """
-    turning(random.randrange(-90, 90))
-    GPIO.output(20, GPIO.HIGH)
-    GPIO.output(21, GPIO.LOW)
+#     Returns:
+#         None
+#     """
+#     turning(random.randrange(-90, 90))
+#     GPIO.output(20, GPIO.HIGH)
+#     GPIO.output(21, GPIO.LOW)
 
-# Im pretty sure this is needed although I need to figure out how to add it in
-# GPIO.cleanup()
+# # Im pretty sure this is needed although I need to figure out how to add it in
+# # GPIO.cleanup()
