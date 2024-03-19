@@ -55,6 +55,8 @@ def left_dist():
     print(f"Distance: {distance} cm")
     return distance
 
+GPIO.setmode(GPIO.BCM)
+
 def main():
     """Executes the main functionality of PEAT
 
