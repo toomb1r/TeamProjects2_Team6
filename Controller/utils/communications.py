@@ -89,109 +89,17 @@ def decrypt(encrypted_msg):
     decoded_msg = decrypted_msg.decode('utf8')
     return decoded_msg
 
-# def transmit_and_receive():
-#     # SPDX-FileCopyrightText: 2018 Brent Rubell for Adafruit Industries
-#     #
-#     # SPDX-License-Identifier: MIT
-
-#     """
-#     Example for using the RFM9x Radio with Raspberry Pi.
-
-#     Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
-#     Author: Brent Rubell for Adafruit Industries
-#     """
-#     # # Import Python System Libraries
-#     # import time
-#     # # Import Blinka Libraries
-#     # import busio
-#     # from digitalio import DigitalInOut
-#     # import board
-#     # # Import the SSD1306 module.
-#     # # import adafruit_ssd1306
-#     # # Import RFM9x
-#     # import adafruit_rfm9x
-
-#     # # Button A
-#     # btnA = DigitalInOut(board.D5)
-#     # btnA.direction = Direction.INPUT
-#     # btnA.pull = Pull.UP
-
-#     # # Button B
-#     # btnB = DigitalInOut(board.D6)
-#     # btnB.direction = Direction.INPUT
-#     # btnB.pull = Pull.UP
-
-#     # # Button C
-#     # btnC = DigitalInOut(board.D12)
-#     # btnC.direction = Direction.INPUT
-#     # btnC.pull = Pull.UP
-
-#     # Create the I2C interface.
-#     # i2c = busio.I2C(board.SCL, board.SDA)
-
-#     # # 128x32 OLED Display
-#     # reset_pin = DigitalInOut(board.D4)
-#     # display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c, reset=reset_pin)
-#     # # Clear the display.
-#     # display.fill(0)
-#     # display.show()
-#     # width = display.width
-#     # height = display.height
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     prev_packet = None
-
-#     while True:
-#         packet = None
-#         # draw a box to clear the image
-#         # display.fill(0)
-#         # display.text('RasPi LoRa', 35, 0, 1)
-
-#         # check for packet rx
-#         packet = rfm9x.receive()
-#         if packet is None:
-#             # display.show()
-#             # display.text('- Waiting for PKT -', 15, 20, 1)
-#             print("packet = None")
-#         else:
-#             # Display the packet text and rssi
-#             # display.fill(0)
-#             prev_packet = packet
-#             packet_text = str(prev_packet, "utf-8")
-#             # display.text('RX: ', 0, 0, 1)
-#             # display.text(packet_text, 25, 0, 1)
-#             print(f"packet = {packet_text}")
-#             sleep(1)
-
-#         # if not btnA.value:
-#         #     # Send Button A
-#         #     display.fill(0)
-#         data = bytes("This is data!\r\n","utf-8")
-#         rfm9x.send(data)
-#         #     display.text('Sent Button A!', 25, 15, 1)
-#         # elif not btnB.value:
-#         #     # Send Button B
-#         #     display.fill(0)
-#         #     button_b_data = bytes("Button B!\r\n","utf-8")
-#         #     rfm9x.send(button_b_data)
-#         #     display.text('Sent Button B!', 25, 15, 1)
-#         # elif not btnC.value:
-#         #     # Send Button C
-#         #     display.fill(0)
-#         #     button_c_data = bytes("Button C!\r\n","utf-8")
-#         #     rfm9x.send(button_c_data)
-#         #     display.text('Sent Button C!', 25, 15, 1)
-
-
-#         # display.show()
-#         sleep(0.1)
-
 def transmit(signal):
+    """Transmits a signal using the transciever
+    Converts a signal into bytes. Transmits this signal 3 times (to ensure receipt).
+
+    Args:
+        signal (Any): The signal to be sent
+
+    Returns:
+        None
+    """
+
     # Configure LoRa Radio
     CS = DigitalInOut(board.CE1)
     RESET = DigitalInOut(board.D25)
@@ -201,14 +109,22 @@ def transmit(signal):
     num_sends = 0
 
     while num_sends <= 2:
-        # data = encrypt("This is data")
-        # data = bytes("This is data!\r\n","utf-8")
         data = bytes(f"{signal}\r\n","utf-8")
-        # data = bytes("ejiinjaewfiaefiafewihefwahieafwhiefwhifaewhaewhfhbwaefhifaeifaewhefhwabfbahwhabfwefbheiawehwbawfbfbhewafhbfeijafeaijnefwfaehaefwhjaefwjaefwbhjiwaefbhijefwijnwehbjewfakejiwafnjifjnkfwjknfeqwnbjkefqwjknefwqbhjkewjnbkewnjkaefwbnjkewnjjknewrajkbhjkjnkefw\r\n","utf-8")
         rfm9x.send(data)
         num_sends+=1
 
 def receive():
+    """Receives a signal using the transciever
+    Listens for a signal until one is recieved. Converts this signal into a string.
+    Returns this string signal to the calling method
+
+    Args:
+        None
+
+    Returns:
+        packet_text (string): The data received
+    """
+
     # Configure LoRa Radio
     CS = DigitalInOut(board.CE1)
     RESET = DigitalInOut(board.D25)
@@ -223,64 +139,129 @@ def receive():
             print("packet = None")
         else:
             prev_packet = packet
-            # packet_text = decrypt(prev_packet)
             packet_text = str(prev_packet, "utf-8")
             print(f"packet = {packet_text}")
             return packet_text
-            # time.sleep(1)
 
 def trigger_IMMOBILIZED_LIGHT():
-    print(f"in func: {GPIO.input(IMMOBILIZED_LIGHT)}")
+    """Triggers light signaling immobilized status
+    Turns the immobilized light on if it is off.
+    Turns the immobilized light off if it is on.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     if GPIO.input(IMMOBILIZED_LIGHT):
         GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
     else:
         GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
 def trigger_OUT_OF_ALGAECIDE_LIGHT():
+    """Triggers light signaling out of algaecide status
+    Turns the out of algaecide light on if it is off.
+    Turns the out of algaecide light off if it is on.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     if GPIO.input(OUT_OF_ALGAECIDE_LIGHT):
         GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
     else:
         GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
 
-def set_home_button_pressed_callback(channel):
-    #print("Set home button pressed!")
+def SET_HOME_BUTTON_pressed_callback(channel):
+    """Callback for the set home button
+    Transmits a signal to trigger PEAT's set home point functionality
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     transmit("5")
 
-def return_to_home_button_pressed_callback(channel):
-    #print("Return to home button pressed!")
+def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
+    """Callback for the return to home button
+    Transmits a signal to trigger PEAT'S return to home functionality
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     transmit("7")
 
-def START_STOP_MOVE_BUTTON_button_pressed_callback(channel):
-    #print("Start/Stop move button pressed!")
+def START_STOP_MOVE_BUTTON_pressed_callback(channel):
+    """Callback for the start and stop move button
+    Transmits a signal to trigger PEAT's start and stop movement functionality
+
+    Args:
+        None
+    
+    Returns:
+        None
+    """
+
     transmit("9")
 
-def START_STOP_DISPENSING_BUTTON_button_pressed_callback(channel):
-    #print("Start/Stop dispense button pressed!")
+def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
+    """Callback for the start and stop algaecide dispensing button
+    Transmits a signal to trigger PEAT's start and stop dispensing functionality
+
+    Args:
+        None
+    
+    Returns:
+        None
+    """
+
     transmit("11")
 
-def EMERGENCY_STOP_BUTTON_button_pressed_callback(channel):
-    #print("Emergency stop button pressed!")
+def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
+    """Callback for the emergency stop button
+    Transmits a signal to trigger PEAT's emergency stop functionality
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
     transmit("13")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
+    """Callback for the button setting the algaecide dispensing rate
+    Divides the max voltage into 10 distinct dispense rate settings.
+    Determines the setting corresponding to the current measured voltage.
+    Determines the signal to be sent based on this setting.
+    Transmits this signal.
+
+    Args:
+        channel:
+
+    Returns:
+        None
+    """
+    
     # Initialize the I2C interface
     i2c = busio.I2C(board.SCL, board.SDA)
     # Create an  ADS1115 object
     ads = ADS.ADS1115(i2c)
     # Define the analog input channel
     cur_channel = AnalogIn(ads, ADS.P0)
-
-    #print("Dispense rate button pressed!")
-    # 0.0 - 0.33; 1
-    # 0.33 - 0.66; 2
-    # 0.66 - 0.99; 3
-    # 0.99 - 1.32; 4
-    # 1.32 - 1.65; 5
-    # 1.65 - 1.98; 6
-    # 1.98 - 2.31; 7
-    # 2.31 - 2.64; 8
-    # 2.64 - 2.97; 9
-    # 2.97 - 3.30; 10
 
     max_voltage = 3.3
     num_settings = 10
@@ -298,20 +279,9 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
             transmit(cur_setting_sig)
             break
 
-GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=set_home_button_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=return_to_home_button_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_button_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_button_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_button_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=200)
 GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=200)
-
-    # while True:
-    #     GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
-    #     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
-    #     sleep(1)
-    #     GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
-    #     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
-    #     sleep(1)
-
-    #     print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
-    #     sleep(0.2)
