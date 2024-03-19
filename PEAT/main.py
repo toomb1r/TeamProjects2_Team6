@@ -4,8 +4,16 @@ import busio
 import digitalio
 from gps3 import gps3
 
+from time import sleep, time
+
 from utils.communications import *
 from utils.movement import *
+
+TRIGl = 12
+GPIO.setup(TRIGl, GPIO.OUT)
+
+ECHOl = 16
+GPIO.setup(ECHOl, GPIO.IN)
 
 def main():
     """Executes the main functionality of PEAT
@@ -15,18 +23,27 @@ def main():
     Returns: None
     """
 
-    #enc_msg = encrypt("this is encrypted")
-    #dec_msg = decrypt(enc_msg)
+    # enc_msg = encrypt("this is encrypted")
+    # dec_msg = decrypt(enc_msg)
 
-    # This is to start the servo motor in the center of the 180 degrees
-    # To allow -90 and 90 degrees of motion
-    #turning(90)
+    # receive()
+    while True:
+        if left_dist() < 30:
+            transmit("1")
+        sleep(5)
+    #sleep(5)
 
-    #start()
-    #rorl = True
-    while(True):
-        edgeOfPond()
-        #move()
+    # transmit_and_receive()
+
+    # # This is to start the servo motor in the center of the 180 degrees
+    # # To allow -90 and 90 degrees of motion
+    # turning(90)
+
+    # move()
+    # rorl = True
+    # while(True):
+    #     edgeOfPond(rorl)
+    #     move()
 
 if __name__ == "__main__":
     main()
