@@ -47,6 +47,7 @@ lat_in_degrees = 0
 long_in_degrees = 0
 
 try:
+    print("Hello")
     while True:
         received_data = (str)(ser.readline())                   #read NMEA string received
         print(received_data)
