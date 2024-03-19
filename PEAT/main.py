@@ -9,11 +9,7 @@ from time import sleep, time
 from utils.communications import *
 from utils.movement import *
 
-TRIGl = 12
-GPIO.setup(TRIGl, GPIO.OUT)
-
-ECHOl = 16
-GPIO.setup(ECHOl, GPIO.IN)
+GPIO.setmode(GPIO.BCM)
 
 def main():
     """Executes the main functionality of PEAT

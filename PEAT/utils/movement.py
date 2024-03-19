@@ -3,8 +3,6 @@ import RPi.GPIO as GPIO
 from time import sleep, time
 from gpiozero import DistanceSensor
 
-#random.seed()
-
 # This is incorrect figure this out before merge
 en = 26
 in1 = 22

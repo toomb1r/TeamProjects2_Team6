@@ -2,11 +2,13 @@ import adafruit_rfm9x
 import board
 import busio
 import digitalio
-import RPi.GPIO
+import RPi.GPIO as GPIO
 
 from time import sleep
 
 from utils.communications import *
+
+GPIO.setmode(GPIO.BCM)
 
 def main():
     """Executes the main functionality of the Controller
