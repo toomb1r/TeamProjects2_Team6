@@ -39,3 +39,15 @@ def decrypt(encrypted_msg):
     decrypted_msg = rsa.decrypt(encrypted_msg, private_key)
     decoded_msg = decrypted_msg.decode('utf8')
     return decoded_msg
+
+def emergency_stop(stop):
+    """
+    Takes in a boolean variable to return the opposite
+
+    Args:
+        stop (bool): variable to stop all functionality
+
+    Returns:
+        stop (bool): variable to stop all functionality
+    """
+    return not stop
