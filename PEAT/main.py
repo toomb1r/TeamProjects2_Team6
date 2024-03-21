@@ -89,12 +89,12 @@ def main():
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
-    # receive()
-    while True:
-        if left_dist() < 30:
-            transmit("1")
-        sleep(5)
-    #sleep(5)
+    receive()
+    # while True:
+    #     if left_dist() < 30:
+    #         transmit("1")
+    #     sleep(5)
+    # #sleep(5)
 
     # transmit_and_receive()
 
@@ -104,18 +104,18 @@ def main():
 
     # This is to start the servo motor in the center of the 180 degrees
     # To allow -90 and 90 degrees of motion
-    turning(90)
+    # turning(90)
 
-    move()
-    rorl = True
+    # move()
+    # rorl = True
 
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
     signal.signal(signal.SIGINT, signal_handler)
     # signal.pause()
 
-    while(True):
-        edgeOfPond(rorl)
-        move()
+    # while(True):
+    #     edgeOfPond(rorl)
+    #     move()
 
 if __name__ == "__main__":
     main()
