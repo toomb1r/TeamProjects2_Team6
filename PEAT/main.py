@@ -63,34 +63,37 @@ def main():
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
     signal.signal(signal.SIGINT, signal_handler)
     # signal.pause()
-
+    #dispense_algae()
     while(True):
-        var = receive().strip()
-        if var == "11":
-            if GPIO.input(get_auger_in1()):
-                stop_dispense()
-            else:
-                dispense_algae()
-        elif var == "21":
-            change_dispense_speed(90)
-        elif var =="22":
-            change_dispense_speed(91)
-        elif var == "23":
-            change_dispense_speed(92)
-        elif var == "24":
-            change_dispense_speed(93)
-        elif var == "25":
-            change_dispense_speed(94)
-        elif var == "26":
-            change_dispense_speed(95)
-        elif var == "27":
-            change_dispense_speed(96)
-        elif var == "28":
-            change_dispense_speed(97)
-        elif var == "29":
-            change_dispense_speed(98)
-        elif var == "30":
-            change_dispense_speed(99)
+        if detect_out():
+            transmit("3")
+    #    var = receive().strip()
+    #    if var == "11":
+    #        if GPIO.input(get_auger_in1()):
+    #            stop_dispense()
+    #        else:
+    #            dispense_algae()
+    #    elif var == "21":
+    #        change_dispense_speed(90)
+    #    elif var =="22":
+    #        change_dispense_speed(91)
+    #    elif var == "23":
+    #        change_dispense_speed(92)
+    #    elif var == "24":
+    #        change_dispense_speed(93)
+    #    elif var == "25":
+    #        change_dispense_speed(94)
+    #    elif var == "26":
+    #        change_dispense_speed(95)
+    #    elif var == "27":
+    #        change_dispense_speed(96)
+    #    elif var == "28":
+    #        change_dispense_speed(97)
+    #    elif var == "29":
+    #        change_dispense_speed(98)
+    #    elif var == "30":
+    #        change_dispense_speed(99)
+    #    sleep(1.5)
         #print("enter new speed")
         #speed = int(input())
         #change_dispense_speed(speed)
