@@ -91,14 +91,22 @@ def receive():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    prev_packet = None
+    #prev_packet = None
 
+    data_list = []
     while True:
         packet = rfm9x.receive()
         if packet is None:
             print("packet = None")
         else:
-            prev_packet = packet
-            packet_text = str(prev_packet, "utf-8")
+            #prev_packet = packet
+            # packet_text = str(prev_packet, "utf-8")
+            if packet not in data_list:
+                data_list.append(packet)
+            packet_text = ''.join(data_list)
             print(f"packet = {packet_text}")
-            return packet_text
+            if (packet_text[-1] == "\n"):
+                packet_text = decrypt(packet_text.strip())
+                return packet_text
+
+

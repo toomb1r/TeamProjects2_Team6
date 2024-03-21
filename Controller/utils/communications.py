@@ -108,10 +108,16 @@ def transmit(signal):
     rfm9x.tx_power = 23
     num_sends = 0
 
-    while num_sends <= 2:
-        data = bytes(f"{signal}\r\n","utf-8")
-        rfm9x.send(data)
-        num_sends+=1
+    data = encrypt(signal)
+    # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
+    data_list = [(data[i:i+250]) for i in range(0, len(data), 250)]
+    data_list[-1] = data_list[-1] + "\n"
+    for seg in data_list:
+        while num_sends <= 2:
+            # data = bytes(f"{signal}\r\n","utf-8")
+            # rfm9x.send(data)
+            rfm9x.send(seg)
+            num_sends+=1
 
 def receive():
     """Receives a signal using the transciever
