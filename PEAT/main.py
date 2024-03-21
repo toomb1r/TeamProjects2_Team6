@@ -11,6 +11,7 @@ from time import sleep, time
 from utils.communications import *
 #from utils.movement import *
 from utils.algaecide import *
+from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
@@ -66,9 +67,10 @@ def main():
     while(True):
         var = receive().strip()
         if var == "11":
-            stop_dispense()
-        elif var == "12":
-            dispense_algae()
+            if GPIO.input(get_auger_in1()):
+                stop_dispense()
+            else:
+                dispense_algae()
         elif var == "21":
             change_dispense_speed(90)
         elif var =="22":
