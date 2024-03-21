@@ -103,10 +103,10 @@ def receive():
             # packet_text = str(prev_packet, "utf-8")
             if packet not in data_list:
                 data_list.append(packet)
-            packet_text = ''.join(data_list)
-            print(f"packet = {packet_text}")
-            if (packet_text[-1] == "\n"):
+            # print(f"packet = {packet_text}")
+            print(f"packet = {packet}\n")
+            if data_list[-1] == b"\n":
+                data_list.pop()
+                packet_text = ''.join(data_list)
                 packet_text = decrypt(packet_text.strip())
                 return packet_text
-
-
