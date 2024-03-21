@@ -9,7 +9,7 @@ in1 = 22
 in2 = 6
 turn = 13
 TRIGl = 12
-ECHOl = 16
+ECHOl = 19
 TRIGr = 23
 ECHOr = 24
 GPIO.setmode(GPIO.BCM)

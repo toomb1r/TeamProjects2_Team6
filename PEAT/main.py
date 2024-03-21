@@ -51,8 +51,8 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     # receive()
     while True:
-        print(f"left distance {left_dist()}")
-        print(f"right distance {right_dist()}")
+        left_dist()
+        right_dist()
         # var = receive().strip()
         # if var == "9":
         #     start()
