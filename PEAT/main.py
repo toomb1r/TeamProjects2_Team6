@@ -65,7 +65,11 @@ def main():
 
     while(True):
         var = receive().strip()
-        if var == "21":
+        if var == "11":
+            stop_dispense()
+        elif var == "12":
+            dispense_algae()
+        elif var == "21":
             change_dispense_speed(90)
         elif var =="22":
             change_dispense_speed(91)
