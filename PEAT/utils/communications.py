@@ -49,6 +49,19 @@ def decrypt(encrypted_msg):
     decoded_msg = decrypted_msg.decode('utf8')
     return decoded_msg
 
+def emergency_stop():
+    """
+    Takes in a boolean variable to return the opposite
+
+    Args:
+        stop (bool): variable to stop all functionality
+
+    Returns:
+        stop (bool): variable to stop all functionality
+    """
+    # Stop algaecide dispensing here
+    # Stop movement here
+
 def transmit(signal):
     """Transmits a signal using the transciever
     Converts a signal into bytes and transmits it 3 times (to ensure receipt)

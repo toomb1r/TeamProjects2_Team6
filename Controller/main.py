@@ -3,11 +3,29 @@ import board
 import busio
 import digitalio
 import RPi.GPIO as GPIO
+
 import signal
 import sys
+
 from time import sleep
 
 from utils.communications import *
+#from utils.actions import *
+
+stop = False
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(20,GPIO.OUT)
+GPIO.setup(21,GPIO.OUT)
+GPIO.setup(15,GPIO.IN)
+GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def emergency_stop(channel):
+    global stop
+    stop = not stop
+    print("stop")
+
+GPIO.add_event_detect(15, GPIO.FALLING, callback=emergency_stop, bouncetime=200)
 
 GPIO.setmode(GPIO.BCM)
 
@@ -59,6 +77,7 @@ def main():
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # sleep(1)
+        signal.signal(signal.SIGINT, signal_handler)
         received_sig = receive().strip()
         if (received_sig == "1"):
             trigger_IMMOBILIZED_LIGHT()
@@ -72,7 +91,6 @@ def main():
 
 
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    signal.signal(signal.SIGINT, signal_handler)
     # This only exists in unix
     # signal.pause()
 
