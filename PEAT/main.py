@@ -87,19 +87,22 @@ def main():
 
     Returns: None
     """
-    if not stop:
-        enc_msg = encrypt("this is encrypted")
-        dec_msg = decrypt(enc_msg)
+    enc_msg = encrypt("this is encrypted")
+    dec_msg = decrypt(enc_msg)
 
-        # enc_msg = encrypt("this is encrypted")
-        # dec_msg = decrypt(enc_msg)
-        signal.signal(signal.SIGINT, signal_handler)
+    # enc_msg = encrypt("this is encrypted")
+    # dec_msg = decrypt(enc_msg)
+    signal.signal(signal.SIGINT, signal_handler)
 
-        # receive()
-        while True:
-            if left_dist() < 30:
-                transmit("1")
-            sleep(5)
+    # receive()
+    while True:
+        var = receive().strip()
+        if var == "1":
+            emergency_stop()
+            stop = True
+        if not stop:
+            if var == "2":
+                # stuff
         #sleep(5)
 
         # transmit_and_receive()

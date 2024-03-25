@@ -49,7 +49,7 @@ def decrypt(encrypted_msg):
     decoded_msg = decrypted_msg.decode('utf8')
     return decoded_msg
 
-def emergency_stop(stop):
+def emergency_stop():
     """
     Takes in a boolean variable to return the opposite
 
@@ -59,7 +59,8 @@ def emergency_stop(stop):
     Returns:
         stop (bool): variable to stop all functionality
     """
-    return not stop
+    # Stop algaecide dispensing here
+    # Stop movement here
 
 def transmit(signal):
     """Transmits a signal using the transciever
