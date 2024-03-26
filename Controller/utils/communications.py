@@ -106,7 +106,7 @@ def transmit(signal):
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    num_sends = 0
+    #num_sends = 0
 
     data = encrypt(signal)
     # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
@@ -115,6 +115,7 @@ def transmit(signal):
     data_list.append(b"\n")
     print(data_list)
     for seg in data_list:
+        num_sends = 0
         while num_sends <= 2:
             # data = bytes(f"{signal}\r\n","utf-8")
             # rfm9x.send(data)
