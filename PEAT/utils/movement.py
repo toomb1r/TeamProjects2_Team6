@@ -30,7 +30,7 @@ def edgeOfPond(rorl):
         None
     """
     constant = 20
-    
+
 #     # If edge of pond detected
 #     if(GPIO.input(24)):
 
