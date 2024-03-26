@@ -110,7 +110,7 @@ def receive():
                 # print(data_list)
                 data_list.pop()
                 if not data_list:
-                    continue
+                    return
                 packet_text = b''.join(data_list)
                 print(f"here: {packet_text}")
                 packet_text = decrypt(packet_text.strip())
