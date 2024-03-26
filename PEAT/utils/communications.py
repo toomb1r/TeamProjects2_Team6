@@ -109,4 +109,5 @@ def receive():
                 data_list.pop()
                 packet_text = b''.join(data_list)
                 packet_text = decrypt(packet_text.strip())
+                print(packet_text)
                 return packet_text
