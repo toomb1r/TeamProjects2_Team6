@@ -107,6 +107,6 @@ def receive():
             print(f"packet = {packet}\n")
             if data_list[-1] == b"\n":
                 data_list.pop()
-                packet_text = ''.join(data_list)
+                packet_text = b''.join(data_list)
                 packet_text = decrypt(packet_text.strip())
                 return packet_text
