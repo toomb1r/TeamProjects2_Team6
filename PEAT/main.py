@@ -89,7 +89,8 @@ def main():
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
-    receive()
+    while True:
+        receive()
     # while True:
     #     if left_dist() < 30:
     #         transmit("1")
