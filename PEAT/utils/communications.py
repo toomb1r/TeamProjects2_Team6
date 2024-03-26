@@ -109,6 +109,6 @@ def receive():
                 print("here")
                 data_list.pop()
                 packet_text = b''.join(data_list)
-                packet_text = decrypt(packet_text.strip())
+                packet_text = decrypt(packet_text)
                 print(packet_text)
                 return packet_text
