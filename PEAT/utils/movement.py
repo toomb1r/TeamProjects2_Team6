@@ -5,12 +5,6 @@ from gps3 import gps3
 
 random.seed()
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT)
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(24, GPIO.IN)
-
 def turning(direction):
     """Turns the rudder of PEAT to allow for turning
     Takes the direction from the input and moves the servo motor to there
@@ -37,53 +31,52 @@ def edgeOfPond(rorl):
         None
     """
     constant = 20
-    
-    # If edge of pond detected
-    if(GPIO.input(24)):
 
-        # Stop all movement and turn the correct direction
-        GPIO.output(20, GPIO.LOW)
-        GPIO.output(21, GPIO.LOW)
-        if(rorl):
-            turning(90)
-        else:
-            turning(-90)
+#     # If edge of pond detected
+#     if(GPIO.input(24)):
 
-        # Move for a constant time
-        GPIO.output(20, GPIO.HIGH)
-        GPIO.output(21, GPIO.LOW)
-        sleep(constant)
+#         # Stop all movement and turn the correct direction
+#         GPIO.output(20, GPIO.LOW)
+#         GPIO.output(21, GPIO.LOW)
+#         if(rorl):
+#             turning(90)
+#         else:
+#             turning(-90)
 
-        # Stop all movement and turn the correct direction
-        GPIO.output(20, GPIO.LOW)
-        GPIO.output(21, GPIO.LOW)
-        if(rorl):
-            turning(90)
-        else:
-            turning(-90)
+#         # Move for a constant time
+#         GPIO.output(20, GPIO.HIGH)
+#         GPIO.output(21, GPIO.LOW)
+#         sleep(constant)
 
-        # Change the turning direction unless the edge of pond is still in front of PEAT
-        rorl = not rorl
-        if(GPIO.input(24)):
-            rorl = not rorl
+#         # Stop all movement and turn the correct direction
+#         GPIO.output(20, GPIO.LOW)
+#         GPIO.output(21, GPIO.LOW)
+#         if(rorl):
+#             turning(90)
+#         else:
+#             turning(-90)
 
-        # Check if the edge of pond is still in front of PEAT
-        edgeOfPond()
+#         # Change the turning direction unless the edge of pond is still in front of PEAT
+#         rorl = not rorl
+#         if(GPIO.input(24)):
+#             rorl = not rorl
 
-def move():
-    """Begins the movement of the rudder of PEAT
-    Selects a random direction and moves there
+#         # Check if the edge of pond is still in front of PEAT
+#         edgeOfPond()
 
-    Args:
-        None
+# def move():
+#     """Begins the movement of the rudder of PEAT
+#     Selects a random direction and moves there
 
-    Returns:
-        None
-    """
-    turning(random.randrange(-90, 90))
-    GPIO.output(20, GPIO.HIGH)
-    GPIO.output(21, GPIO.LOW)
+#     Args:
+#         None
 
-# Im pretty sure this is needed although I need to figure out how to add it in
-# GPIO.cleanup()
+#     Returns:
+#         None
+#     """
+#     turning(random.randrange(-90, 90))
+#     GPIO.output(20, GPIO.HIGH)
+#     GPIO.output(21, GPIO.LOW)
 
+# # Im pretty sure this is needed although I need to figure out how to add it in
+# # GPIO.cleanup()
