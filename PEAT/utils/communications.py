@@ -114,4 +114,4 @@ def receive():
                 packet_text = decrypt(packet_text.strip())
                 print(packet_text)
                 return packet_text
-            sleep(1.5)
+            #sleep(1.5)
