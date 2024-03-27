@@ -28,7 +28,7 @@ movepwm.start(25)
 turnpwm.start(0)
 
 #turnpwm.ChangeDutyCycle(5)
-movepwm.ChangeDutyCycle(75)
+movepwm.ChangeDutyCycle(100)
 
 # This code probably should be in the main method although this will probably be run first so it doesnt matter?
 # Consult with team
