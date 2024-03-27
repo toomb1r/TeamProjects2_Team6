@@ -111,7 +111,7 @@ def transmit(signal):
 
     data = encrypt(signal)
     # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
-    data_list = [(data[i:i+200]) for i in range(0, len(data), 200)]
+    data_list = [(data[i:i+150]) for i in range(0, len(data), 150)]
     data_list.append(b"\n")
     for seg in data_list:
         num_sends = 0
