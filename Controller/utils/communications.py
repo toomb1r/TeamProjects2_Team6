@@ -115,6 +115,7 @@ def transmit(signal):
     data_list.append(b"\n")
     for seg in data_list:
         num_sends = 0
+        print(f"{seg}\n")
         while num_sends <= 5:
             rfm9x.send(seg)
             num_sends+=1
