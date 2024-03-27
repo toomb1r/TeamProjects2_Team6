@@ -285,7 +285,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
             cur_setting += 1
         else:
             cur_setting_sig = cur_setting + 20
-            transmit(cur_setting_sig)
+            transmit(str(cur_setting_sig))
             break
 
 GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=200)
