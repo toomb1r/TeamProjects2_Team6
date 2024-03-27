@@ -160,7 +160,7 @@ def trigger_IMMOBILIZED_LIGHT():
     else:
         GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
-def trigger_OUT_OF_ALGAECIDE_LIGHT():
+def trigger_OUT_OF_ALGAECIDE_LIGHT(onoff):
     """Triggers light signaling out of algaecide status
     Turns the out of algaecide light on if it is off.
     Turns the out of algaecide light off if it is on.
@@ -172,7 +172,7 @@ def trigger_OUT_OF_ALGAECIDE_LIGHT():
         None
     """
 
-    if GPIO.input(OUT_OF_ALGAECIDE_LIGHT):
+    if not onoff:
         GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
     else:
         GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
