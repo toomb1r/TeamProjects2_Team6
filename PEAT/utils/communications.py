@@ -51,10 +51,12 @@ def decrypt(encrypted_msg):
 
 def transmit(signal):
     """Transmits a signal using the transciever
-    Converts a signal into bytes and transmits it 3 times (to ensure receipt)
+    Encrypts a signal. Segments signal into 200 character packets.
+    Sends a newline character at the end to symbolize end of signal.
+    Transmits each packet 3 times (to ensure receipt).
 
     Args:
-        signal (Any): The signal to be sent
+        signal (str): The signal to be sent
 
     Returns:
         None
@@ -66,17 +68,22 @@ def transmit(signal):
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    num_sends = 0
 
-    while num_sends <= 2:
-        data = bytes(f"{signal}\r\n","utf-8")
-        rfm9x.send(data)
-        num_sends+=1
+    data = encrypt(signal)
+    # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
+    data_list = [(data[i:i+200]) for i in range(0, len(data), 200)]
+    data_list.append(b"\n")
+    for seg in data_list:
+        num_sends = 0
+        while num_sends <= 2:
+            rfm9x.send(seg)
+            num_sends+=1
 
 def receive():
     """Receives a signal using the transciever
-    Listens for a signal until one is recieved. Converts this signal into a string.
-    Returns this string signal to the calling method
+    Listens for a signal until one is received.
+    Joins all received packets until a packet with the newline character is received.
+    Decrypts this signal. Returns this string signal to the calling method
 
     Args:
         None
@@ -91,29 +98,18 @@ def receive():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    #prev_packet = None
 
     data_list = []
     while True:
         packet = rfm9x.receive()
-        if packet is None:
-            print("packet = None")
-        else:
-            print(f"this: {packet}")
-            #prev_packet = packet
-            # packet_text = str(prev_packet, "utf-8")
+        if packet is not None:
             if packet not in data_list:
                 data_list.append(packet)
-            # print(f"packet = {packet_text}")
-            # print(f"packet = {packet}\n")
             if data_list[-1] == b"\n":
-                # print(data_list)
                 data_list.pop()
                 if not data_list:
                     return
                 packet_text = b''.join(data_list)
-                print(f"here: {packet_text}")
                 packet_text = decrypt(packet_text.strip())
-                print(packet_text)
                 return packet_text
-            #sleep(1.5)
+
