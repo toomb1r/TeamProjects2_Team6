@@ -71,9 +71,9 @@ def main():
     # signal.pause()
     signal.signal(signal.SIGINT, signal_handler)
     # receive()
+    start()
     while True:
-        left_dist()
-        right_dist()
+        edgeOfPond()
         # var = receive().strip()
         # if var == "9":
         #     start()
