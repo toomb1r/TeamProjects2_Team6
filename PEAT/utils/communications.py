@@ -99,6 +99,7 @@ def receive():
         if packet is None:
             print("packet = None")
         else:
+            print(f"this: {packet}")
             #prev_packet = packet
             # packet_text = str(prev_packet, "utf-8")
             if packet not in data_list:
@@ -108,8 +109,11 @@ def receive():
             if data_list[-1] == b"\n":
                 # print(data_list)
                 data_list.pop()
+                if not data_list:
+                    return
                 packet_text = b''.join(data_list)
                 print(f"here: {packet_text}")
                 packet_text = decrypt(packet_text.strip())
                 print(packet_text)
                 return packet_text
+            #sleep(1.5)
