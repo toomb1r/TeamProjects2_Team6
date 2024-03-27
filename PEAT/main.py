@@ -90,7 +90,8 @@ def main():
     # dec_msg = decrypt(enc_msg)
 
     while True:
-        receive()
+        data = receive()
+        print(data)
     # while True:
     #     if left_dist() < 30:
     #         transmit("1")

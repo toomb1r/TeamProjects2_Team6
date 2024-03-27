@@ -102,7 +102,6 @@ def receive():
     data_list = []
     while True:
         packet = rfm9x.receive()
-        print(f"received packet: {packet}")
         if packet is not None:
             if packet not in data_list:
                 data_list.append(packet)
