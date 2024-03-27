@@ -110,13 +110,15 @@ def transmit(signal):
 
     data = encrypt(signal)
     # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
-    data_list = [(data[i:i+250]) for i in range(0, len(data), 250)]
+    data_list = [(data[i:i+200]) for i in range(0, len(data), 200)]
     # data_list[-1] = data_list[-1] + "\n"
     data_list.append(b"\n")
-    print(data_list)
+    #print(data_list)
     for seg in data_list:
         num_sends = 0
-        while num_sends <= 2:
+        print(f"{seg} Numsends: {num_sends}\n")
+        while num_sends <= 5:
+            # print("hi")
             # data = bytes(f"{signal}\r\n","utf-8")
             # rfm9x.send(data)
             rfm9x.send(seg)
@@ -285,12 +287,12 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
             cur_setting += 1
         else:
             cur_setting_sig = cur_setting + 20
-            transmit(cur_setting_sig)
+            transmit(str(cur_setting_sig))
             break
 
-GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=8000)
