@@ -222,9 +222,9 @@ def edgeOfPond():
     # consult Anmol about progress on the ultrasonic sensor code
     left = left_dist()
     right = right_dist()
-    if(left <= 30 and left > 5):
+    if(left <= 25 and left > 5):
         turn_left()
-    if(right <= 30 and right > 5):
+    if(right <= 25 and right > 5):
         turn_right()
         # Stop all movement and turn the correct direction
         # stop()
