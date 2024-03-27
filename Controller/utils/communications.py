@@ -117,6 +117,7 @@ def transmit(signal):
         num_sends = 0
         while num_sends <= 2:
             rfm9x.send(seg)
+            print(f"sent seg: {seg}")
             num_sends+=1
 
 def receive():
