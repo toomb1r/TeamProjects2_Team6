@@ -6,19 +6,15 @@ import signal
 import sys
 from gps3 import gps3
 
-from time import sleep, time
 import RPi.GPIO as GPIO
 
 from utils.communications import *
-from utils.movement import *
+from utils.bg_files.movement import *
 from utils.algaecide import *
 from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
-#turn = get_turn()
-#turnpwm = GPIO.PWM(turn,50)
-#turnpwm.start(0)
 def signal_handler(sig, frame):
     """
     Handles CTRL+C inputs
@@ -35,7 +31,6 @@ def signal_handler(sig, frame):
 
     Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
-    turnpwm.ChangeDutyCycle(5)
     GPIO.cleanup()
     sys.exit(0)
 
@@ -46,44 +41,20 @@ def main():
 
     Returns: None
     """
-
-    # enc_msg = encrypt("this is encrypted")
-    # dec_msg = decrypt(enc_msg)
-#sleep(5)
-
-    # transmit_and_receive()
-
-    # This is how to make an interrupt, this is commented out because idk how to get
-    # the string from what is being called in from the controller...
-    # GPIO.add_event_detect(9, GPIO.FALLING, callback=decrypt())
-
-    # This is to start the servo motor in the center of the 180 degrees
-    # To allow -90 and 90 degrees of motion
-    #turning(90)
-
-    #move()
-    #rorl = True
-    #dispense_algae()
-    #dispense_algae()
-    #change_dispense_speed(100)
-
-    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    # signal.pause()
     signal.signal(signal.SIGINT, signal_handler)
-    # receive()
-    #start()
+
     while True:
         var = receive().strip()
-        if var == "11":
-            if GPIO.input(get_auger_in1()):
-                stop_dispense()
-            else:
-                dispense_algae()
-        elif var == "9":
+        if var == "9":
             if GPIO.input(get_drive_in1()):
                 stop()
             else:
                 start()
+        elif var == "11":
+            if GPIO.input(get_auger_in1()):
+                stop_dispense()
+            else:
+                dispense_algae()
         elif var == "21":
             change_dispense_speed(90)
         elif var =="22":

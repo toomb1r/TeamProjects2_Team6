@@ -35,7 +35,7 @@ def signal_handler(sig, frame):
 
     Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
-    turnpwm.ChangeDutyCycle(5)
+    #turnpwm.ChangeDutyCycle(5)
     GPIO.cleanup()
     sys.exit(0)
 
