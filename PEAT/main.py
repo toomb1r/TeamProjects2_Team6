@@ -71,7 +71,7 @@ def main():
     # signal.pause()
     signal.signal(signal.SIGINT, signal_handler)
     # receive()
-    start()
+    #start()
     while True:
         edgeOfPond()
         # var = receive().strip()
