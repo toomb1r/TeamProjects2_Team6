@@ -48,8 +48,10 @@ def main():
         if var == "9":
             if GPIO.input(get_drive_in1()):
                 stop()
+                print("Stopped movement")
             else:
                 start()
+                print("Start movement")
         elif var == "11":
             if GPIO.input(get_auger_in1()):
                 stop_dispense()
