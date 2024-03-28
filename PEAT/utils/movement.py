@@ -93,7 +93,7 @@ def right_dist():
 
     GPIO.output(TRIGr, False)
     #print("Waiting For Sensor To Settle")
-    sleep(2)
+    sleep(0.5)
 
     GPIO.output(TRIGr, True)
     sleep(0.00001)
@@ -223,9 +223,9 @@ def edgeOfPond():
     if GPIO.input(in1):
         print("not stopped")
         left = left_dist()
-        right = right_dist()
         if(left <= 25 and left > 5):
             turn_left()
+        right = right_dist()
         if(right <= 25 and right > 5):
             turn_right()
         # Stop all movement and turn the correct direction
