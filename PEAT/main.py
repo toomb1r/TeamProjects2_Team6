@@ -61,10 +61,10 @@ def main():
         if var == "13":
             if GPIO.input(get_drive_in1()):
                 stop()
-                stop_dispense()
+                # stop_dispense()
             else:
                 start()
-                dispense_algae()
+                # dispense_algae()
             stopped = not stopped
         if not stopped:
             if var == "9":
