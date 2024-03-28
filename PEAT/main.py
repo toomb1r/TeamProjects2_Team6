@@ -74,6 +74,7 @@ def main():
     #start()
     while True:
         edgeOfPond()
+        detect_out()
         # var = receive().strip()
         # if var == "9":
         #     start()
