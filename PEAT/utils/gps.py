@@ -1,4 +1,6 @@
 '''
+check last three values. figure out the difference between max and min if less then 6 meters 
+
 GPS Interfacing with Raspberry Pi using Pyhton
 http://www.electronicwings.com
 '''
@@ -6,11 +8,12 @@ import serial               #import serial pacakge
 from time import sleep
 import webbrowser           #import package for opening link in browser
 import sys                  #import system package
+import math
 
 def GPS_Info():
-    global NMEA_buff
-    global lat_in_degrees
-    global long_in_degrees
+    global NMEA_buff 
+    # global lat_in_degrees # wtf change this probs
+    # global long_in_degrees
     nmea_time = []
     nmea_latitude = []
     nmea_longitude = []
@@ -22,11 +25,11 @@ def GPS_Info():
     print ("NMEA Latitude:", nmea_latitude,"NMEA Longitude:", nmea_longitude,'\n')
     
     lat = float(nmea_latitude)                  #convert string into float for calculation
-    longi = float(nmea_longitude)               #convertr string into float for calculation
+    longi = float(nmea_longitude)               #convert string into float for calculation
     
     lat_in_degrees = convert_to_degrees(lat)    #get latitude in degree decimal format
     long_in_degrees = convert_to_degrees(longi) #get longitude in degree decimal format
-    return lat_in_degrees, long_in_degrees
+    return lat_in_degrees, long_in_degrees, lat, longi
     
 #convert raw NMEA string into degree decimal format   
 def convert_to_degrees(raw_value):
@@ -55,7 +58,7 @@ try:
         if (GPGGA_data_available>0):
             GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string 
             NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
-            GPS_Info()                                          #get time, latitude, longitude
+            lat_in_degrees, long_in_degrees, lat, longi = GPS_Info()                                          #get time, latitude, longitude
  
             print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
             map_link = 'http://maps.google.com/?q=' + lat_in_degrees + ',' + long_in_degrees    #create link to plot location on Google map
@@ -66,6 +69,17 @@ except KeyboardInterrupt:
     webbrowser.open(map_link)        #open current position information in google map
     sys.exit(0)
 
+
+
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 6378.137  # Radius of earth in KM
+    dLat = math.radians(lat2 - lat1)
+    dLon = math.radians(lon2 - lon1)
+    a = math.sin(dLat / 2) * math.sin(dLat / 2) + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dLon / 2) * math.sin(dLon / 2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    d = R * c
+    return d * 1000  # meters
 
 def save_gps_data():
     """Gets coordinates at the time of function call.
