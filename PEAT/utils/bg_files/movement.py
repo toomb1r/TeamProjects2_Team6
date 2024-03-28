@@ -28,8 +28,8 @@ movepwm.start(25)
 movepwm.ChangeDutyCycle(100)
 
 #REMOVE THIS
-GPIO.output(in1,GPIO.LOW)
-GPIO.output(in2,GPIO.LOW)
+# GPIO.output(in1,GPIO.LOW)
+# GPIO.output(in2,GPIO.LOW)
 
 def stop():
     """
