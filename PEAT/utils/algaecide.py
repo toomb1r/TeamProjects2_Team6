@@ -26,7 +26,7 @@ dispenserpwm=GPIO.PWM(dispenser_en,1000)
 augerpwm.start(25)
 dispenserpwm.start(25)
 
-augerpwm.ChangeDutyCycle(75)
+augerpwm.ChangeDutyCycle(100)
 dispenserpwm.ChangeDutyCycle(75)
 
 def ultson_algae():

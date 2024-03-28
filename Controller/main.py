@@ -45,6 +45,10 @@ def main():
     # receive()
 
     #transmit_and_receive()
+    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    signal.signal(signal.SIGINT, signal_handler)
+    # This only exists in unix
+    # signal.pause()
 
     while True:
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
@@ -72,12 +76,6 @@ def main():
         # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
-
-
-    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    signal.signal(signal.SIGINT, signal_handler)
-    # This only exists in unix
-    # signal.pause()
 
 if __name__ == "__main__":
     main()
