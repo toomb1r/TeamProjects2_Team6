@@ -35,8 +35,6 @@ movepwm.ChangeDutyCycle(100)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
-stopped = True
-
 def left_dist():
     """
     Returns distance of left ultrasonic sensor
@@ -128,8 +126,6 @@ def stop():
     Returns:
         None
     """
-    global stopped
-    stopped = True
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
@@ -145,8 +141,6 @@ def start():
     Returns:
         None
     """
-    global stopped
-    stopped = False
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
@@ -226,9 +220,7 @@ def edgeOfPond():
 
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
-    global stopped
-    print(stopped)
-    if not stopped:
+    if GPIO.input(in1):
         print("not stopped")
         left = left_dist()
         right = right_dist()
