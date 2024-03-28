@@ -58,7 +58,7 @@ def main():
     stopped = False
     while True:
         var = receive().strip()
-        if var == "1":
+        if var == "13":
             emergency_stop()
             stopped = not stopped
         if not stopped:
