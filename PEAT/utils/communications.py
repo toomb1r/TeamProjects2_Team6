@@ -61,6 +61,7 @@ def emergency_stop():
     """
     # Stop algaecide dispensing here
     # Stop movement here
+    
 
 def transmit(signal):
     """Transmits a signal using the transciever

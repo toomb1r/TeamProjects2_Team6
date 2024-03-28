@@ -59,7 +59,12 @@ def main():
     while True:
         var = receive().strip()
         if var == "13":
-            emergency_stop()
+            if GPIO.input(get_drive_in1()):
+                stop()
+                stop_dispense()
+            else:
+                start()
+                dispense_algae()
             stopped = not stopped
         if not stopped:
             if var == "9":
