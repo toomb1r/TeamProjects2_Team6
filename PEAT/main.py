@@ -53,7 +53,7 @@ def main():
     # dec_msg = decrypt(enc_msg)
 
     signal.signal(signal.SIGINT, signal_handler)
-
+    stop_dispense()
     # receive()
     stopped = False
     while True:
