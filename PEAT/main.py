@@ -7,60 +7,18 @@ import sys
 from gps3 import gps3
 
 from time import sleep, time
+import RPi.GPIO as GPIO
 
 from utils.communications import *
-# from utils.movement import *
-
-stop = False
-
-TRIGl = 12
-GPIO.setup(TRIGl, GPIO.OUT)
-
-ECHOl = 16
-GPIO.setup(ECHOl, GPIO.IN)
-
-
-def left_dist():
-    """
-    Returns distance of left ultrasonic sensor
-
-    Measures the distance in front of the left ultrasonic sensor
-    returns the distance in the form of cms
-
-    Args:
-        None
-    Returns:
-        distance (int): Distance in front of ultrasonic sensor in cm
-    """
-    distance = 0
-
-    #print("Distance Measurement In Progress")
-
-    GPIO.output(TRIGl, False)
-    #print("Waiting For Sensor To Settle")
-    sleep(2)
-
-    GPIO.output(TRIGl, True)
-    sleep(0.00001)
-    GPIO.output(TRIGl, False)
-
-    while GPIO.input(ECHOl) == 0:
-        pulse_start = time()
-        #print("stuck in start")
-
-    while GPIO.input(ECHOl) == 1:
-        pulse_end = time()
-        #print("stuck in end")
-
-    pulse_duration = pulse_end - pulse_start
-    distance = pulse_duration * 17150 # speed of sound in air
-    # distance = pulse_duration * 75000 # speed of sound in water
-    distance = round(distance, 2)
-    print(f"Distance: {distance} cm")
-    return distance
+from utils.movement import *
+from utils.algaecide import *
+from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
+#turn = get_turn()
+#turnpwm = GPIO.PWM(turn,50)
+#turnpwm.start(0)
 def signal_handler(sig, frame):
     """
     Handles CTRL+C inputs
@@ -77,6 +35,7 @@ def signal_handler(sig, frame):
 
     Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
+    #turnpwm.ChangeDutyCycle(5)
     GPIO.cleanup()
     sys.exit(0)
 
@@ -92,18 +51,24 @@ def main():
 
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
+
     signal.signal(signal.SIGINT, signal_handler)
 
     # receive()
+    stopped = False
     while True:
         var = receive().strip()
         if var == "1":
             emergency_stop()
-            stop = True
-        if not stop:
-            if var == "2":
-                # stuff
+            stopped = not stopped
+        if not stopped:
+            if var == "9":
+                if GPIO.input(get_drive_in1()):
+                    stop()
+                else:
+                    start()
         #sleep(5)
+
 
         # transmit_and_receive()
 
@@ -111,10 +76,59 @@ def main():
         # the string from what is being called in from the controller...
         # GPIO.add_event_detect(9, GPIO.FALLING, callback=decrypt())
 
-        # This is to start the servo motor in the center of the 180 degrees
-        # To allow -90 and 90 degrees of motion
+    # This is to start the servo motor in the center of the 180 degrees
+    # To allow -90 and 90 degrees of motion
+    #turning(90)
 
-        # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    #move()
+    #rorl = True
+    #dispense_algae()
+    #dispense_algae()
+    #change_dispense_speed(100)
+
+    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    # signal.pause()
+
+        # var = receive().strip()
+        # if var == "9":
+        #     start()
+    #dispense_algae()
+    #while(True):
+    #    if detect_out():
+    #        transmit("3")
+    #    var = receive().strip()
+    #    if var == "11":
+    #        if GPIO.input(get_auger_in1()):
+    #            stop_dispense()
+    #        else:
+    #            dispense_algae()
+    #    elif var == "21":
+    #        change_dispense_speed(90)
+    #    elif var =="22":
+    #        change_dispense_speed(91)
+    #    elif var == "23":
+    #        change_dispense_speed(92)
+    #    elif var == "24":
+    #        change_dispense_speed(93)
+    #    elif var == "25":
+    #        change_dispense_speed(94)
+    #    elif var == "26":
+    #        change_dispense_speed(95)
+    #    elif var == "27":
+    #        change_dispense_speed(96)
+    #    elif var == "28":
+    #        change_dispense_speed(97)
+    #    elif var == "29":
+    #        change_dispense_speed(98)
+    #    elif var == "30":
+    #        change_dispense_speed(99)
+    #    sleep(1.5)
+        #print("enter new speed")
+        #speed = int(input())
+        #change_dispense_speed(speed)
+        # detect_out()
+        #edgeOfPond(rorl)
+        #move()
 
 if __name__ == "__main__":
     main()

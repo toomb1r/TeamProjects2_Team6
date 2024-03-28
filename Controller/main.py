@@ -63,6 +63,10 @@ def main():
     # receive()
 
     #transmit_and_receive()
+    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
+    signal.signal(signal.SIGINT, signal_handler)
+    # This only exists in unix
+    # signal.pause()
 
     while True:
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
@@ -83,16 +87,14 @@ def main():
             trigger_IMMOBILIZED_LIGHT()
             print("triggered immobilized light")
         elif (received_sig == "3"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT()
+            trigger_OUT_OF_ALGAECIDE_LIGHT(True)
             print("triggered out of algaecide light")
+        elif (received_sig == "4"):
+            trigger_OUT_OF_ALGAECIDE_LIGHT(False)
+            print("Turned algaecide light off")
         # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
-
-
-    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    # This only exists in unix
-    # signal.pause()
 
 if __name__ == "__main__":
     main()

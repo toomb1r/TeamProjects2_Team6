@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
 
 algae_trig = 2
 algae_echo = 3
