@@ -22,6 +22,15 @@ GPIO.setup(ECHOl, GPIO.IN)
 GPIO.setup(TRIGr, GPIO.OUT)
 GPIO.setup(ECHOr, GPIO.IN)
 
+movepwm=GPIO.PWM(en,1000)
+movepwm.start(25)
+
+movepwm.ChangeDutyCycle(100)
+
+#REMOVE THIS
+GPIO.output(in1,GPIO.LOW)
+GPIO.output(in2,GPIO.LOW)
+
 def stop():
     """
     Ceases motion for the movement motors
