@@ -59,16 +59,21 @@ def main():
     while True:
         var = receive().strip()
         if var == "13":
-            if GPIO.input(get_drive_in1()):
+            if GPIO.input(get_drive_in1()) or GPIO.input(get_auger_in1()):
                 stop()
-                # stop_dispense()
+                stop_dispense()
             else:
                 start()
-                # dispense_algae()
+                dispense_algae()
             stopped = not stopped
         if not stopped:
             if var == "9":
                 if GPIO.input(get_drive_in1()):
+                    stop()
+                else:
+                    start()
+            if var == "11":
+                if GPIO.input(get_auger_in1()):
                     stop()
                 else:
                     start()
