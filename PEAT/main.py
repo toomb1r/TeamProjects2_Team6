@@ -77,7 +77,7 @@ def main():
         lat1, lon1 = get_location()
         lat2, lon2 = get_location()
         meters = convert_to_meters(lat1, lat2, lon1, lon2)
-        print(f"meters different {meters} \n\n\n")
+        print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
         # var = receive().strip()
         # if var == "9":
         #     start()
