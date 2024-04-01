@@ -72,8 +72,12 @@ def main():
 
     while True:
         start_time = time()
+        print(f"starting transmit on controller. time = {time() - start_time}\n")
         transmit_state(start_time)
+        print(f"finishing transmit on controller. time = {time() - start_time}\n")
+        print(f"starting receive on controller. time = {time() - start_time}\n")
         receive_state()
+        print(f"finishing receive on controller. time = {time() - start_time}\n")
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)

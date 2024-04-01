@@ -39,7 +39,7 @@ def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
-def receive_state(start_time):
+def receive_state():
     while True:
         received_sig = receive(120.0).strip()
         if (received_sig == "40"):
@@ -110,8 +110,13 @@ def main():
     #start()
     while True:
         start_time = time()
-        receive_state(start_time)
+        print(f"starting receive on PEAT. time = {time() - start_time}\n")
+        receive_state()
+        print(f"finishing receive on PEAT. time = {time() - start_time}\n")
+        print(f"starting transmit on PEAT. time = {time() - start_time}\n")
         transmit_state()
+        print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
+
         # var = receive().strip()
         # if var == "9":
         #     start()
