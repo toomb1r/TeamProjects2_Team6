@@ -47,20 +47,16 @@ def convert_to_degrees(raw_value):
     return position
 
 def convert_to_meters(lat1, lon1, lat2, lon2):
-    print(f"lat1: {lat1} lon1: {lon1} lat2: {lat2} lon2: {lon2} \n\n")
-    mLat1 = float(lat1) * 111.32
-    print(f"This is mLat1: {mLat1} \n\n")
-    mLat2 = float(lat2) * 111.32
-    print(f"This is mLat2: {mLat2} \n\n")
-    mLong1 = 40075 * math.cos(float(lat1)) / 360 * float(lon1)
-    print(f"This is mLong1: {mLong1} \n\n")
-    mLong2 = 40075 * math.cos(float(lat2)) / 360 * float(lon2)
-    print(f"This is mLong2: {mLong2} \n\n")
-    a = math.fabs(mLat1 - mLat2)
-    print(f"This is A: {a} \n\n")
-    b = math.fabs(mLong1 - mLong2)
-    print(f"This is B: {b} \n\n")
-    c = math.sqrt(math.pow(a,2)+math.pow(b,2))
+    midLat = float(lat1) +float(lat2) / 2
+    mLat = 111132.954 - 559.822 * math.cos( 2.0 * midLat ) + 1.175 * math.cos( 4.0 * midLat)
+    print(f"This is mLat: {mLat} \n\n")
+    mLon = (math.pi/180 ) * 6367449 * math.cos( midLat )
+    print(f"This is mLon: {mLon} \n\n")
+    dLat = math.fabs(float(lat1) - float(lat2))
+    print(f"This is dLat: {dLat} \n\n")
+    dLon = math.fabs(float(lon1) - float(lon2))
+    print(f"This is dLon: {dLon} \n\n")
+    c = math.sqrt(math.pow(dLat * mLat,2) + math.pow(dLon * mLon,2))
     print(f"This is C: {c} \n\n")
     return c * 1000
 
