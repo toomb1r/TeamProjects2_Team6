@@ -40,9 +40,32 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def receive_state(start_time):
-    pass
+    while True:
+        received_sig = receive(120.0).strip()
+        if (received_sig == "40"):
+            break
+    # while True:
+    #     received_sig = receive(40.0).strip()
+    #     if (received_sig == "1"):
+    #         trigger_IMMOBILIZED_LIGHT()
+    #         print("triggered immobilized light")
+    #     elif (received_sig == "3"):
+    #         trigger_OUT_OF_ALGAECIDE_LIGHT(True)
+    #         print("triggered out of algaecide light")
+    #     elif (received_sig == "4"):
+    #         trigger_OUT_OF_ALGAECIDE_LIGHT(False)
+    #         print("Turned algaecide light off")
 
-def transmit_state(start_time):
+    #     traversed_time = time() - start_time
+    #     if (traversed_time > 40.0):
+    #         break
+
+
+def transmit_state():
+    # 1: has algaecide and is moving
+    # 2: has algaecide and is not moving
+    # 3: has no algaecide and is moving
+    # 4: has no algaecide and is not moving
     edgeOfPond()
     if detect_out():
         transmit("3")
@@ -88,8 +111,7 @@ def main():
     while True:
         start_time = time()
         receive_state(start_time)
-        start_time = time()
-        transmit_state(start_time)
+        transmit_state()
         # var = receive().strip()
         # if var == "9":
         #     start()
@@ -133,3 +155,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# controller in transmit state for 120 s                                            PEAT in receive state for 120 s
+# 1. controller transmits signal 40 at end and switches to receive                  2. PEAT receives signal 40 at end and switches to transmit
+# 2. controller receives what it needs to and switches from receive to transmit     1. PEAT transmits what it needs to and switches from transmit to receive
+# controller in transmit state for 120 s                                            PEAT in receive state for 120 s

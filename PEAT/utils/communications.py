@@ -79,7 +79,7 @@ def transmit(signal):
             rfm9x.send(seg)
             num_sends+=1
 
-def receive():
+def receive(timeout):
     """Receives a signal using the transciever
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
@@ -101,7 +101,7 @@ def receive():
 
     data_list = []
     while True:
-        packet = rfm9x.receive()
+        packet = rfm9x.receive(timeout=timeout)
         print(f"received packet: {packet}")
         if packet is not None:
             if packet not in data_list:
