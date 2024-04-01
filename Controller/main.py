@@ -47,6 +47,7 @@ def main():
     #transmit_and_receive()
 
     while True:
+        pass
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
         # sleep(1)
@@ -59,16 +60,16 @@ def main():
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # sleep(1)
-        received_sig = receive().strip()
-        if (received_sig == "1"):
-            trigger_IMMOBILIZED_LIGHT()
-            print("triggered immobilized light")
-        elif (received_sig == "3"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-            print("triggered out of algaecide light")
-        elif (received_sig == "4"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-            print("Turned algaecide light off")
+        #received_sig = receive().strip()
+        #if (received_sig == "1"):
+        #    trigger_IMMOBILIZED_LIGHT()
+        #    print("triggered immobilized light")
+        #elif (received_sig == "3"):
+        #    trigger_OUT_OF_ALGAECIDE_LIGHT(True)
+        #    print("triggered out of algaecide light")
+        #elif (received_sig == "4"):
+        #    trigger_OUT_OF_ALGAECIDE_LIGHT(False)
+        #    print("Turned algaecide light off")
         # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
