@@ -50,7 +50,7 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
     R = 6378.137
     dLat = float(lat2) * math.pi / 180 - float(lat1) * math.pi / 180
     dLon = float(lon2) * math.pi / 180 - float(lon1) * math.pi / 180
-    a = math.sin(dLat/2) * math.sin(dLat/2) + math.cos(lat1 * math.pi / 180) * math.cos(lat2 * math.pi / 180) * math.sin(dLon/2) * math.sin(dLon/2)
+    a = math.sin(dLat/2) * math.sin(dLat/2) + math.cos(float(lat1) * math.pi / 180) * math.cos(float(lat2) * math.pi / 180) * math.sin(dLon/2) * math.sin(dLon/2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
     d = R * c
     return d * 1000
