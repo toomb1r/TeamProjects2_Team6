@@ -49,8 +49,8 @@ def convert_to_degrees(raw_value):
 def convert_to_meters(lat1, lon1, lat2, lon2):
     mLat1 = float(lat1) * 111.32
     mLat2 = float(lat2) * 111.32
-    mLong1 = 40075 * math.cos(float(lat1)) / 360
-    mLong2 = 40075 * math.cos(float(lat2)) / 360
+    mLong1 = 40075 * math.cos(float(lat1)) / 360 * lon1
+    mLong2 = 40075 * math.cos(float(lat2)) / 360 * lon2
     a = math.fabs(mLat1 - mLat2)
     b = math.fabs(mLong1 - mLong2)
     c = math.sqrt(math.pow(a,2)+math.pow(b,2))
