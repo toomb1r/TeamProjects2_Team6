@@ -47,13 +47,21 @@ def convert_to_degrees(raw_value):
     return position
 
 def convert_to_meters(lat1, lon1, lat2, lon2):
+    print(f"lat1: {lat1} lon1: {lon1} lat2: {lat2} lon2: {lon2} \n\n")
     mLat1 = float(lat1) * 111.32
+    print(f"This is mLat1: {mLat1} \n\n")
     mLat2 = float(lat2) * 111.32
+    print(f"This is mLat2: {mLat2} \n\n")
     mLong1 = 40075 * math.cos(float(lat1)) / 360 * float(lon1)
+    print(f"This is mLong1: {mLong1} \n\n")
     mLong2 = 40075 * math.cos(float(lat2)) / 360 * float(lon2)
+    print(f"This is mLong2: {mLong2} \n\n")
     a = math.fabs(mLat1 - mLat2)
+    print(f"This is A: {a} \n\n")
     b = math.fabs(mLong1 - mLong2)
+    print(f"This is B: {b} \n\n")
     c = math.sqrt(math.pow(a,2)+math.pow(b,2))
+    print(f"This is C: {c} \n\n")
     return c * 1000
 
 def get_location():
