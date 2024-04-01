@@ -39,6 +39,16 @@ def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
+def receive_state(start_time):
+    pass
+
+def transmit_state(start_time):
+    edgeOfPond()
+    if detect_out():
+        transmit("3")
+    else:
+        transmit("4")
+
 def main():
     """Executes the main functionality of PEAT
 
@@ -73,11 +83,10 @@ def main():
     # receive()
     #start()
     while True:
-        edgeOfPond()
-        if detect_out():
-            transmit("3")
-        else:
-            transmit("4")
+        start_time = time()
+        receive_state(start_time)
+        start_time = time()
+        transmit_state(start_time)
         # var = receive().strip()
         # if var == "9":
         #     start()

@@ -5,7 +5,7 @@ import digitalio
 import RPi.GPIO as GPIO
 import signal
 import sys
-from time import sleep
+from time import sleep, time
 
 from utils.communications import *
 
@@ -30,6 +30,29 @@ def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
+def receive_state(start_time):
+    while True:
+        received_sig = receive().strip()
+        if (received_sig == "1"):
+            trigger_IMMOBILIZED_LIGHT()
+            print("triggered immobilized light")
+        elif (received_sig == "3"):
+            trigger_OUT_OF_ALGAECIDE_LIGHT(True)
+            print("triggered out of algaecide light")
+        elif (received_sig == "4"):
+            trigger_OUT_OF_ALGAECIDE_LIGHT(False)
+            print("Turned algaecide light off")
+
+        traversed_time = time() - start_time
+        if (traversed_time > 40):
+            break
+
+def transmit_state(start_time):
+    while True:
+        traversed_time = time() - start_time
+        if (traversed_time > 120):
+            break
+
 def main():
     """Executes the main functionality of the Controller
 
@@ -51,6 +74,10 @@ def main():
     # signal.pause()
 
     while True:
+        start_time = time()
+        transmit_state(start_time)
+        start_time = time()
+        receive_state(start_time)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
         # sleep(1)
@@ -63,16 +90,7 @@ def main():
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # sleep(1)
-        received_sig = receive().strip()
-        if (received_sig == "1"):
-            trigger_IMMOBILIZED_LIGHT()
-            print("triggered immobilized light")
-        elif (received_sig == "3"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-            print("triggered out of algaecide light")
-        elif (received_sig == "4"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-            print("Turned algaecide light off")
+        
         # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
