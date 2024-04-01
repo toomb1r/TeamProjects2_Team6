@@ -8,6 +8,15 @@ import webbrowser           #import package for opening link in browser
 import sys                  #import system package
 import math
 
+gpgga_info = "$GPGGA,"
+# print("GPGGA")
+ser = serial.Serial ("/dev/ttyAMA0")              #Open port with baud rate
+# print("Serial")
+GPGGA_buffer = 0
+NMEA_buff = 0
+lat_in_degrees = 0
+long_in_degrees = 0
+
 def GPS_Info():
     global NMEA_buff
     global lat_in_degrees
@@ -47,14 +56,12 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
     return d * 1000
 
 def get_location():
-    gpgga_info = "$GPGGA,"
-    print("GPGGA")
-    ser = serial.Serial ("/dev/ttyAMA0")              #Open port with baud rate
-    print("Serial")
-    GPGGA_buffer = 0
-    NMEA_buff = 0
-    lat_in_degrees = 0
-    long_in_degrees = 0
+    global GPGGA_buffer
+    global ser
+    global NMEA_buff
+    global lat_in_degrees
+    global long_in_degrees
+    global gpgga_info
     print("before try")
     try:
         while True:
