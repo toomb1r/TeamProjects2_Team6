@@ -12,6 +12,7 @@ import RPi.GPIO as GPIO
 from utils.communications import *
 from utils.movement import *
 from utils.algaecide import *
+from utils.gps_test import *
 #from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
@@ -73,11 +74,9 @@ def main():
     # receive()
     #start()
     while True:
-        edgeOfPond()
-        if detect_out():
-            transmit("3")
-        else:
-            transmit("4")
+        lat1, lon1 = get_location()
+        lat2, lon2 = get_location()
+        meters = convert_to_meters()
         # var = receive().strip()
         # if var == "9":
         #     start()
