@@ -7,14 +7,18 @@ import sys
 from gps3 import gps3
 
 from time import sleep, time
+import RPi.GPIO as GPIO
 
 from utils.communications import *
-#from utils.movement import *
+from utils.movement import *
 from utils.algaecide import *
-from utils.pins import *
+#from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
+#turn = get_turn()
+#turnpwm = GPIO.PWM(turn,50)
+#turnpwm.start(0)
 def signal_handler(sig, frame):
     """
     Handles CTRL+C inputs
@@ -31,6 +35,7 @@ def signal_handler(sig, frame):
 
     Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
+    #turnpwm.ChangeDutyCycle(5)
     GPIO.cleanup()
     sys.exit(0)
 
@@ -42,7 +47,9 @@ def main():
     Returns: None
     """
 
-    #sleep(5)
+    # enc_msg = encrypt("this is encrypted")
+    # dec_msg = decrypt(enc_msg)
+#sleep(5)
 
     # transmit_and_receive()
 
@@ -61,12 +68,23 @@ def main():
     #change_dispense_speed(100)
 
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    signal.signal(signal.SIGINT, signal_handler)
     # signal.pause()
-    #dispense_algae()
-    while(True):
+    signal.signal(signal.SIGINT, signal_handler)
+    # receive()
+    #start()
+    while True:
+        edgeOfPond()
         if detect_out():
             transmit("3")
+        else:
+            transmit("4")
+        # var = receive().strip()
+        # if var == "9":
+        #     start()
+    #dispense_algae()
+    #while(True):
+    #    if detect_out():
+    #        transmit("3")
     #    var = receive().strip()
     #    if var == "11":
     #        if GPIO.input(get_auger_in1()):
