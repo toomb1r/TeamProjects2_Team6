@@ -50,7 +50,7 @@ def main():
 
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
-#sleep(5)
+#slee
 
     # transmit_and_receive()
 
@@ -76,7 +76,7 @@ def main():
     while True:
         lat1, lon1 = get_location()
         lat2, lon2 = get_location()
-        meters = convert_to_meters()
+        meters = convert_to_meters(lat1, lat2, lon1, lon2)
         # var = receive().strip()
         # if var == "9":
         #     start()
