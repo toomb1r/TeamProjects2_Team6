@@ -42,35 +42,30 @@ def convert_to_degrees(raw_value):
     
 
 
-gpgga_info = "$GPGGA,"
-ser = serial.Serial ("/dev/ttyS0")              #Open port with baud rate
-GPGGA_buffer = 0
-NMEA_buff = 0
-lat_in_degrees = 0
-long_in_degrees = 0
-
-try:
-    print("Hello")
-    while True:
-        received_data = (str)(ser.readline())                   #read NMEA string received
-        print(received_data)
-        GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string                 
-        if (GPGGA_data_available>0):
-            GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string 
-            NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
-            lat_in_degrees, long_in_degrees, lat, longi = GPS_Info()                                          #get time, latitude, longitude
- 
-            print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
-            map_link = 'http://maps.google.com/?q=' + lat_in_degrees + ',' + long_in_degrees    #create link to plot location on Google map
-            print("<<<<<<<<press ctrl+c to plot location on google maps>>>>>>\n")               #press ctrl+c to plot on map and exit 
-            print("------------------------------------------------------------\n")
-                        
-except KeyboardInterrupt:
-    webbrowser.open(map_link)        #open current position information in google map
-    sys.exit(0)
 
 
+def gps_init():
+    """
+    """
+    gpgga_info = "$GPGGA,"
+    ser = serial.Serial ("/dev/ttyS0")   #Open port with baud rate
+    GPGGA_buffer = 0
+    NMEA_buff = 0
+    lat_in_degrees = 0 # delete this one?
+    long_in_degrees = 0 # deleter this one?
+    try:
+        print("Hello")
+        while True:
+            ping_gps_location(ser, gpgga_info)
 
+def ping_gps_location(ser, gpgga_info):
+    received_data = (str)(ser.readline())                   #read NMEA string received
+    print(received_data)
+    GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string                 
+    if (GPGGA_data_available>0):
+        GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string 
+        NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
+        lat_in_degrees, long_in_degrees, lat, longi = GPS_Info()  
 
 def calculate_distance(lat1, lon1, lat2, lon2):
     R = 6378.137  # Radius of earth in KM
@@ -83,8 +78,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
 def save_gps_data():
     """Gets coordinates at the time of function call.
-    Get GPS data from GPS3 socket. 
-    It then stores it in a Data stream. 
+
     After error checking it writes at time coordinates to a CSV file.
 
     Args: 
@@ -124,3 +118,14 @@ def save_gps_data():
                 sleep(1)
     finally:
         return csv_file_path
+    
+                           #get time, latitude, longitude
+ 
+            # print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
+            # map_link = 'http://maps.google.com/?q=' + lat_in_degrees + ',' + long_in_degrees    #create link to plot location on Google map
+            # print("<<<<<<<<press ctrl+c to plot location on google maps>>>>>>\n")               #press ctrl+c to plot on map and exit 
+            # print("------------------------------------------------------------\n")
+                        
+# except KeyboardInterrupt:
+#     webbrowser.open(map_link)        #open current position information in google map
+#     sys.exit(0)
