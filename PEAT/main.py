@@ -59,7 +59,8 @@ def main():
 
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
-#sleep(5)
+
+    #sleep(5)
 
     # transmit_and_receive()
 
@@ -69,6 +70,7 @@ def main():
 
     # This is to start the servo motor in the center of the 180 degrees
     # To allow -90 and 90 degrees of motion
+
     #turning(90)
 
     #move()
@@ -79,6 +81,7 @@ def main():
 
     # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
     # signal.pause()
+
     signal.signal(signal.SIGINT, signal_handler)
     # receive()
     #start()

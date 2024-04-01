@@ -78,6 +78,7 @@ def main():
         transmit_state(start_time)
         start_time = time()
         receive_state(start_time)
+
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
         # sleep(1)

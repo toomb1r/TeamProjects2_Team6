@@ -91,10 +91,12 @@ def decrypt(encrypted_msg):
 
 def transmit(signal):
     """Transmits a signal using the transciever
-    Converts a signal into bytes. Transmits this signal 3 times (to ensure receipt).
+    Encrypts a signal. Segments signal into 200 character packets.
+    Sends a newline character at the end to symbolize end of signal.
+    Transmits each packet 3 times (to ensure receipt).
 
     Args:
-        signal (Any): The signal to be sent
+        signal (str): The signal to be sent
 
     Returns:
         None
@@ -106,17 +108,23 @@ def transmit(signal):
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    num_sends = 0
 
-    while num_sends <= 2:
-        data = bytes(f"{signal}\r\n","utf-8")
-        rfm9x.send(data)
-        num_sends+=1
+    data = encrypt(signal)
+    # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
+    data_list = [(data[i:i+150]) for i in range(0, len(data), 150)]
+    data_list.append(b"\n")
+    for seg in data_list:
+        num_sends = 0
+        while num_sends <= 2:
+            rfm9x.send(seg)
+            print(f"sent seg: {seg}")
+            num_sends+=1
 
 def receive():
     """Receives a signal using the transciever
-    Listens for a signal until one is recieved. Converts this signal into a string.
-    Returns this string signal to the calling method
+    Listens for a signal until one is received.
+    Joins all received packets until a packet with the newline character is received.
+    Decrypts this signal. Returns this string signal to the calling method
 
     Args:
         None
@@ -131,17 +139,20 @@ def receive():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    prev_packet = None
 
+    data_list = []
     while True:
         packet = rfm9x.receive()
-        if packet is None:
-            print("packet = None")
-        else:
-            prev_packet = packet
-            packet_text = str(prev_packet, "utf-8")
-            print(f"packet = {packet_text}")
-            return packet_text
+        if packet is not None:
+            if packet not in data_list:
+                data_list.append(packet)
+            if data_list[-1] == b"\n":
+                data_list.pop()
+                if not data_list:
+                    return
+                packet_text = b''.join(data_list)
+                packet_text = decrypt(packet_text.strip())
+                return packet_text
 
 def trigger_IMMOBILIZED_LIGHT():
     """Triggers light signaling immobilized status
@@ -276,12 +287,12 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
             cur_setting += 1
         else:
             cur_setting_sig = cur_setting + 20
-            transmit(cur_setting_sig)
+            transmit(str(cur_setting_sig))
             break
 
-GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=200)
+GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=8000)
