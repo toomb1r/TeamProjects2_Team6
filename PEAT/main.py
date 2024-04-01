@@ -72,11 +72,32 @@ def main():
                     stop()
                 else:
                     start()
-            if var == "11":
+            elif var == "11":
                 if GPIO.input(get_auger_in1()):
-                    stop()
+                    stop_dispense()
                 else:
-                    start()
+                    dispense_algae()
+            elif var == "21":
+                change_dispense_speed(90)
+            elif var == "22":
+                change_dispense_speed(91)
+            elif var == "23":
+                change_dispense_speed(92)
+            elif var == "24":
+                change_dispense_speed(93)
+            elif var == "25":
+                change_dispense_speed(94)
+            elif var == "26":
+                change_dispense_speed(95)
+            elif var == "27":
+                change_dispense_speed(96)
+            elif var == "28":
+                change_dispense_speed(97)
+            elif var == "29":
+                change_dispense_speed(98)
+            elif var == "30":
+                change_dispense_speed(99)
+
         #sleep(5)
 
 
