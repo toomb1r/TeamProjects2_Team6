@@ -208,10 +208,9 @@ def receive(timeout):
             print(f"packet = {packet_text}")
             return packet_text
 
-def trigger_IMMOBILIZED_LIGHT():
-    """Triggers light signaling immobilized status
-    Turns the immobilized light on if it is off.
-    Turns the immobilized light off if it is on.
+def OUT_OF_ALGAECIDE_LIGHT_off():
+    """Turns light signaling out of algaecide status off
+    Turns the out of algaecide light off.
 
     Args:
         None
@@ -220,15 +219,12 @@ def trigger_IMMOBILIZED_LIGHT():
         None
     """
 
-    if GPIO.input(IMMOBILIZED_LIGHT):
-        GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
-    else:
-        GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
+    
+    GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
 
-def trigger_OUT_OF_ALGAECIDE_LIGHT(onoff):
-    """Triggers light signaling out of algaecide status
-    Turns the out of algaecide light on if it is off.
-    Turns the out of algaecide light off if it is on.
+def OUT_OF_ALGAECIDE_LIGHT_on():
+    """Turns light signaling out of algaecide status on
+    Turns the out of algaecide light on.
 
     Args:
         None
@@ -237,10 +233,35 @@ def trigger_OUT_OF_ALGAECIDE_LIGHT(onoff):
         None
     """
 
-    if not onoff:
-        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
-    else:
-        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
+    
+    GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
+
+def IMMOBILIZED_LIGHT_off():
+    """Turns light signaling immobilized status off
+    Turns the immobilized light off.
+
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
+
+def IMMOBILIZED_LIGHT_on():
+    """Turns light signaling immobilized status on
+    Turns the immobilized light on.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
 def SET_HOME_BUTTON_pressed_callback(channel):
     """Callback for the set home button

@@ -12,7 +12,7 @@ import RPi.GPIO as GPIO
 from utils.communications import *
 from utils.movement import *
 from utils.algaecide import *
-from utils.gps_test import *
+from PEAT.utils.gps import *
 #from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
@@ -62,16 +62,29 @@ def receive_state():
     #         break
 
 
-def transmit_state():
+def transmit_state(distances):
     # 1: has algaecide and is moving
     # 2: has algaecide and is not moving
     # 3: has no algaecide and is moving
     # 4: has no algaecide and is not moving
-    edgeOfPond()
-    if detect_out():
+
+    out_of_algaecide = detect_out()
+    distance = check_distances(distances)
+    immobilized = distance < 12
+    # edgeOfPond()
+    if not out_of_algaecide and not immobilized:
+        transmit("1")
+    elif not out_of_algaecide and immobilized:
+        transmit("2")
+    elif out_of_algaecide and not immobilized:
         transmit("3")
-    else:
+    elif out_of_algaecide and immobilized:
         transmit("4")
+
+    # if detect_out():
+    #     transmit("3")
+    # else:
+    #     transmit("4")
 
 def main():
     """Executes the main functionality of PEAT
@@ -110,21 +123,22 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
     start_time = time()
-    distances = []
+    distances = [[0, 0], [90, 90], [0, 0], [90, 90]]
     # receive()
     #start()
-    lat1, lon1 = get_location()
-    lat2, lon2 = get_location()
-    meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
-    print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
-    distances.append(meters)
+    # lat1, lon1 = get_location()
+    # lat2, lon2 = get_location()
+    # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+    # print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+    # distances.append(meters)
+
     while True:
         start_time = time()
         print(f"starting receive on PEAT. time = {time() - start_time}\n")
         receive_state()
         print(f"finishing receive on PEAT. time = {time() - start_time}\n")
         print(f"starting transmit on PEAT. time = {time() - start_time}\n")
-        transmit_state()
+        transmit_state(distances)
         print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
         #if time() - start_time == 60:
             #lat1, lon1 = get_location()

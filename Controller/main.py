@@ -31,17 +31,35 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def receive_state():
+    # 1: has algaecide and is moving
+    # 2: has algaecide and is not moving
+    # 3: has no algaecide and is moving
+    # 4: has no algaecide and is not moving
+
     # while True:
     received_sig = receive(40.0).strip()
-    if (received_sig == "1"):
-        trigger_IMMOBILIZED_LIGHT()
-        print("triggered immobilized light")
+    if received_sig == "1":
+        # trigger_IMMOBILIZED_LIGHT()
+        # print("triggered immobilized light")
+        OUT_OF_ALGAECIDE_LIGHT_off()
+        IMMOBILIZED_LIGHT_off()
+        print("out of algaecide: off\timmobilized: off\n")
+    elif received_sig == "2":
+        OUT_OF_ALGAECIDE_LIGHT_off()
+        IMMOBILIZED_LIGHT_on()
+        print("out of algaecide: off\timmobilized: on\n")
     elif (received_sig == "3"):
-        trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-        print("triggered out of algaecide light")
+        # trigger_OUT_OF_ALGAECIDE_LIGHT(True)
+        # print("triggered out of algaecide light")
+        OUT_OF_ALGAECIDE_LIGHT_on()
+        IMMOBILIZED_LIGHT_off()
+        print("out of algaecide: on\timmobilized: off\n")
     elif (received_sig == "4"):
-        trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-        print("Turned algaecide light off")
+        # trigger_OUT_OF_ALGAECIDE_LIGHT(False)
+        # print("Turned algaecide light off")
+        OUT_OF_ALGAECIDE_LIGHT_on()
+        IMMOBILIZED_LIGHT_on()
+        print("out of algaecide: on\timmobilized: on\n")
 
 def transmit_state(start_time):
     while True:
