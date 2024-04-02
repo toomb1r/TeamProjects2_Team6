@@ -12,6 +12,7 @@ import RPi.GPIO as GPIO
 from utils.communications import *
 from utils.movement import *
 from utils.algaecide import *
+from utils.gps_test import *
 #from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
@@ -85,6 +86,8 @@ def main():
 
     #sleep(5)
 
+    #slee
+
     # transmit_and_receive()
 
     # This is how to make an interrupt, this is commented out because idk how to get
@@ -116,7 +119,6 @@ def main():
         print(f"starting transmit on PEAT. time = {time() - start_time}\n")
         transmit_state()
         print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
-
         # var = receive().strip()
         # if var == "9":
         #     start()

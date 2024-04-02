@@ -173,7 +173,7 @@ def transmit(signal):
     rfm9x.tx_power = 23
     num_sends = 0
 
-    while num_sends <= 2:
+    while num_sends <= 0:
         data = bytes(f"{signal}\r\n","utf-8")
         rfm9x.send(data)
         num_sends+=1
