@@ -74,10 +74,10 @@ def main():
     #start()
     while True:
         edgeOfPond()
-        if detect_out():
-            transmit("3")
-        else:
-            transmit("4")
+        # if detect_out():
+        #     transmit("3")
+        # else:
+        #     transmit("4")
         # var = receive().strip()
         # if var == "9":
         #     start()
