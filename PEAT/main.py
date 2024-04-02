@@ -43,6 +43,7 @@ def signal_handler(sig, frame):
 def receive_state():
     while True:
         received_sig = receive(120.0).strip()
+        print(received_sig)
         if (received_sig == "40"):
             break
     # while True:

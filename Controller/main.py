@@ -38,6 +38,7 @@ def receive_state():
 
     # while True:
     received_sig = receive(40.0).strip()
+    print(received_sig)
     if received_sig == "1":
         # trigger_IMMOBILIZED_LIGHT()
         # print("triggered immobilized light")
