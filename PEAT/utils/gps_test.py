@@ -89,3 +89,9 @@ def get_location():
     except KeyboardInterrupt:
         webbrowser.open(map_link)        #open current position information in google map
         sys.exit(0)
+
+def check_distances(distances):
+    distance = 0
+    for i in range(0, len(distances)-1):
+        distance = distance + (float(distances[i]) + float(distances[i+1]))
+    return distance

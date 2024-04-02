@@ -109,8 +109,15 @@ def main():
     # signal.pause()
 
     signal.signal(signal.SIGINT, signal_handler)
+    start_time = time()
+    distances = []
     # receive()
     #start()
+    lat1, lon1 = get_location()
+    lat2, lon2 = get_location()
+    meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+    print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+    distances.append(meters)
     while True:
         start_time = time()
         print(f"starting receive on PEAT. time = {time() - start_time}\n")
@@ -119,6 +126,21 @@ def main():
         print(f"starting transmit on PEAT. time = {time() - start_time}\n")
         transmit_state()
         print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
+        #if time() - start_time == 60:
+            #lat1, lon1 = get_location()
+            #lat2, lon2 = get_location()
+            #meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+            #print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+            #if len(distances) > 4:
+                #distances.append(meters)
+            #if len(distances) == 4:
+                #distances.pop(0)
+                #distances.append(meters)
+                #if check_distances(distances) > 12:
+                    # do the immobilized stuff here
+                    #pass
+
+
         # var = receive().strip()
         # if var == "9":
         #     start()
