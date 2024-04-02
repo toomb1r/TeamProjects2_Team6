@@ -123,7 +123,7 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
     start_time = time()
-    distances = [[0, 0], [90, 90], [0, 0], [90, 90]]
+    distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
     # receive()
     #start()
     # lat1, lon1 = get_location()
