@@ -143,6 +143,7 @@ def receive(timeout):
     data_list = []
     while True:
         packet = rfm9x.receive(timeout=timeout)
+        print(f"received packet: {packet}")
         if packet is not None:
             if packet not in data_list:
                 data_list.append(packet)
