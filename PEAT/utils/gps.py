@@ -92,5 +92,16 @@ def get_location():
         sys.exit(0)
 
 def setHome():
+    """
+    Sets the bot's home coordinates
+    Gathers GPS coordinates from the current location
+    Saves the GPS coordinates to the global home variable
+
+    Args:
+        None
+    Returns:
+        None
+    """
     global home
+    home.pop()
     home.append(get_location())
