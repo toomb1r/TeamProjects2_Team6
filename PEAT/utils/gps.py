@@ -105,3 +105,4 @@ def setHome():
     global home
     home.pop()
     home.append(get_location())
+    print(f"Home: {home}\n")
