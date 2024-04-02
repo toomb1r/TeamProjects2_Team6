@@ -11,7 +11,7 @@ import sys                  #import system package
 import math
 
 def GPS_Info():
-    global NMEA_buff 
+    # global NMEA_buff 
     # global lat_in_degrees # wtf change this probs
     # global long_in_degrees
     nmea_time = []
@@ -56,16 +56,17 @@ def gps_init():
     try:
         print("Hello")
         while True:
-            ping_gps_location(ser, gpgga_info)
+            ping_gps_location(ser, gpgga_info, GPGGA_buffer, NMEA_buff)
+            sleep(20)
 
-def ping_gps_location(ser, gpgga_info):
+def ping_gps_location(ser, gpgga_info, GPGGA_buffer, NMEA_buff):
     received_data = (str)(ser.readline())                   #read NMEA string received
     print(received_data)
     GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string                 
     if (GPGGA_data_available>0):
         GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string 
         NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
-        lat_in_degrees, long_in_degrees, lat, longi = GPS_Info()  
+        return lat_in_degrees, long_in_degrees, lat, longi = GPS_Info()  
 
 def calculate_distance(lat1, lon1, lat2, lon2):
     R = 6378.137  # Radius of earth in KM
