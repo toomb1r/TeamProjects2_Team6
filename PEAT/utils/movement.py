@@ -35,6 +35,7 @@ movepwm.ChangeDutyCycle(100)
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
+retToHome = False
 def left_dist():
     """
     Returns distance of left ultrasonic sensor
@@ -141,6 +142,8 @@ def start():
     Returns:
         None
     """
+    global retToHome
+    retToHome = False
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
@@ -200,6 +203,10 @@ def turn_right():
     sleep(sleep_time)
     turnpwm.ChangeDutyCycle(5)
 
+def return_to_home():
+    global retToHome
+    retToHome = not retToHome
+
 def edgeOfPond():
     """
     Turns PEAT if the edge of the pond is detected
@@ -223,11 +230,17 @@ def edgeOfPond():
     if GPIO.input(in1):
         print("not stopped")
         left = left_dist()
-        if(left <= 25 and left > 5):
-            turn_left()
+        if left <= 25 and left > 5:
+            if retToHome:
+                stop()
+            else:
+                turn_left()
         right = right_dist()
-        if(right <= 25 and right > 5):
-            turn_right()
+        if right <= 25 and right > 5:
+            if retToHome:
+                stop()
+            else:
+                turn_right()
         # Stop all movement and turn the correct direction
         # stop()
         # if(rorl):
