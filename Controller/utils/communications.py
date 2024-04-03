@@ -286,6 +286,7 @@ def SET_HOME_BUTTON_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         transmit("5")
 
@@ -301,6 +302,7 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         transmit("7")
 
@@ -316,6 +318,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         transmit("9")
 
@@ -331,6 +334,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         transmit("11")
 
@@ -346,6 +350,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         transmit("13")
 
@@ -364,6 +369,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     """
 
     global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
         # Initialize the I2C interface
         i2c = busio.I2C(board.SCL, board.SDA)
