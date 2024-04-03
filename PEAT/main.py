@@ -149,7 +149,7 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
     #start_time = time()
-    #distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
     # receive()
     #start()
     # lat1, lon1 = get_location()
@@ -159,14 +159,14 @@ def main():
     # distances.append(meters)
     start()
     while True:
-        edgeOfPond()
-        #start_time = time()
-        #print(f"starting receive on PEAT. time = {time() - start_time}\n")
-        #receive_state()
-        #print(f"finishing receive on PEAT. time = {time() - start_time}\n")
-        #print(f"starting transmit on PEAT. time = {time() - start_time}\n")
-        #transmit_state(distances)
-        #print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
+        # edgeOfPond()
+        start_time = time()
+        print(f"starting receive on PEAT. time = {time() - start_time}\n")
+        receive_state()
+        print(f"finishing receive on PEAT. time = {time() - start_time}\n")
+        print(f"starting transmit on PEAT. time = {time() - start_time}\n")
+        transmit_state(distances)
+        print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
         #if time() - start_time == 60:
             #lat1, lon1 = get_location()
             #lat2, lon2 = get_location()
