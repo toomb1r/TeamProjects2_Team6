@@ -30,6 +30,7 @@ movepwm.ChangeDutyCycle(100)
 
 GPIO.output(in1, GPIO.LOW)
 GPIO.output(in2, GPIO.LOW)
+GPIO.output(rth, GPIO.LOW)
 
 def stop():
     """
