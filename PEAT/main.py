@@ -82,11 +82,6 @@ def transmit_state(distances):
     elif out_of_algaecide and immobilized:
         transmit("4")
 
-    # if detect_out():
-    #     transmit("3")
-    # else:
-    #     transmit("4")
-
 def main():
     """Executes the main functionality of PEAT
 
@@ -123,8 +118,8 @@ def main():
     # signal.pause()
 
     signal.signal(signal.SIGINT, signal_handler)
-    start_time = time()
-    distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    #start_time = time()
+    #distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
     # receive()
     #start()
     # lat1, lon1 = get_location()

@@ -12,7 +12,6 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
-GPIO.setmode(GPIO.BCM)
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
