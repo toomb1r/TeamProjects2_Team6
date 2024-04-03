@@ -49,7 +49,7 @@ ads = ADS.ADS1115(i2c)
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
 
-in_transmit_state = False
+in_transmit_state = True
 
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
