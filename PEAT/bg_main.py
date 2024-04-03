@@ -45,7 +45,9 @@ def main():
 
     while True:
         var = receive().strip()
-        if var == "9":
+        if var == "7":
+            pass
+        elif var == "9":
             if GPIO.input(get_drive_in1()):
                 stop()
                 print("Stopped movement")
@@ -59,7 +61,7 @@ def main():
                 dispense_algae()
         elif var == "21":
             change_dispense_speed(90)
-        elif var =="22":
+        elif var == "22":
             change_dispense_speed(91)
         elif var == "23":
             change_dispense_speed(92)

@@ -74,6 +74,7 @@ def main():
     #start()
     while True:
         edgeOfPond()
+        
         # if detect_out():
         #     transmit("3")
         # else:
