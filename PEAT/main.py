@@ -74,7 +74,7 @@ def main():
     #start()
     while True:
         edgeOfPond()
-        print(f"RETURN TO HOME{GPIO.input(rth)}\n\n\n")
+        print(f"RETURN TO HOME{GPIO.input(rth)==GPIO.HIGH}\n\n\n")
 
         # if detect_out():
         #     transmit("3")
