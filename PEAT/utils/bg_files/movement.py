@@ -12,7 +12,7 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
-GPIO.setmode(GPIO.BCM)
+rth = 8
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
@@ -21,15 +21,12 @@ GPIO.setup(TRIGl, GPIO.OUT)
 GPIO.setup(ECHOl, GPIO.IN)
 GPIO.setup(TRIGr, GPIO.OUT)
 GPIO.setup(ECHOr, GPIO.IN)
+GPIO.setup(rth, GPIO.OUT)
 
 movepwm=GPIO.PWM(en,1000)
 movepwm.start(25)
 
 movepwm.ChangeDutyCycle(100)
-
-#REMOVE THIS
-# GPIO.output(in1,GPIO.LOW)
-# GPIO.output(in2,GPIO.LOW)
 
 def stop():
     """
@@ -75,3 +72,16 @@ def reverse():
     """
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.HIGH)
+
+def return_to_home():
+    """
+    Activates return to home GPIO boolean
+
+    Turns the return to home pin (pin 8) to high
+
+    Args:
+        None
+    Returns:
+        None
+    """
+    GPIO.output(rth, GPIO.HIGH)

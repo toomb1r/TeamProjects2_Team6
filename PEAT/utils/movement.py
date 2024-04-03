@@ -12,7 +12,7 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
-GPIO.setmode(GPIO.BCM)
+rth = 8
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
@@ -21,13 +21,13 @@ GPIO.setup(TRIGl, GPIO.OUT)
 GPIO.setup(ECHOl, GPIO.IN)
 GPIO.setup(TRIGr, GPIO.OUT)
 GPIO.setup(ECHOr, GPIO.IN)
+GPIO.setup(rth, GPIO.OUT)
 
 turnpwm=GPIO.PWM(turn,50)
 movepwm=GPIO.PWM(en,1000)
 movepwm.start(25)
 turnpwm.start(0)
 
-#turnpwm.ChangeDutyCycle(5)
 movepwm.ChangeDutyCycle(100)
 
 # This code probably should be in the main method although this will probably be run first so it doesnt matter?
@@ -54,7 +54,7 @@ def left_dist():
 
     GPIO.output(TRIGl, False)
     #print("Waiting For Sensor To Settle")
-    sleep(2)
+    sleep(0.05)
 
     GPIO.output(TRIGl, True)
     sleep(0.00001)
@@ -94,7 +94,7 @@ def right_dist():
 
     GPIO.output(TRIGr, False)
     #print("Waiting For Sensor To Settle")
-    sleep(0.5)
+    sleep(0.05)
 
     GPIO.output(TRIGr, True)
     sleep(0.00001)
@@ -142,8 +142,7 @@ def start():
     Returns:
         None
     """
-    global retToHome
-    retToHome = False
+    GPIO.output(rth,GPIO.LOW)
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
@@ -203,10 +202,6 @@ def turn_right():
     sleep(sleep_time)
     turnpwm.ChangeDutyCycle(5)
 
-def return_to_home():
-    global retToHome
-    retToHome = not retToHome
-
 def edgeOfPond():
     """
     Turns PEAT if the edge of the pond is detected
@@ -221,23 +216,17 @@ def edgeOfPond():
     Returns:
         None
     """
-
-    # During testing we can determine whether or not this is needed
-    # constant = 20
-
-    # If edge of pond detected
-    # consult Anmol about progress on the ultrasonic sensor code
     if GPIO.input(in1):
         print("not stopped")
         left = left_dist()
-        if left <= 25 and left > 5:
-            if retToHome:
+        if left <= 25 and left > 5.5:
+            if GPIO.input(rth):
                 stop()
             else:
                 turn_left()
         right = right_dist()
-        if right <= 25 and right > 5:
-            if retToHome:
+        if right <= 25 and right > 5.5:
+            if GPIO.input(rth):
                 stop()
             else:
                 turn_right()
