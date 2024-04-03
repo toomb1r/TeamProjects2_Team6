@@ -32,8 +32,8 @@ movepwm.ChangeDutyCycle(100)
 
 # This code probably should be in the main method although this will probably be run first so it doesnt matter?
 # Consult with team
-GPIO.output(in1,GPIO.LOW)
-GPIO.output(in2,GPIO.LOW)
+#GPIO.output(in1,GPIO.LOW)
+#GPIO.output(in2,GPIO.LOW)
 
 retToHome = False
 def left_dist():
