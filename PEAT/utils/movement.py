@@ -12,7 +12,6 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
-GPIO.setmode(GPIO.BCM)
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
@@ -53,7 +52,7 @@ def left_dist():
 
     GPIO.output(TRIGl, False)
     #print("Waiting For Sensor To Settle")
-    sleep(2)
+    sleep(0.05)
 
     GPIO.output(TRIGl, True)
     sleep(0.00001)
@@ -93,7 +92,7 @@ def right_dist():
 
     GPIO.output(TRIGr, False)
     #print("Waiting For Sensor To Settle")
-    sleep(0.5)
+    sleep(0.05)
 
     GPIO.output(TRIGr, True)
     sleep(0.00001)

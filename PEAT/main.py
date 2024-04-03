@@ -112,11 +112,6 @@ def transmit_state(distances):
     elif out_of_algaecide and immobilized:
         transmit("4")
 
-    # if detect_out():
-    #     transmit("3")
-    # else:
-    #     transmit("4")
-
 def main():
     """Executes the main functionality of PEAT
 
@@ -153,8 +148,8 @@ def main():
     # signal.pause()
 
     signal.signal(signal.SIGINT, signal_handler)
-    start_time = time()
-    distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    #start_time = time()
+    #distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
     # receive()
     #start()
     # lat1, lon1 = get_location()
@@ -162,15 +157,16 @@ def main():
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
     # print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
     # distances.append(meters)
-
+    start()
     while True:
-        start_time = time()
-        print(f"starting receive on PEAT. time = {time() - start_time}\n")
-        receive_state()
-        print(f"finishing receive on PEAT. time = {time() - start_time}\n")
-        print(f"starting transmit on PEAT. time = {time() - start_time}\n")
-        transmit_state(distances)
-        print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
+        edgeOfPond()
+        #start_time = time()
+        #print(f"starting receive on PEAT. time = {time() - start_time}\n")
+        #receive_state()
+        #print(f"finishing receive on PEAT. time = {time() - start_time}\n")
+        #print(f"starting transmit on PEAT. time = {time() - start_time}\n")
+        #transmit_state(distances)
+        #print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
         #if time() - start_time == 60:
             #lat1, lon1 = get_location()
             #lat2, lon2 = get_location()
