@@ -54,7 +54,7 @@ def main():
                 stop()
                 print("Stopped movement")
             else:
-                start()
+                start_up()
                 print("Start movement")
         elif var == "11":
             if GPIO.input(get_auger_in1()):

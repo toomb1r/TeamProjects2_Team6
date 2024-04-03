@@ -132,6 +132,22 @@ def stop():
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
+def start_up():
+    """
+    Turns on movement motors
+
+    Turns on the output for both inputs of the motor, which turns the motor on and turns off the return to home stuff
+
+    Args:
+        None
+    Returns:
+        None
+    """
+    with open("returntohome.txt", "w") as file:
+        file.write("notStopped")
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+
 def start():
     """
     Beings motion for the movement motors
@@ -219,16 +235,19 @@ def edgeOfPond():
         None
     """
     if GPIO.input(in1):
+        data = ""
+        with open("returntohome.txt", "r") as file:
+            data = file.read().strip()
         print("not stopped")
         left = left_dist()
         if left <= 25 and left > 5.5:
-            if GPIO.input(rth):
+            if data == "stop":
                 stop()
             else:
                 turn_left()
         right = right_dist()
         if right <= 25 and right > 5.5:
-            if GPIO.input(rth):
+            if data == "stop":
                 stop()
             else:
                 turn_right()
