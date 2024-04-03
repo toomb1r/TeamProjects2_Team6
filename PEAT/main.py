@@ -134,13 +134,14 @@ def main():
     # distances.append(meters)
 
     while True:
-        start_time = time()
-        print(f"starting receive on PEAT. time = {time() - start_time}\n")
-        receive_state()
-        print(f"finishing receive on PEAT. time = {time() - start_time}\n")
-        print(f"starting transmit on PEAT. time = {time() - start_time}\n")
-        transmit_state(distances)
-        print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
+        edgeOfPond()
+        #start_time = time()
+        #print(f"starting receive on PEAT. time = {time() - start_time}\n")
+        #receive_state()
+        #print(f"finishing receive on PEAT. time = {time() - start_time}\n")
+        #print(f"starting transmit on PEAT. time = {time() - start_time}\n")
+        #transmit_state(distances)
+        #print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
         #if time() - start_time == 60:
             #lat1, lon1 = get_location()
             #lat2, lon2 = get_location()

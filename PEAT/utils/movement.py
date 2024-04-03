@@ -53,10 +53,10 @@ def left_dist():
 
     GPIO.output(TRIGl, False)
     #print("Waiting For Sensor To Settle")
-    sleep(2)
+    #sleep(2)
 
     GPIO.output(TRIGl, True)
-    sleep(0.00001)
+    #sleep(0.00001)
     GPIO.output(TRIGl, False)
 
     while GPIO.input(ECHOl) == 0:
@@ -93,10 +93,10 @@ def right_dist():
 
     GPIO.output(TRIGr, False)
     #print("Waiting For Sensor To Settle")
-    sleep(0.5)
+    #sleep(0.5)
 
     GPIO.output(TRIGr, True)
-    sleep(0.00001)
+    #sleep(0.00001)
     GPIO.output(TRIGr, False)
 
     while GPIO.input(ECHOr) == 0:
