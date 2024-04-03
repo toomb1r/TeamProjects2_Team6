@@ -9,12 +9,12 @@ from gps3 import gps3
 from time import sleep, time
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
+
 from utils.communications import *
 from utils.movement import *
 from utils.algaecide import *
 #from utils.pins import *
-
-GPIO.setmode(GPIO.BCM)
 
 #turn = get_turn()
 #turnpwm = GPIO.PWM(turn,50)

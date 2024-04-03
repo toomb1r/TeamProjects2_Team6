@@ -19,6 +19,7 @@ right_trig = 23
 right_echo = 24
 drive_en = 26
 auger_in2 = 27
+rth = 16
 
 GPIO.setup(algae_trig, GPIO.OUT)
 GPIO.setup(algae_echo, GPIO.IN)
@@ -38,6 +39,7 @@ GPIO.setup(right_trig, GPIO.OUT)
 GPIO.setup(right_echo, GPIO.IN)
 GPIO.setup(drive_en, GPIO.OUT)
 GPIO.setup(auger_in2, GPIO.OUT)
+GPIO.setup(rth, GPIO.OUT)
 
 def get_algae_trig():
     return algae_trig
@@ -92,3 +94,6 @@ def get_drive_en():
 
 def get_auger_in2():
     return auger_in2
+
+def get_rth():
+    return rth
