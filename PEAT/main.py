@@ -132,7 +132,7 @@ def main():
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
     # print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
     # distances.append(meters)
-
+    start()
     while True:
         edgeOfPond()
         #start_time = time()
