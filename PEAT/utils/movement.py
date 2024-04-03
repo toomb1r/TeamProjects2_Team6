@@ -56,7 +56,7 @@ def left_dist():
     sleep(0.1)
 
     GPIO.output(TRIGl, True)
-    #sleep(0.00001)
+    sleep(0.00001)
     GPIO.output(TRIGl, False)
 
     while GPIO.input(ECHOl) == 0:
@@ -96,7 +96,7 @@ def right_dist():
     sleep(0.1)
 
     GPIO.output(TRIGr, True)
-    #sleep(0.00001)
+    sleep(0.00001)
     GPIO.output(TRIGr, False)
 
     while GPIO.input(ECHOr) == 0:
