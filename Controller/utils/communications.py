@@ -49,7 +49,15 @@ ads = ADS.ADS1115(i2c)
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
 
-in_transmit_state = True
+in_transmit_state = False
+
+# def get_in_transmit_state():
+#     global in_transmit_state
+#     return in_transmit_state
+
+def set_in_transmit_state(bool):
+    global in_transmit_state
+    in_transmit_state = bool
 
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
@@ -277,6 +285,7 @@ def SET_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
+    global in_transmit_state
     if in_transmit_state:
         transmit("5")
 
@@ -291,6 +300,7 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
+    global in_transmit_state
     if in_transmit_state:
         transmit("7")
 
@@ -305,6 +315,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
         None
     """
 
+    global in_transmit_state
     if in_transmit_state:
         transmit("9")
 
@@ -319,6 +330,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
         None
     """
 
+    global in_transmit_state
     if in_transmit_state:
         transmit("11")
 
@@ -333,6 +345,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
         None
     """
 
+    global in_transmit_state
     if in_transmit_state:
         transmit("13")
 
@@ -349,7 +362,8 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     Returns:
         None
     """
-    
+
+    global in_transmit_state
     if in_transmit_state:
         # Initialize the I2C interface
         i2c = busio.I2C(board.SCL, board.SDA)
