@@ -49,6 +49,8 @@ ads = ADS.ADS1115(i2c)
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
 
+in_transmit_state = False
+
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
     Gets the RSA public key of PEAT. Encodes the message in UTF-8 and encrypts it.
@@ -275,7 +277,8 @@ def SET_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("5")
+    if in_transmit_state:
+        transmit("5")
 
 def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     """Callback for the return to home button
@@ -288,7 +291,8 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("7")
+    if in_transmit_state:
+        transmit("7")
 
 def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     """Callback for the start and stop move button
@@ -301,7 +305,8 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("9")
+    if in_transmit_state:
+        transmit("9")
 
 def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     """Callback for the start and stop algaecide dispensing button
@@ -314,7 +319,8 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("11")
+    if in_transmit_state:
+        transmit("11")
 
 def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     """Callback for the emergency stop button
@@ -327,7 +333,8 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("13")
+    if in_transmit_state:
+        transmit("13")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     """Callback for the button setting the algaecide dispensing rate
@@ -343,28 +350,29 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
         None
     """
     
-    # Initialize the I2C interface
-    i2c = busio.I2C(board.SCL, board.SDA)
-    # Create an  ADS1115 object
-    ads = ADS.ADS1115(i2c)
-    # Define the analog input channel
-    cur_channel = AnalogIn(ads, ADS.P0)
+    if in_transmit_state:
+        # Initialize the I2C interface
+        i2c = busio.I2C(board.SCL, board.SDA)
+        # Create an  ADS1115 object
+        ads = ADS.ADS1115(i2c)
+        # Define the analog input channel
+        cur_channel = AnalogIn(ads, ADS.P0)
 
-    max_voltage = 3.3
-    num_settings = 10
-    voltage_boundary = max_voltage / num_settings
-    cur_voltage = cur_channel.voltage
-    cur_setting = 1
-    cur_voltage_setting_boundary = voltage_boundary
+        max_voltage = 3.3
+        num_settings = 10
+        voltage_boundary = max_voltage / num_settings
+        cur_voltage = cur_channel.voltage
+        cur_setting = 1
+        cur_voltage_setting_boundary = voltage_boundary
 
-    while True:
-        if cur_voltage_setting_boundary < cur_voltage:
-            cur_voltage_setting_boundary += voltage_boundary
-            cur_setting += 1
-        else:
-            cur_setting_sig = cur_setting + 20
-            transmit(str(cur_setting_sig))
-            break
+        while True:
+            if cur_voltage_setting_boundary < cur_voltage:
+                cur_voltage_setting_boundary += voltage_boundary
+                cur_setting += 1
+            else:
+                cur_setting_sig = cur_setting + 20
+                transmit(str(cur_setting_sig))
+                break
 
 GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=8000)
 GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=8000)

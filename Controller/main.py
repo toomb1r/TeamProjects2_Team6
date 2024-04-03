@@ -36,6 +36,7 @@ def receive_state():
     # 3: has no algaecide and is moving
     # 4: has no algaecide and is not moving
 
+    in_transmit_state = False
     # while True:
     received_sig = receive(40.0).strip()
     print(received_sig)
@@ -63,6 +64,7 @@ def receive_state():
         print("out of algaecide: on\timmobilized: on\n")
 
 def transmit_state(start_time):
+    in_transmit_state = True
     while True:
         traversed_time = time() - start_time
         if (traversed_time > 120.0):
