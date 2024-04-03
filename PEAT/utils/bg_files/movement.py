@@ -28,6 +28,9 @@ movepwm.start(25)
 
 movepwm.ChangeDutyCycle(100)
 
+GPIO.output(in1, GPIO.LOW)
+GPIO.output(in2, GPIO.LOW)
+
 def stop():
     """
     Ceases motion for the movement motors
