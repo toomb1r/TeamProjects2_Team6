@@ -48,8 +48,8 @@ def main():
     while True:
         var = receive().strip()
         if var == "7":
-            return_to_home()
             stop_dispense()
+            return_to_home()
         elif var == "9":
             if GPIO.input(get_drive_in1()):
                 stop()
