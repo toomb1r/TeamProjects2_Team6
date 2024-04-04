@@ -108,6 +108,8 @@ def readHome():
     with open("home.txt","r") as file:
         home = file.readlines()
 
+    print(f"Home: {home}")
+
 def setHome():
     """
     Sets the bot's home coordinates
