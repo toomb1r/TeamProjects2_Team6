@@ -12,7 +12,6 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
-rth = 16
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
@@ -22,7 +21,6 @@ GPIO.setup(TRIGl, GPIO.OUT)
 GPIO.setup(ECHOl, GPIO.IN)
 GPIO.setup(TRIGr, GPIO.OUT)
 GPIO.setup(ECHOr, GPIO.IN)
-GPIO.setup(rth, GPIO.OUT)
 
 movepwm=GPIO.PWM(en,1000)
 movepwm.start(25)
@@ -31,7 +29,6 @@ movepwm.ChangeDutyCycle(100)
 
 GPIO.output(in1, GPIO.LOW)
 GPIO.output(in2, GPIO.LOW)
-GPIO.output(rth, GPIO.HIGH)
 
 def stop():
     """
@@ -45,6 +42,7 @@ def stop():
     Returns:
         None
     """
+
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
@@ -59,6 +57,7 @@ def start_up():
     Returns:
         None
     """
+
     with open("returntohome.txt", "w") as file:
         file.write("notStopped")
         file.close()
@@ -77,6 +76,7 @@ def start():
     Returns:
         None
     """
+
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
@@ -92,6 +92,7 @@ def reverse():
     Returns:
         None
     """
+
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.HIGH)
 
@@ -106,6 +107,7 @@ def return_to_home():
     Returns:
         None
     """
+
     with open("returntohome.txt", "w") as file:
         file.write("home")
         file.close()

@@ -47,9 +47,6 @@ def main():
     Returns: None
     """
 
-    # enc_msg = encrypt("this is encrypted")
-    # dec_msg = decrypt(enc_msg)
-#sleep(5)
 
     # transmit_and_receive()
 
@@ -61,17 +58,8 @@ def main():
     # To allow -90 and 90 degrees of motion
     #turning(90)
 
-    #move()
-    #rorl = True
-    #dispense_algae()
-    #dispense_algae()
-    #change_dispense_speed(100)
-
-    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
-    # signal.pause()
     signal.signal(signal.SIGINT, signal_handler)
-    # receive()
-    #start()
+
     while True:
         edgeOfPond()
 
