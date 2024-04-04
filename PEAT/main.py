@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 
 from utils.communications import *
 from utils.bg_movement import *
-from utils.algaecide import *
+from utils.bg_files.algaecide import *
 from utils.gps import *
 #from utils.pins import *
 

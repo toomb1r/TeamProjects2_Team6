@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 
 from utils.communications import *
 from utils.bg_files.movement import *
-from utils.algaecide import *
+#from utils.algaecide import *
 from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
