@@ -42,6 +42,7 @@ def signal_handler(sig, frame):
 
 def receive_state():
     while True:
+        received_sig
         try:
             received_sig = receive(120.0).strip()
         except:

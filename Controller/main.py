@@ -38,8 +38,9 @@ def receive_state():
 
     set_in_transmit_state(False)
     # while True:
+    received_sig
     try:
-        received_sig = receive(40.0).strip()
+        received_sig = receive(0.5).strip()
     except:
         print("Error: Receive failed")
         # return
