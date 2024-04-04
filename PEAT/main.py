@@ -40,11 +40,28 @@ def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
+start_time = time()
+distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
+
+def find_distance():
+    global start_time
+    if time() - start_time == 60:
+        lat1, lon1 = get_location()
+        lat2, lon2 = get_location()
+        meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+        print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+        if len(distances) > 4:
+            distances.append(meters)
+        if len(distances) == 4:
+            distances.pop(0)
+            distances.append(meters)
+
 def receive_state():
     while True:
         received_sig = ""
         try:
-            received_sig = receive(120.0).strip()
+            received_sig = receive(60.0).strip()
+            find_distance()
         except:
             print("Error: Receive failed\n")
             continue
@@ -61,7 +78,7 @@ def receive_state():
                 dispense_algae()
         elif received_sig == "21":
             change_dispense_speed(90)
-        elif received_sig =="22":
+        elif received_sig == "22":
             change_dispense_speed(91)
         elif received_sig == "23":
             change_dispense_speed(92)
@@ -98,7 +115,8 @@ def receive_state():
     #         break
 
 
-def transmit_state(distances):
+def transmit_state():
+    global distances
     # 1: has algaecide and is moving
     # 2: has algaecide and is not moving
     # 3: has no algaecide and is moving
@@ -136,7 +154,7 @@ def main():
 
     Returns: None
     """
-
+    global start_time
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
 
@@ -165,8 +183,8 @@ def main():
     # signal.pause()
 
     signal.signal(signal.SIGINT, signal_handler)
+    find_distance()
     #start_time = time()
-    distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
     # receive()
     #start()
     # lat1, lon1 = get_location()
@@ -175,6 +193,19 @@ def main():
     # print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
     # distances.append(meters)
     # start()
+    # if time() - start_time == 60:
+    #     lat1, lon1 = get_location()
+    #     lat2, lon2 = get_location()
+    #     meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+    #     print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+    #     if len(distances) > 4:
+    #         distances.append(meters)
+    #     if len(distances) == 4:
+    #         distances.pop(0)
+    #         distances.append(meters)
+    #         if check_distances(distances) > 12:
+    #             # do the immobilized stuff here
+    #             pass
     while True:
         # edgeOfPond()
         start_time = time()
@@ -182,21 +213,9 @@ def main():
         receive_state()
         print(f"finishing receive on PEAT. time = {time() - start_time}\n")
         print(f"starting transmit on PEAT. time = {time() - start_time}\n")
-        transmit_state(distances)
+        transmit_state()
         print(f"finishing transmit on PEAT. time = {time() - start_time}\n")
-        #if time() - start_time == 60:
-            #lat1, lon1 = get_location()
-            #lat2, lon2 = get_location()
-            #meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
-            #print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
-            #if len(distances) > 4:
-                #distances.append(meters)
-            #if len(distances) == 4:
-                #distances.pop(0)
-                #distances.append(meters)
-                #if check_distances(distances) > 12:
-                    # do the immobilized stuff here
-                    #pass
+
 
 
         # var = receive().strip()
