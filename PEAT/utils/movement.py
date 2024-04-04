@@ -240,7 +240,7 @@ def edgeOfPond():
             data = file.read().strip()
             file.close()
             print(f"Data: {data}\n\n")
-        print("not stopped")
+        print(f"not stopped {data}")
         left = left_dist()
         if left <= 25 and left > 5.5:
             if data == "stop":
