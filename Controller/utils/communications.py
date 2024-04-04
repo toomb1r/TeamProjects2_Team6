@@ -288,7 +288,10 @@ def SET_HOME_BUTTON_pressed_callback(channel):
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
-        transmit("5")
+        try:
+            transmit("5")
+        except:
+            print("Error: Transmit signal 5 failed\n")
 
 def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     """Callback for the return to home button
@@ -304,7 +307,10 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
-        transmit("7")
+        try:
+            transmit("7")
+        except:
+            print("Error: Transmit signal 7 failed\n")
 
 def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     """Callback for the start and stop move button
@@ -320,7 +326,10 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
-        transmit("9")
+        try:
+            transmit("9")
+        except:
+            print("Error: Transmit signal 9 failed\n")
 
 def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     """Callback for the start and stop algaecide dispensing button
@@ -336,7 +345,10 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
-        transmit("11")
+        try:
+            transmit("11")
+        except:
+            print("Error: Transmit signal 11 failed\n")
 
 def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     """Callback for the emergency stop button
@@ -352,7 +364,10 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
     if in_transmit_state:
-        transmit("13")
+        try:
+            transmit("13")
+        except:
+            print("Error: Transmit signal 13 failed\n")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     """Callback for the button setting the algaecide dispensing rate
@@ -391,7 +406,10 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
                 cur_setting += 1
             else:
                 cur_setting_sig = cur_setting + 20
-                transmit(str(cur_setting_sig))
+                try:
+                    transmit(str(cur_setting_sig))
+                except:
+                    print(f"Error: Transmit {cur_setting_sig} failed\n")
                 break
 
 GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=8000)

@@ -42,7 +42,11 @@ def signal_handler(sig, frame):
 
 def receive_state():
     while True:
-        received_sig = receive(120.0).strip()
+        try:
+            received_sig = receive(120.0).strip()
+        except:
+            print("Error: Receive failed\n")
+            continue
         print(received_sig)
         if received_sig == "9":
             if GPIO.input(in1):
@@ -104,13 +108,25 @@ def transmit_state(distances):
     immobilized = distance < 12
     # edgeOfPond()
     if not out_of_algaecide and not immobilized:
-        transmit("1")
+        try:
+            transmit("1")
+        except:
+            print("Error: Transmit signal 1 failed\n")
     elif not out_of_algaecide and immobilized:
-        transmit("2")
+        try:
+            transmit("2")
+        except:
+            print("Error: Transmit signal 2 failed\n")
     elif out_of_algaecide and not immobilized:
-        transmit("3")
+        try:
+            transmit("3")
+        except:
+            print("Error: Transmit signal 3 failed\n")
     elif out_of_algaecide and immobilized:
-        transmit("4")
+        try:
+            transmit("4")
+        except:
+            print("Error: Transmit signal 4 failed\n")
 
 def main():
     """Executes the main functionality of PEAT

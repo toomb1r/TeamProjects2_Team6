@@ -38,7 +38,11 @@ def receive_state():
 
     set_in_transmit_state(False)
     # while True:
-    received_sig = receive(40.0).strip()
+    try:
+        received_sig = receive(40.0).strip()
+    except:
+        print("Error: Receive failed")
+        return
     print(received_sig)
     if received_sig == "1":
         # trigger_IMMOBILIZED_LIGHT()
@@ -68,7 +72,11 @@ def transmit_state(start_time):
     while True:
         traversed_time = time() - start_time
         if (traversed_time > 120.0):
-            transmit("40")
+            try:
+                transmit("40")
+            except:
+                print("Error: Transmit signal 40 failed\n")
+                continue
             break
 
 def main():
