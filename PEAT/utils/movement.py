@@ -238,6 +238,7 @@ def edgeOfPond():
         data = ""
         with open("returntohome.txt", "r") as file:
             data = file.read().strip()
+            print(f"Data: {data}\n\n")
         print("not stopped")
         left = left_dist()
         if left <= 25 and left > 5.5:

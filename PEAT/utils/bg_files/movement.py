@@ -107,3 +107,4 @@ def return_to_home():
     """
     with open("returntohome.txt", "w") as file:
         file.write("home")
+        print(f"Returning to home")
