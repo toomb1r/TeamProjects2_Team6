@@ -165,6 +165,7 @@ def receive(timeout):
                         return
                     packet_text = b''.join(data_list)
                     packet_text = decrypt(packet_text.strip())
+                    print(f"decrypted packet: {packet_text}")
                     return packet_text
 
 # def transmit(signal):
@@ -232,7 +233,7 @@ def OUT_OF_ALGAECIDE_LIGHT_off():
         None
     """
 
-    
+
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
 
 def OUT_OF_ALGAECIDE_LIGHT_on():
@@ -246,7 +247,7 @@ def OUT_OF_ALGAECIDE_LIGHT_on():
         None
     """
 
-    
+
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
 
 def IMMOBILIZED_LIGHT_off():
@@ -320,7 +321,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
 
     Args:
         None
-    
+
     Returns:
         None
     """
@@ -339,7 +340,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
 
     Args:
         None
-    
+
     Returns:
         None
     """
