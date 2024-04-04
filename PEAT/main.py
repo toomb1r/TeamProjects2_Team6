@@ -63,8 +63,8 @@ def receive_state():
     while True:
         received_sig = ""
         try:
-            received_sig = receive(60.0).strip()
             find_distance()
+            received_sig = receive(60.0).strip()
         except:
             print("Error: Receive failed\n")
             continue
@@ -188,7 +188,7 @@ def main():
     # signal.pause()
 
     signal.signal(signal.SIGINT, signal_handler)
-    find_distance()
+    # find_distance()
     #start_time = time()
     # receive()
     #start()
