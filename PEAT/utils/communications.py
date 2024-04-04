@@ -103,6 +103,7 @@ def receive(timeout):
     fail_list = []
     data_list = []
     packet = rfm9x.receive(timeout=timeout)
+    print(f"first packet: {packet}\n")
     if packet is not None:
         while True:
             fail_count = 0
