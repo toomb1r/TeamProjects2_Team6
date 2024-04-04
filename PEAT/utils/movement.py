@@ -246,14 +246,12 @@ def edgeOfPond():
         if left <= 25 and left > 5.5:
             if data == "home":
                 stop()
-                stop_dispense()
             else:
                 turn_left()
         right = right_dist()
         if right <= 25 and right > 5.5:
             if data == "home":
                 stop()
-                stop_dispense()
             else:
                 turn_right()
         # Stop all movement and turn the correct direction
