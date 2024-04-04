@@ -40,7 +40,7 @@ def receive_state():
     # while True:
     received_sig = ""
     try:
-        received_sig = receive(0.5).strip()
+        received_sig = receive(40).strip()
     except:
         print("Error: Receive failed")
         # return
