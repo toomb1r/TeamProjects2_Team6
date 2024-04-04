@@ -91,6 +91,23 @@ def get_location():
         webbrowser.open(map_link)        #open current position information in google map
         sys.exit(0)
 
+def readHome():
+    """
+    Sets the bot's home coordinates from a read in string
+
+    Uses a file to get the latitude and longitude data for the Home
+    Sets the latitude and longitude data to the global home variable
+
+    Args:
+        None
+    Returns:
+        None
+    """
+
+    global home
+    with open("home.txt","r") as file:
+        home = file.readlines()
+
 def setHome():
     """
     Sets the bot's home coordinates
@@ -102,9 +119,18 @@ def setHome():
     Returns:
         None
     """
+
     global home
+    with open("home.txt","w") as file:
+        file.write("")
+        file.close()
+
     if len(home) > 0:
         home.pop()
     lat, lon = get_location()
-    home.append([lat, lon])
+    home = [lat, lon]
     print(f"Home: {home}\n")
+    with open("home.txt","a") as file:
+        file.write(f"{lat}\n")
+        file.write(lon)
+        file.close()
