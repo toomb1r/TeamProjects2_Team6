@@ -153,16 +153,17 @@ def receive(timeout):
     fail_list = []
     data_list = []
     packet = rfm9x.receive(timeout=timeout)
+    print(f"first packet: {packet}\n")
     if packet is not None:
         while True:
             fail_count = 0
-            packet = rfm9x.receive()
+            # packet = rfm9x.receive()
             print(f"received packet: {packet}")
             fail_list.append(packet)
             for fail in fail_list[-10:]:
                 if fail is None:
                     fail_count += 1
-            if fail >= 10:
+            if fail_count >= 10:
                 return "50"
             if packet is not None:
                 if packet not in data_list:
@@ -174,6 +175,7 @@ def receive(timeout):
                     packet_text = b''.join(data_list)
                     packet_text = decrypt(packet_text.strip())
                     return packet_text
+            packet = rfm9x.receive()
 
 # def transmit(signal):
 #     """Transmits a signal using the transciever
