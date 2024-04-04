@@ -103,7 +103,8 @@ def setHome():
         None
     """
     global home
-    home.pop()
+    if len(home) > 0:
+        home.pop()
     lat, lon = get_location()
     home.append([lat, lon])
     print(f"Home: {home}\n")
