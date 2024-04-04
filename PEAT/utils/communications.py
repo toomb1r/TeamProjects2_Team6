@@ -100,12 +100,20 @@ def receive(timeout):
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
 
+    fail_list = []
     data_list = []
     packet = rfm9x.receive(timeout=timeout)
     if packet is not None:
         while True:
+            fail_count = 0
             packet = rfm9x.receive()
             print(f"received packet: {packet}")
+            fail_list.append(packet)
+            for fail in fail_list[-10:]:
+                if fail is None:
+                    fail_count += 1
+            if fail >= 10:
+                return "50"
             if packet is not None:
                 if packet not in data_list:
                     data_list.append(packet)
