@@ -55,6 +55,7 @@ def find_distance():
         if len(distances) == 4:
             distances.pop(0)
             distances.append(meters)
+            print(distances)
 
 def receive_state():
     while True:
