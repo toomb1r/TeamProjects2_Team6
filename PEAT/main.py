@@ -45,7 +45,9 @@ distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
 def find_distance():
     global start_time
+    print(f"Start time: {start_time}\n Current time: {time()}\n")
     if time() - start_time == 60:
+        print("inside if")
         lat1, lon1 = get_location()
         lat2, lon2 = get_location()
         meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
@@ -55,7 +57,7 @@ def find_distance():
         if len(distances) == 4:
             distances.pop(0)
             distances.append(meters)
-            print(distances)
+            print(f"{distances}\n")
 
 def receive_state():
     while True:
