@@ -151,19 +151,21 @@ def receive(timeout):
     rfm9x.tx_power = 23
 
     data_list = []
-    while True:
-        packet = rfm9x.receive(timeout=timeout)
-        print(f"received packet: {packet}")
-        if packet is not None:
-            if packet not in data_list:
-                data_list.append(packet)
-            if data_list[-1] == b"\n":
-                data_list.pop()
-                if not data_list:
-                    return
-                packet_text = b''.join(data_list)
-                packet_text = decrypt(packet_text.strip())
-                return packet_text
+    packet = rfm9x.receive(timeout=timeout)
+    if packet is not None:
+        while True:
+            packet = rfm9x.receive()
+            print(f"received packet: {packet}")
+            if packet is not None:
+                if packet not in data_list:
+                    data_list.append(packet)
+                if data_list[-1] == b"\n":
+                    data_list.pop()
+                    if not data_list:
+                        return
+                    packet_text = b''.join(data_list)
+                    packet_text = decrypt(packet_text.strip())
+                    return packet_text
 
 # def transmit(signal):
 #     """Transmits a signal using the transciever
