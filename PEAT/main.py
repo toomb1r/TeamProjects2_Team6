@@ -64,10 +64,10 @@ def receive_state():
         received_sig = ""
         try:
             received_sig = receive(60.0).strip()
+            find_distance()
         except:
             print("Error: Receive failed\n")
             continue
-        find_distance()
         print(received_sig)
         if received_sig == "9":
             if GPIO.input(in1):
