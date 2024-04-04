@@ -42,7 +42,7 @@ def receive_state():
         received_sig = receive(40.0).strip()
     except:
         print("Error: Receive failed")
-        return
+        # return
     print(received_sig)
     if received_sig == "1":
         # trigger_IMMOBILIZED_LIGHT()
