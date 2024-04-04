@@ -2,7 +2,6 @@ import random
 import RPi.GPIO as GPIO
 from time import sleep, time
 from gpiozero import DistanceSensor
-from algaecide import stop_dispense
 
 # This is incorrect figure this out before merge
 en = 26

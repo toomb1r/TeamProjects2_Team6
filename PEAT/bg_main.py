@@ -49,6 +49,7 @@ def main():
         var = receive().strip()
         if var == "7":
             return_to_home()
+            stop_dispense()
         elif var == "9":
             if GPIO.input(get_drive_in1()):
                 stop()
