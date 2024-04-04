@@ -46,18 +46,18 @@ distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
 def find_distance():
     global start_time
     print(f"Start time: {start_time}\n Current time: {time()}\n")
-    if time() - start_time == 60:
-        print("inside if")
-        lat1, lon1 = get_location()
-        lat2, lon2 = get_location()
-        meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
-        print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
-        if len(distances) > 4:
-            distances.append(meters)
-        if len(distances) == 4:
-            distances.pop(0)
-            distances.append(meters)
-            print(f"{distances}\n")
+    # if time() - start_time == 60:
+    print("inside if")
+    lat1, lon1 = get_location()
+    lat2, lon2 = get_location()
+    meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+    print(f"meters different {meters} \ncoords 1: {lat1} {lon1} \ncoords 2: {lat2} {lon2}\n\n\n")
+    if len(distances) > 4:
+        distances.append(meters)
+    if len(distances) == 4:
+        distances.pop(0)
+        distances.append(meters)
+        print(f"{distances}\n")
 
 def receive_state():
     while True:
