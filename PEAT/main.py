@@ -123,7 +123,9 @@ def transmit_state():
     # 4: has no algaecide and is not moving
 
     out_of_algaecide = detect_out()
+    print(f"distances: {distances}")
     distance = check_distances(distances)
+    print(f"distance measurement: {distance}")
     immobilized = distance < 12
     # edgeOfPond()
     if not out_of_algaecide and not immobilized:
