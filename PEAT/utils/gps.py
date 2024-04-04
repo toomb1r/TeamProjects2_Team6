@@ -104,5 +104,6 @@ def setHome():
     """
     global home
     home.pop()
-    home.append(get_location())
+    lat, lon = get_location()
+    home.append([lat, lon])
     print(f"Home: {home}\n")
