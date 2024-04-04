@@ -38,7 +38,7 @@ def receive_state():
 
     set_in_transmit_state(False)
     # while True:
-    received_sig
+    received_sig = ""
     try:
         received_sig = receive(0.5).strip()
     except:
