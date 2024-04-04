@@ -2,6 +2,7 @@ import random
 import RPi.GPIO as GPIO
 from time import sleep, time
 from gpiozero import DistanceSensor
+from algaecide import stop_dispense
 
 # This is incorrect figure this out before merge
 en = 26
@@ -246,12 +247,14 @@ def edgeOfPond():
         if left <= 25 and left > 5.5:
             if data == "home":
                 stop()
+                stop_dispense()
             else:
                 turn_left()
         right = right_dist()
         if right <= 25 and right > 5.5:
             if data == "home":
                 stop()
+                stop_dispense()
             else:
                 turn_right()
         # Stop all movement and turn the correct direction
