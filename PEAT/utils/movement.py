@@ -238,6 +238,7 @@ def edgeOfPond():
         data = ""
         with open("returntohome.txt", "r") as file:
             data = file.read().strip()
+            file.close()
             print(f"Data: {data}\n\n")
         print("not stopped")
         left = left_dist()

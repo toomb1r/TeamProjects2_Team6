@@ -61,6 +61,7 @@ def start_up():
     """
     with open("returntohome.txt", "w") as file:
         file.write("notStopped")
+        file.close()
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
@@ -107,4 +108,5 @@ def return_to_home():
     """
     with open("returntohome.txt", "w") as file:
         file.write("home")
+        file.close()
         print(f"Returning to home")
