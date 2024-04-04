@@ -10,7 +10,7 @@ from time import sleep, time
 import RPi.GPIO as GPIO
 
 from utils.communications import *
-from utils.movement import *
+from PEAT.utils.movement import *
 from utils.algaecide import *
 from utils.gps import *
 #from utils.pins import *
