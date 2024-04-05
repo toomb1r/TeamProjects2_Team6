@@ -25,8 +25,10 @@ def receive_last():
     while True:
         buffer += ser.read(ser.in_waiting())
         if "\n" in buffer:
+            print("new line")
             last_received, buffer = buffer.split("\n")[-2:]
         else:
+            print(f"last thing: {last_received}")
             return last_received
 
 def GPS_Info():
