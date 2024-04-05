@@ -16,6 +16,18 @@ GPGGA_buffer = 0
 NMEA_buff = 0
 lat_in_degrees = 0
 long_in_degrees = 0
+# last_received = ""
+
+def receive_last():
+    global ser
+    last_received =""
+    buffer = ""
+    while True:
+        buffer += ser.read(ser.in_waiting())
+        if "\n" in buffer:
+            last_received, buffer = buffer.split("\n")[-2:]
+        else:
+            return last_received
 
 def GPS_Info():
     global NMEA_buff
@@ -72,7 +84,7 @@ def get_location():
         while True:
             print("in loop")
             ser.reset_input_buffer()
-            received_data = (str)(ser.readline())                   #read NMEA string received
+            received_data = (str)(receive_last())                   #read NMEA string received
             print("data received")
             GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
             print(f"GPGGA data available {GPGGA_data_available}")
