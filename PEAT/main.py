@@ -43,6 +43,23 @@ def signal_handler(sig, frame):
 start_time = time()
 distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
+def find_distance_start():
+    global start_time
+    global ser
+    print(f"Start time: {start_time}\n Current time: {time()}\n")
+    # if time() - start_time == 60:
+    print("inside if")
+    lat1, lon1 = get_location_start()
+    # lat2, lon2 = get_location()
+    # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
+    print(f"coords 1: {lat1} {lon1}\n\n\n")
+    if len(distances) > 4:
+        distances.append([lat1, lon1])
+    if len(distances) == 4:
+        distances.pop(0)
+        distances.append([lat1, lon1])
+        print(f"{distances}\n")
+
 def find_distance():
     global start_time
     global ser
@@ -216,6 +233,7 @@ def main():
     #         if check_distances(distances) > 12:
     #             # do the immobilized stuff here
     #             pass
+    find_distance_start()
     while True:
         # edgeOfPond()
         start_time = time()
