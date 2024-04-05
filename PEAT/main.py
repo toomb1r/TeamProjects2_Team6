@@ -63,13 +63,13 @@ def find_distance():
 def receive_state():
     while True:
         received_sig = ""
-        # try:
         find_distance()
-        received_sig = receive(60.0).strip()
-    # except:
-        print("Error: Receive failed\n")
-        GPIO.cleanup()
-        sys.exit(0)
+        try:
+            received_sig = receive(60.0).strip()
+        except:
+            print("Error: Receive failed\n")
+            GPIO.cleanup()
+            sys.exit(0)
         print(received_sig)
         if received_sig == "9":
             if GPIO.input(in1):

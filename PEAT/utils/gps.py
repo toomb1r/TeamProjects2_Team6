@@ -24,7 +24,7 @@ def receive_last():
     buffer = ""
     while True:
         print(f"before read: {ser.in_waiting}")
-        buffer += ser.read(ser.in_waiting)
+        buffer += (str)(ser.read(ser.in_waiting))
         print("after read")
         if "\n" in buffer:
             print("new line")
