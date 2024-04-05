@@ -23,7 +23,9 @@ def receive_last():
     last_received =""
     buffer = ""
     while True:
+        print("Reading line")
         buffer = (str)(ser.readline())
+        print("Line Read")
         if buffer == "":
             return last_received
         else:
