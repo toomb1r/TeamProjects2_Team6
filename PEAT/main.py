@@ -61,9 +61,11 @@ def find_distance():
         print(f"{distances}\n")
 
 def receive_state():
+    start_receive = time()
     while True:
         received_sig = ""
-        find_distance()
+        if int(time() - start_receive) % 60 == 0:
+            find_distance()
         try:
             received_sig = receive(60.0).strip()
         except:
