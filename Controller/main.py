@@ -67,6 +67,8 @@ def receive_state():
         OUT_OF_ALGAECIDE_LIGHT_on()
         IMMOBILIZED_LIGHT_on()
         print("out of algaecide: on\timmobilized: on\n")
+    elif (received_sig == "50"):
+        print("Error: Receive failed (signal 50)")
 
 def transmit_state(start_time):
     set_in_transmit_state(True)
