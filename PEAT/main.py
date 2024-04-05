@@ -45,6 +45,7 @@ distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
 def find_distance():
     global start_time
+    global ser
     print(f"Start time: {start_time}\n Current time: {time()}\n")
     # if time() - start_time == 60:
     print("inside if")

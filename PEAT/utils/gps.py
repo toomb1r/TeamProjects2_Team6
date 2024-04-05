@@ -71,7 +71,7 @@ def get_location():
     try:
         while True:
             print("in loop")
-            received_data = (str)(ser.readline())                   #read NMEA string received
+            received_data = (str)(ser.readline()[-1])                   #read NMEA string received
             print("data received")
             GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
             print(f"GPGGA data available {GPGGA_data_available}")
