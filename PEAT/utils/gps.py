@@ -23,15 +23,11 @@ def receive_last():
     last_received =""
     buffer = ""
     while True:
-        print(f"before read: {ser.in_waiting}")
-        buffer += (str)(ser.read(ser.in_waiting))
-        print("after read")
-        if "\n" in buffer:
-            print("new line")
-            last_received, buffer = buffer.split("\n")[-2:]
-        else:
-            print(f"last thing: {last_received}")
+        buffer = (str)(ser.readline())
+        if buffer == "":
             return last_received
+        else:
+            last_received = buffer
 
 def GPS_Info():
     global NMEA_buff
