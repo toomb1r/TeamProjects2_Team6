@@ -233,7 +233,7 @@ def main():
     #         if check_distances(distances) > 12:
     #             # do the immobilized stuff here
     #             pass
-    find_distance_start()
+    # find_distance_start()
     while True:
         # edgeOfPond()
         start_time = time()
