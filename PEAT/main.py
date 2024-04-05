@@ -85,8 +85,7 @@ def receive_state():
             received_sig = receive(60.0).strip()
         except:
             print("Error: Receive failed\n")
-            GPIO.cleanup()
-            sys.exit(0)
+            continue
         print(received_sig)
         if received_sig == "9":
             if GPIO.input(in1):
