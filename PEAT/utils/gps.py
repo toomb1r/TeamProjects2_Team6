@@ -82,6 +82,8 @@ def get_location_start():
     global long_in_degrees
     global gpgga_info
     print("before try")
+    ser.reset_input_buffer()
+    print("after reset")
     try:
         while True:
             print("in loop")

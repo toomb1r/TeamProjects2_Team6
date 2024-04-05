@@ -66,7 +66,7 @@ def find_distance():
     print(f"Start time: {start_time}\n Current time: {time()}\n")
     # if time() - start_time == 60:
     print("inside if")
-    lat1, lon1 = get_location()
+    lat1, lon1 = get_location_start()
     # lat2, lon2 = get_location()
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
     print(f"coords 1: {lat1} {lon1}\n\n\n")
