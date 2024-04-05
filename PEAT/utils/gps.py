@@ -16,20 +16,6 @@ GPGGA_buffer = 0
 NMEA_buff = 0
 lat_in_degrees = 0
 long_in_degrees = 0
-# last_received = ""
-
-def receive_last():
-    global ser
-    last_received =""
-    buffer = ""
-    while True:
-        print("Reading line")
-        buffer = (str)(ser.readline())
-        print(f"Line Read: {buffer}")
-        if buffer == "":
-            return last_received
-        else:
-            last_received = buffer
 
 def GPS_Info():
     global NMEA_buff
@@ -74,38 +60,6 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
     print(f"This is C: {c} \n\n")
     return c
 
-def get_location_start():
-    global GPGGA_buffer
-    global ser
-    global NMEA_buff
-    global lat_in_degrees
-    global long_in_degrees
-    global gpgga_info
-    print("before try")
-    ser.reset_input_buffer()
-    print("after reset")
-    try:
-        while True:
-            print("in loop")
-            received_data = (str)(ser.readline())                   #read NMEA string received
-            print("data received")
-            GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
-            print(f"GPGGA data available {GPGGA_data_available}")
-            if (GPGGA_data_available>0):
-                GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string
-                NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
-                GPS_Info()                                          #get time, latitude, longitude
-
-                print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
-                map_link = 'http://maps.google.com/?q=' + lat_in_degrees + ',' + long_in_degrees    #create link to plot location on Google map
-                print("<<<<<<<<press ctrl+c to plot location on google maps>>>>>>\n")               #press ctrl+c to plot on map and exit
-                print("------------------------------------------------------------\n")
-                return lat_in_degrees, long_in_degrees
-
-    except KeyboardInterrupt:
-        webbrowser.open(map_link)        #open current position information in google map
-        sys.exit(0)
-
 def get_location():
     global GPGGA_buffer
     global ser
@@ -119,7 +73,7 @@ def get_location():
     try:
         while True:
             print("in loop")
-            received_data = (str)(receive_last())                   #read NMEA string received
+            received_data = (str)(ser.readline())                   #read NMEA string received
             print("data received")
             GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
             print(f"GPGGA data available {GPGGA_data_available}")
