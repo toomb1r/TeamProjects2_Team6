@@ -44,6 +44,7 @@ def signal_handler(sig, frame):
 
 start_time = time()
 distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
+stopped = False
 
 def find_distance():
     global start_time
@@ -66,6 +67,7 @@ def receive_state():
     start_receive = time()
     zero = False
     sixty = False
+    global stopped
     while True:
         received_sig = ""
         if time() - start_receive > 0 and not zero:
@@ -80,38 +82,44 @@ def receive_state():
             print("Error: Receive failed\n")
             continue
         print(received_sig)
-        if received_sig == "5":
-            setHome()
-        elif received_sig == "9":
-            if GPIO.input(in1):
-                stop()
-            else:
-                start()
-        elif received_sig == "11":
-            if GPIO.input(auger1):
-                stop_dispense()
-            else:
-                dispense_algae()
-        elif received_sig == "21":
-            change_dispense_speed(90)
-        elif received_sig == "22":
-            change_dispense_speed(91)
-        elif received_sig == "23":
-            change_dispense_speed(92)
-        elif received_sig == "24":
-            change_dispense_speed(93)
-        elif received_sig == "25":
-            change_dispense_speed(94)
-        elif received_sig == "26":
-            change_dispense_speed(95)
-        elif received_sig == "27":
-            change_dispense_speed(96)
-        elif received_sig == "28":
-            change_dispense_speed(97)
-        elif received_sig == "29":
-            change_dispense_speed(98)
-        elif received_sig == "30":
-            change_dispense_speed(99)
+        if received_sig == "13":
+            print("emergency stop")
+            stopped = not stopped
+            stop()
+            stop_dispense()
+        if not stopped:
+            if received_sig == "5":
+                setHome()
+            elif received_sig == "9":
+                if GPIO.input(in1):
+                    stop()
+                else:
+                    start()
+            elif received_sig == "11":
+                if GPIO.input(auger1):
+                    stop_dispense()
+                else:
+                    dispense_algae()
+            elif received_sig == "21":
+                change_dispense_speed(90)
+            elif received_sig == "22":
+                change_dispense_speed(91)
+            elif received_sig == "23":
+                change_dispense_speed(92)
+            elif received_sig == "24":
+                change_dispense_speed(93)
+            elif received_sig == "25":
+                change_dispense_speed(94)
+            elif received_sig == "26":
+                change_dispense_speed(95)
+            elif received_sig == "27":
+                change_dispense_speed(96)
+            elif received_sig == "28":
+                change_dispense_speed(97)
+            elif received_sig == "29":
+                change_dispense_speed(98)
+            elif received_sig == "30":
+                change_dispense_speed(99)
         elif (received_sig == "40"):
             break
         elif (received_sig == "50"):
