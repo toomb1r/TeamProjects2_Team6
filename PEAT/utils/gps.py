@@ -29,8 +29,8 @@ def GPS_Info():
     nmea_latitude = NMEA_buff[1]                #extract latitude from GPGGA string
     nmea_longitude = NMEA_buff[3]               #extract longitude from GPGGA string
 
-    print("NMEA Time: ", nmea_time,'\n')
-    print ("NMEA Latitude:", nmea_latitude,"NMEA Longitude:", nmea_longitude,'\n')
+    #print("NMEA Time: ", nmea_time,'\n')
+    #print ("NMEA Latitude:", nmea_latitude,"NMEA Longitude:", nmea_longitude,'\n')
 
     lat = float(nmea_latitude)                  #convert string into float for calculation
     longi = float(nmea_longitude)               #convertr string into float for calculation
@@ -50,15 +50,15 @@ def convert_to_degrees(raw_value):
 def convert_to_meters(lat1, lon1, lat2, lon2):
     midLat = float(lat1) + float(lat2) / 2
     mLat = 111132.954 - 559.822 * math.cos( 2.0 * midLat ) + 1.175 * math.cos( 4.0 * midLat)
-    print(f"This is mLat: {mLat} \n\n")
+    #print(f"This is mLat: {mLat} \n\n")
     mLon = (math.pi/180 ) * 6367449 * math.cos( midLat )
-    print(f"This is mLon: {mLon} \n\n")
+    #print(f"This is mLon: {mLon} \n\n")
     dLat = math.fabs(float(lat1) - float(lat2))
-    print(f"This is dLat: {dLat} \n\n")
+    #print(f"This is dLat: {dLat} \n\n")
     dLon = math.fabs(float(lon1) - float(lon2))
-    print(f"This is dLon: {dLon} \n\n")
+    #print(f"This is dLon: {dLon} \n\n")
     c = math.sqrt(math.pow(dLat * mLat,2) + math.pow(dLon * mLon,2))
-    print(f"This is C: {c} \n\n")
+    #print(f"This is C: {c} \n\n")
     return c
 
 def get_location():
@@ -115,6 +115,7 @@ def readHome():
 def setHome():
     """
     Sets the bot's home coordinates
+
     Gathers GPS coordinates from the current location
     Saves the GPS coordinates to the global home variable
 
