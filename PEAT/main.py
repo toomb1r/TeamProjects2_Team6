@@ -15,7 +15,7 @@ from utils.communications import *
 from utils.bg_movement import *
 from utils.bg_files.algaecide import *
 from utils.gps import *
-from utils.pins import *
+#from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
@@ -85,9 +85,9 @@ def receive_state():
         if received_sig == "13":
             print("emergency stop")
             stopped = not stopped
-            if GPIO.input(get_drive_in1()) or GPIO.input(get_auger_in1()):
+            if True or True:
                 stop()
-                stop_dispense
+                stop_dispense()
         if not stopped:
             if received_sig == "5":
                 setHome()
