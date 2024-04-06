@@ -64,6 +64,7 @@ def find_distance():
         print(f"{distances}\n")
 
 def receive_state():
+    print("receive state")
     global stopped
     start_receive = time()
     zero = False
