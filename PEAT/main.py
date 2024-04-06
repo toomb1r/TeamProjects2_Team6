@@ -85,9 +85,8 @@ def receive_state():
         if received_sig == "13":
             print("emergency stop")
             stopped = not stopped
-            if True or True:
-                stop()
-                stop_dispense()
+            stop()
+            stop_dispense()
         if not stopped:
             if received_sig == "5":
                 setHome()
