@@ -53,9 +53,9 @@ def find_distance():
     # if time() - start_time == 60:
     #print("inside if")
     lat1, lon1 = get_location()
-    if lat1 == 0 and lon1 == 0:
-        print("Error: Couldnt gather GPS data")
-        return
+    # if lat1 == 0 and lon1 == 0:
+    #     print("Error: Couldnt gather GPS data")
+    #     return
     # lat2, lon2 = get_location()
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
     #print(f"coords 1: {lat1} {lon1}\n\n\n")
