@@ -75,18 +75,18 @@ def get_location():
         while True:
             print("in loop")
             received_data = (str)(ser.readline())                   #read NMEA string received
-            #print("data received")
+            print("data received")
             GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
-            #print(f"GPGGA data available {GPGGA_data_available}")
+            print(f"GPGGA data available {GPGGA_data_available}")
             if (GPGGA_data_available>0):
                 GPGGA_buffer = received_data.split("$GPGGA,",1)[1]  #store data coming after "$GPGGA," string
                 NMEA_buff = (GPGGA_buffer.split(','))               #store comma separated data in buffer
                 GPS_Info()                                          #get time, latitude, longitude
 
-                #print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
+                print("lat in degrees:", lat_in_degrees," long in degree: ", long_in_degrees, '\n')
                 map_link = 'http://maps.google.com/?q=' + lat_in_degrees + ',' + long_in_degrees    #create link to plot location on Google map
-                #print("<<<<<<<<press ctrl+c to plot location on google maps>>>>>>\n")               #press ctrl+c to plot on map and exit
-                #print("------------------------------------------------------------\n")
+                print("<<<<<<<<press ctrl+c to plot location on google maps>>>>>>\n")               #press ctrl+c to plot on map and exit
+                print("------------------------------------------------------------\n")
                 return lat_in_degrees, long_in_degrees
 
     except KeyboardInterrupt:
