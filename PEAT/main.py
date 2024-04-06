@@ -77,6 +77,7 @@ def receive_state():
             find_distance()
             sixty = True
         try:
+            print("trying to receive")
             received_sig = receive(60.0).strip()
         except:
             print("Error: Receive failed\n")
