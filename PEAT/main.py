@@ -90,6 +90,11 @@ def receive_state():
             stopped = not stopped
             stop()
             stop_dispense()
+        elif (received_sig == "40"):
+            break
+        elif (received_sig == "50"):
+            print("Error: Receive failed (signal 50)")
+            continue
         if not stopped:
             if received_sig == "5":
                 setHome()
@@ -123,11 +128,6 @@ def receive_state():
                 change_dispense_speed(98)
             elif received_sig == "30":
                 change_dispense_speed(99)
-        if (received_sig == "40"):
-            break
-        elif (received_sig == "50"):
-            print("Error: Receive failed (signal 50)")
-            continue
     # while True:
     #     received_sig = receive(40.0).strip()
     #     if (received_sig == "1"):
