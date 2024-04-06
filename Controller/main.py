@@ -6,12 +6,7 @@ import RPi.GPIO as GPIO
 
 import signal
 import sys
-<<<<<<< HEAD
-
-from time import sleep
-=======
-from time import sleep, time
->>>>>>> dev
+from time import time
 
 from utils.communications import *
 #from utils.actions import *
@@ -144,30 +139,6 @@ def main():
 
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
         # sleep(1)
-<<<<<<< HEAD
-        signal.signal(signal.SIGINT, signal_handler)
-        received_sig = receive().strip()
-        if (received_sig == "1"):
-            trigger_IMMOBILIZED_LIGHT()
-            print("triggered immobilized light")
-        elif (received_sig == "3"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-            print("triggered out of algaecide light")
-        elif (received_sig == "4"):
-            trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-            print("Turned algaecide light off")
-=======
-        #received_sig = receive().strip()
-        #if (received_sig == "1"):
-        #    trigger_IMMOBILIZED_LIGHT()
-        #    print("triggered immobilized light")
-        #elif (received_sig == "3"):
-        #    trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-        #    print("triggered out of algaecide light")
-        #elif (received_sig == "4"):
-        #    trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-        #    print("Turned algaecide light off")
->>>>>>> dev
         # sleep(5)
         # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
         # sleep(1)
