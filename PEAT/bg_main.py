@@ -13,7 +13,7 @@ GPIO.setmode(GPIO.BCM)
 from utils.communications import *
 from utils.bg_files.movement import *
 #from utils.algaecide import *
-from utils.pins import *
+# from utils.pins import *
 
 
 
