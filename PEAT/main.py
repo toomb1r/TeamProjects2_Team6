@@ -150,6 +150,8 @@ def transmit_state():
             print("Error: Transmit signal 1 failed\n")
     elif not out_of_algaecide and immobilized:
         try:
+            stop_dispense()
+            stop()
             transmit("2")
         except:
             print("Error: Transmit signal 2 failed\n")
@@ -160,6 +162,8 @@ def transmit_state():
             print("Error: Transmit signal 3 failed\n")
     elif out_of_algaecide and immobilized:
         try:
+            stop_dispense()
+            stop()
             transmit("4")
         except:
             print("Error: Transmit signal 4 failed\n")
