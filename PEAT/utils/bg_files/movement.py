@@ -70,7 +70,7 @@ def left_dist():
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    print(f"left Distance: {distance} cm")
+    # print(f"left Distance: {distance} cm")
     return distance
 
 def right_dist():
@@ -110,7 +110,7 @@ def right_dist():
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    print(f"right Distance: {distance} cm")
+    # print(f"right Distance: {distance} cm")
     return distance
 
 def stop():
@@ -227,9 +227,9 @@ def edgeOfPond():
         with open("returntohome.txt", "r") as file:
             data = file.read().strip()
             file.close()
-            print(f"Data: {data}\n\n")
+            # print(f"Data: {data}\n\n")
         working = data == "home"
-        print(f"not stopped {data} working? {working}")
+        print(f"working? {working}")
         left = left_dist()
         if(left <= 25 and left > 5):
             if data == "home":
