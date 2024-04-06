@@ -73,10 +73,10 @@ def receive_state():
         received_sig = ""
         if time() - start_receive > 0 and not zero:
             print("finding distance")
-            find_distance()
+            # find_distance()
             zero = True
         elif time() - start_receive > 60 and not sixty:
-            find_distance()
+            # find_distance()
             sixty = True
         print("before try")
         try:
