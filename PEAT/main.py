@@ -19,7 +19,7 @@ from utils.pins import *
 
 GPIO.setmode(GPIO.BCM)
 
-stopped = False
+# stopped = False
 #turn = get_turn()
 #turnpwm = GPIO.PWM(turn,50)
 #turnpwm.start(0)
@@ -63,7 +63,7 @@ def find_distance():
         print(f"{distances}\n")
 
 def receive_state():
-    global stopped
+    # global stopped
     start_receive = time()
     zero = False
     sixty = False
@@ -81,52 +81,52 @@ def receive_state():
             print("Error: Receive failed\n")
             continue
         print(received_sig)
-        if received_sig == "13":
-            if GPIO.input(get_drive_in1()) or GPIO.input(get_auger_in1()):
+        # if received_sig == "13":
+        #     if GPIO.input(get_drive_in1()) or GPIO.input(get_auger_in1()):
+        #         stop()
+        #         stop_dispense()
+        #     else:
+        #         start()
+        #         dispense_algae()
+        #     stopped = not stopped
+        # elif not stopped:
+        if received_sig == "5":
+            setHome()
+        elif received_sig == "9":
+            if GPIO.input(in1):
                 stop()
-                stop_dispense()
             else:
                 start()
+        elif received_sig == "11":
+            if GPIO.input(auger1):
+                stop_dispense()
+            else:
                 dispense_algae()
-            stopped = not stopped
-        elif not stopped:
-            if received_sig == "5":
-                setHome()
-            elif received_sig == "9":
-                if GPIO.input(in1):
-                    stop()
-                else:
-                    start()
-            elif received_sig == "11":
-                if GPIO.input(auger1):
-                    stop_dispense()
-                else:
-                    dispense_algae()
-            elif received_sig == "21":
-                change_dispense_speed(90)
-            elif received_sig == "22":
-                change_dispense_speed(91)
-            elif received_sig == "23":
-                change_dispense_speed(92)
-            elif received_sig == "24":
-                change_dispense_speed(93)
-            elif received_sig == "25":
-                change_dispense_speed(94)
-            elif received_sig == "26":
-                change_dispense_speed(95)
-            elif received_sig == "27":
-                change_dispense_speed(96)
-            elif received_sig == "28":
-                change_dispense_speed(97)
-            elif received_sig == "29":
-                change_dispense_speed(98)
-            elif received_sig == "30":
-                change_dispense_speed(99)
-            elif (received_sig == "40"):
-                break
-            elif (received_sig == "50"):
-                print("Error: Receive failed (signal 50)")
-                continue
+        elif received_sig == "21":
+            change_dispense_speed(90)
+        elif received_sig == "22":
+            change_dispense_speed(91)
+        elif received_sig == "23":
+            change_dispense_speed(92)
+        elif received_sig == "24":
+            change_dispense_speed(93)
+        elif received_sig == "25":
+            change_dispense_speed(94)
+        elif received_sig == "26":
+            change_dispense_speed(95)
+        elif received_sig == "27":
+            change_dispense_speed(96)
+        elif received_sig == "28":
+            change_dispense_speed(97)
+        elif received_sig == "29":
+            change_dispense_speed(98)
+        elif received_sig == "30":
+            change_dispense_speed(99)
+        elif (received_sig == "40"):
+            break
+        elif (received_sig == "50"):
+            print("Error: Receive failed (signal 50)")
+            continue
     # while True:
     #     received_sig = receive(40.0).strip()
     #     if (received_sig == "1"):
