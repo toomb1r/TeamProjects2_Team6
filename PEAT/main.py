@@ -123,7 +123,7 @@ def receive_state():
                 change_dispense_speed(98)
             elif received_sig == "30":
                 change_dispense_speed(99)
-        elif (received_sig == "40"):
+        if (received_sig == "40"):
             break
         elif (received_sig == "50"):
             print("Error: Receive failed (signal 50)")
