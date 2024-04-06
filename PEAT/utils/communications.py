@@ -65,10 +65,12 @@ def emergency_stop():
 
 def transmit(signal):
     """Transmits a signal using the transciever
-    Converts a signal into bytes and transmits it 3 times (to ensure receipt)
+    Encrypts a signal. Segments signal into 200 character packets.
+    Sends a newline character at the end to symbolize end of signal.
+    Transmits each packet 3 times (to ensure receipt).
 
     Args:
-        signal (Any): The signal to be sent
+        signal (str): The signal to be sent
 
     Returns:
         None
@@ -80,17 +82,23 @@ def transmit(signal):
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    num_sends = 0
 
-    while num_sends <= 2:
-        data = bytes(f"{signal}\r\n","utf-8")
-        rfm9x.send(data)
-        num_sends+=1
+    data = encrypt(signal)
+    # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
+    data_list = [(data[i:i+150]) for i in range(0, len(data), 150)]
+    data_list.append(b"\n")
+    for seg in data_list:
+        num_sends = 0
+        while num_sends <= 2:
+            rfm9x.send(seg)
+            print(f"sent seg: {seg}")
+            num_sends+=1
 
-def receive():
+def receive(timeout):
     """Receives a signal using the transciever
-    Listens for a signal until one is recieved. Converts this signal into a string.
-    Returns this string signal to the calling method
+    Listens for a signal until one is received.
+    Joins all received packets until a packet with the newline character is received.
+    Decrypts this signal. Returns this string signal to the calling method
 
     Args:
         None
@@ -105,14 +113,85 @@ def receive():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    prev_packet = None
 
-    while True:
-        packet = rfm9x.receive()
-        if packet is None:
-            print("packet = None")
-        else:
-            prev_packet = packet
-            packet_text = str(prev_packet, "utf-8")
-            print(f"packet = {packet_text}")
-            return packet_text
+    fail_list = []
+    data_list = []
+    packet = rfm9x.receive(timeout=timeout)
+    print(f"first packet: {packet}\n")
+    if packet is not None:
+        while True:
+            fail_count = 0
+            # packet = rfm9x.receive()
+            print(f"received packet: {packet}")
+            fail_list.append(packet)
+            for fail in fail_list[-10:]:
+                if fail is None:
+                    fail_count += 1
+            if fail_count >= 10:
+                return "50"
+            if packet is not None:
+                if packet not in data_list:
+                    data_list.append(packet)
+                if data_list[-1] == b"\n":
+                    data_list.pop()
+                    if not data_list:
+                        return
+                    packet_text = b''.join(data_list)
+                    packet_text = decrypt(packet_text.strip())
+                    return packet_text
+            packet = rfm9x.receive()
+
+# def transmit(signal):
+#     """Transmits a signal using the transciever
+#     Converts a signal into bytes and transmits it 3 times (to ensure receipt)
+
+#     Args:
+#         signal (Any): The signal to be sent
+
+#     Returns:
+#         None
+#     """
+
+#     # Configure LoRa Radio
+#     CS = DigitalInOut(board.CE1)
+#     RESET = DigitalInOut(board.D25)
+#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+#     rfm9x.tx_power = 23
+#     num_sends = 0
+
+#     while num_sends <= 2:
+#         data = bytes(f"{signal}\r\n","utf-8")
+#         rfm9x.send(data)
+#         num_sends+=1
+
+# def receive(timeout):
+#     """Receives a signal using the transciever
+#     Listens for a signal until one is recieved. Converts this signal into a string.
+#     Returns this string signal to the calling method
+
+#     Args:
+#         None
+
+#     Returns:
+#         packet_text (string): The data received
+#     """
+
+#     # Configure LoRa Radio
+#     CS = DigitalInOut(board.CE1)
+#     RESET = DigitalInOut(board.D25)
+#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+#     rfm9x.tx_power = 23
+#     prev_packet = None
+
+#     while True:
+#         packet = rfm9x.receive(timeout=timeout)
+#         if packet is None:
+#             print("packet = None")
+#         else:
+#             prev_packet = packet
+#             packet_text = str(prev_packet, "utf-8")
+#             print(f"packet = {packet_text}")
+#             return packet_text
+

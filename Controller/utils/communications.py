@@ -49,6 +49,16 @@ ads = ADS.ADS1115(i2c)
 # Define the analog input channel
 channel = AnalogIn(ads, ADS.P0)
 
+in_transmit_state = False
+
+# def get_in_transmit_state():
+#     global in_transmit_state
+#     return in_transmit_state
+
+def set_in_transmit_state(bool):
+    global in_transmit_state
+    in_transmit_state = bool
+
 def encrypt(msg):
     """Encrypts a message using PEAT's public key
     Gets the RSA public key of PEAT. Encodes the message in UTF-8 and encrypts it.
@@ -91,10 +101,12 @@ def decrypt(encrypted_msg):
 
 def transmit(signal):
     """Transmits a signal using the transciever
-    Converts a signal into bytes. Transmits this signal 3 times (to ensure receipt).
+    Encrypts a signal. Segments signal into 200 character packets.
+    Sends a newline character at the end to symbolize end of signal.
+    Transmits each packet 3 times (to ensure receipt).
 
     Args:
-        signal (Any): The signal to be sent
+        signal (str): The signal to be sent
 
     Returns:
         None
@@ -106,17 +118,23 @@ def transmit(signal):
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    num_sends = 0
 
-    while num_sends <= 2:
-        data = bytes(f"{signal}\r\n","utf-8")
-        rfm9x.send(data)
-        num_sends+=1
+    data = encrypt(signal)
+    # https://www.geeksforgeeks.org/python-split-string-in-groups-of-n-consecutive-characters/
+    data_list = [(data[i:i+150]) for i in range(0, len(data), 150)]
+    data_list.append(b"\n")
+    for seg in data_list:
+        num_sends = 0
+        while num_sends <= 2:
+            rfm9x.send(seg)
+            print(f"sent seg: {seg}")
+            num_sends+=1
 
-def receive():
+def receive(timeout):
     """Receives a signal using the transciever
-    Listens for a signal until one is recieved. Converts this signal into a string.
-    Returns this string signal to the calling method
+    Listens for a signal until one is received.
+    Joins all received packets until a packet with the newline character is received.
+    Decrypts this signal. Returns this string signal to the calling method
 
     Args:
         None
@@ -131,22 +149,92 @@ def receive():
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
     rfm9x.tx_power = 23
-    prev_packet = None
 
-    while True:
-        packet = rfm9x.receive()
-        if packet is None:
-            print("packet = None")
-        else:
-            prev_packet = packet
-            packet_text = str(prev_packet, "utf-8")
-            print(f"packet = {packet_text}")
-            return packet_text
+    fail_list = []
+    data_list = []
+    packet = rfm9x.receive(timeout=timeout)
+    print(f"first packet: {packet}\n")
+    if packet is not None:
+        while True:
+            fail_count = 0
+            # packet = rfm9x.receive()
+            print(f"received packet: {packet}")
+            fail_list.append(packet)
+            for fail in fail_list[-10:]:
+                if fail is None:
+                    fail_count += 1
+            if fail_count >= 10:
+                return "50"
+            if packet is not None:
+                if packet not in data_list:
+                    data_list.append(packet)
+                if data_list[-1] == b"\n":
+                    data_list.pop()
+                    if not data_list:
+                        return
+                    packet_text = b''.join(data_list)
+                    packet_text = decrypt(packet_text.strip())
+                    print(f"decrypted packet: {packet_text}")
+                    return packet_text
+            packet = rfm9x.receive()
 
-def trigger_IMMOBILIZED_LIGHT():
-    """Triggers light signaling immobilized status
-    Turns the immobilized light on if it is off.
-    Turns the immobilized light off if it is on.
+# def transmit(signal):
+#     """Transmits a signal using the transciever
+#     Converts a signal into bytes and transmits it 3 times (to ensure receipt)
+
+#     Args:
+#         signal (Any): The signal to be sent
+
+#     Returns:
+#         None
+#     """
+
+#     # Configure LoRa Radio
+#     CS = DigitalInOut(board.CE1)
+#     RESET = DigitalInOut(board.D25)
+#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+#     rfm9x.tx_power = 23
+#     num_sends = 0
+
+#     while num_sends <= 0:
+#         data = bytes(f"{signal}\r\n","utf-8")
+#         rfm9x.send(data)
+#         num_sends+=1
+
+# def receive(timeout):
+#     """Receives a signal using the transciever
+#     Listens for a signal until one is recieved. Converts this signal into a string.
+#     Returns this string signal to the calling method
+
+#     Args:
+#         None
+
+#     Returns:
+#         packet_text (string): The data received
+#     """
+
+#     # Configure LoRa Radio
+#     CS = DigitalInOut(board.CE1)
+#     RESET = DigitalInOut(board.D25)
+#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+#     rfm9x.tx_power = 23
+#     prev_packet = None
+
+#     while True:
+#         packet = rfm9x.receive(timeout=timeout)
+#         if packet is None:
+#             print("packet = None")
+#         else:
+#             prev_packet = packet
+#             packet_text = str(prev_packet, "utf-8")
+#             print(f"packet = {packet_text}")
+#             return packet_text
+
+def OUT_OF_ALGAECIDE_LIGHT_off():
+    """Turns light signaling out of algaecide status off
+    Turns the out of algaecide light off.
 
     Args:
         None
@@ -155,15 +243,12 @@ def trigger_IMMOBILIZED_LIGHT():
         None
     """
 
-    if GPIO.input(IMMOBILIZED_LIGHT):
-        GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
-    else:
-        GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
-def trigger_OUT_OF_ALGAECIDE_LIGHT(onoff):
-    """Triggers light signaling out of algaecide status
-    Turns the out of algaecide light on if it is off.
-    Turns the out of algaecide light off if it is on.
+    GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
+
+def OUT_OF_ALGAECIDE_LIGHT_on():
+    """Turns light signaling out of algaecide status on
+    Turns the out of algaecide light on.
 
     Args:
         None
@@ -172,10 +257,35 @@ def trigger_OUT_OF_ALGAECIDE_LIGHT(onoff):
         None
     """
 
-    if not onoff:
-        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
-    else:
-        GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
+
+    GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
+
+def IMMOBILIZED_LIGHT_off():
+    """Turns light signaling immobilized status off
+    Turns the immobilized light off.
+
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
+
+def IMMOBILIZED_LIGHT_on():
+    """Turns light signaling immobilized status on
+    Turns the immobilized light on.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+
+    GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
 def SET_HOME_BUTTON_pressed_callback(channel):
     """Callback for the set home button
@@ -188,7 +298,13 @@ def SET_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("5")
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        try:
+            transmit("5")
+        except:
+            print("Error: Transmit signal 5 failed\n")
 
 def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     """Callback for the return to home button
@@ -201,7 +317,13 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("7")
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        try:
+            transmit("7")
+        except:
+            print("Error: Transmit signal 7 failed\n")
 
 def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     """Callback for the start and stop move button
@@ -209,12 +331,18 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
 
     Args:
         None
-    
+
     Returns:
         None
     """
 
-    transmit("9")
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        try:
+            transmit("9")
+        except:
+            print("Error: Transmit signal 9 failed\n")
 
 def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     """Callback for the start and stop algaecide dispensing button
@@ -222,12 +350,18 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
 
     Args:
         None
-    
+
     Returns:
         None
     """
 
-    transmit("11")
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        try:
+            transmit("11")
+        except:
+            print("Error: Transmit signal 11 failed\n")
 
 def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     """Callback for the emergency stop button
@@ -240,7 +374,13 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
         None
     """
 
-    transmit("13")
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        try:
+            transmit("13")
+        except:
+            print("Error: Transmit signal 13 failed\n")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     """Callback for the button setting the algaecide dispensing rate
@@ -255,33 +395,39 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     Returns:
         None
     """
-    
-    # Initialize the I2C interface
-    i2c = busio.I2C(board.SCL, board.SDA)
-    # Create an  ADS1115 object
-    ads = ADS.ADS1115(i2c)
-    # Define the analog input channel
-    cur_channel = AnalogIn(ads, ADS.P0)
 
-    max_voltage = 3.3
-    num_settings = 10
-    voltage_boundary = max_voltage / num_settings
-    cur_voltage = cur_channel.voltage
-    cur_setting = 1
-    cur_voltage_setting_boundary = voltage_boundary
+    global in_transmit_state
+    print(f"in transmit state? {in_transmit_state}\n")
+    if in_transmit_state:
+        # Initialize the I2C interface
+        i2c = busio.I2C(board.SCL, board.SDA)
+        # Create an  ADS1115 object
+        ads = ADS.ADS1115(i2c)
+        # Define the analog input channel
+        cur_channel = AnalogIn(ads, ADS.P0)
 
-    while True:
-        if cur_voltage_setting_boundary < cur_voltage:
-            cur_voltage_setting_boundary += voltage_boundary
-            cur_setting += 1
-        else:
-            cur_setting_sig = cur_setting + 20
-            transmit(cur_setting_sig)
-            break
+        max_voltage = 3.3
+        num_settings = 10
+        voltage_boundary = max_voltage / num_settings
+        cur_voltage = cur_channel.voltage
+        cur_setting = 1
+        cur_voltage_setting_boundary = voltage_boundary
 
-GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=200)
-GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=200)
+        while True:
+            if cur_voltage_setting_boundary < cur_voltage:
+                cur_voltage_setting_boundary += voltage_boundary
+                cur_setting += 1
+            else:
+                cur_setting_sig = cur_setting + 20
+                try:
+                    transmit(str(cur_setting_sig))
+                except:
+                    print(f"Error: Transmit {cur_setting_sig} failed\n")
+                break
+
+GPIO.add_event_detect(SET_HOME_BUTTON, GPIO.FALLING, callback=SET_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(RETURN_TO_HOME_BUTTON, GPIO.FALLING, callback=RETURN_TO_HOME_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_MOVE_BUTTON, GPIO.FALLING, callback=START_STOP_MOVE_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(START_STOP_DISPENSING_BUTTON, GPIO.FALLING, callback=START_STOP_DISPENSING_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(EMERGENCY_STOP_BUTTON, GPIO.FALLING, callback=EMERGENCY_STOP_BUTTON_pressed_callback, bouncetime=8000)
+GPIO.add_event_detect(DISPENSE_RATE_POTENTIOMETER, GPIO.FALLING, callback=DISPENSE_RATE_POTENTIOMETER_button_pressed_callback, bouncetime=8000)
