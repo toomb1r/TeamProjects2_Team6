@@ -9,6 +9,8 @@ from gps3 import gps3
 from time import sleep, time
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
+
 from utils.communications import *
 from utils.bg_movement import *
 from utils.bg_files.algaecide import *
@@ -46,13 +48,13 @@ distances = [[0, 0], [0, 0], [0, 0], [0, 0]]
 def find_distance():
     global start_time
     global ser
-    print(f"Start time: {start_time}\n Current time: {time()}\n")
+    #print(f"Start time: {start_time}\n Current time: {time()}\n")
     # if time() - start_time == 60:
-    print("inside if")
+    #print("inside if")
     lat1, lon1 = get_location()
     # lat2, lon2 = get_location()
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
-    print(f"coords 1: {lat1} {lon1}\n\n\n")
+    #print(f"coords 1: {lat1} {lon1}\n\n\n")
     if len(distances) > 4:
         distances.append([lat1, lon1])
     if len(distances) == 4:
@@ -78,7 +80,9 @@ def receive_state():
             print("Error: Receive failed\n")
             continue
         print(received_sig)
-        if received_sig == "9":
+        if received_sig == "5":
+            setHome()
+        elif received_sig == "9":
             if GPIO.input(in1):
                 stop()
             else:
@@ -207,6 +211,7 @@ def main():
     # find_distance()
     #start_time = time()
     # receive()
+    readHome()
     #start()
     # lat1, lon1 = get_location()
     # lat2, lon2 = get_location()
