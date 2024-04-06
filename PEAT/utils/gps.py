@@ -32,8 +32,8 @@ def GPS_Info():
     #print("NMEA Time: ", nmea_time,'\n')
     #print ("NMEA Latitude:", nmea_latitude,"NMEA Longitude:", nmea_longitude,'\n')
 
-    if nmea_latitude == "" or nmea_longitude == "":
-        return
+    # if nmea_latitude == "" or nmea_longitude == "":
+        # return
 
     lat = float(nmea_latitude)                  #convert string into float for calculation
     longi = float(nmea_longitude)               #convertr string into float for calculation
@@ -110,7 +110,7 @@ def readHome():
     """
 
     global home
-    print("reading home")
+    # print("reading home")
     with open("home.txt","r") as file:
         home = file.readlines()
 
