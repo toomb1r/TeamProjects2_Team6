@@ -16,7 +16,6 @@ GPGGA_buffer = 0
 NMEA_buff = 0
 lat_in_degrees = 0
 long_in_degrees = 0
-home = []
 
 def GPS_Info():
     global NMEA_buff
@@ -69,8 +68,6 @@ def get_location():
     global long_in_degrees
     global gpgga_info
     print("before try")
-    ser.reset_input_buffer()
-    print("after reset")
     try:
         while True:
             print("in loop")
@@ -93,54 +90,8 @@ def get_location():
         webbrowser.open(map_link)        #open current position information in google map
         sys.exit(0)
 
-def readHome():
-    """
-    Sets the bot's home coordinates from a read in string
-
-    Uses a file to get the latitude and longitude data for the Home
-    Sets the latitude and longitude data to the global home variable
-
-    Args:
-        None
-    Returns:
-        None
-    """
-
-    global home
-    with open("home.txt","r") as file:
-        home = file.readlines()
-
-    print(f"Home: {home}")
-
-def setHome():
-    """
-    Sets the bot's home coordinates
-    Gathers GPS coordinates from the current location
-    Saves the GPS coordinates to the global home variable
-
-    Args:
-        None
-    Returns:
-        None
-    """
-
-    global home
-    with open("home.txt","w") as file:
-        file.write("")
-        file.close()
-
-    if len(home) > 0:
-        home.pop()
-    lat, lon = get_location()
-    home = [lat, lon]
-    print(f"Home: {home}\n")
-    with open("home.txt","a") as file:
-        file.write(f"{lat}\n")
-        file.write(lon)
-        file.close()
-
 def check_distances(distances):
     distance = 0
     for i in range(0, len(distances)-1):
-        distance = distance + convert_to_meters(distances[i][0], distances[i][1], distances[i+1][0], distances[i+1][1])
+        distance = distance + (float(distances[i]) + float(distances[i+1]))
     return distance
