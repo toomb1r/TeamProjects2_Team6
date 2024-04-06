@@ -73,9 +73,9 @@ def get_location():
     #print("after reset")
     try:
         while True:
-            print("in loop")
+            print("Collecting GPS data")
             received_data = (str)(ser.readline())                   #read NMEA string received
-            print("data received")
+            print("GPS data collected")
             GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
             print(f"GPGGA data available {GPGGA_data_available}")
             if (GPGGA_data_available>0):
