@@ -51,7 +51,6 @@ def find_distance():
     global ser
     #print(f"Start time: {start_time}\n Current time: {time()}\n")
     # if time() - start_time == 60:
-    print("inside if")
     lat1, lon1 = get_location()
     # lat2, lon2 = get_location()
     # meters = convert_to_meters(lat1=lat1, lon1=lon1, lat2=lat2, lon2=lon2)
@@ -71,10 +70,10 @@ def receive_state():
     while True:
         received_sig = ""
         if time() - start_receive > 0 and not zero:
-            # find_distance()
+            find_distance()
             zero = True
         elif time() - start_receive > 60 and not sixty:
-            # find_distance()
+            find_distance()
             sixty = True
         try:
             received_sig = receive(60.0).strip()
