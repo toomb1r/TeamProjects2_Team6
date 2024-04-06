@@ -19,12 +19,12 @@ GPIO.setup(21,GPIO.OUT)
 GPIO.setup(15,GPIO.IN)
 GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-def emergency_stop(channel):
-    global stop
-    stop = not stop
-    print("stop")
+# def emergency_stop(channel):
+#     global stop
+#     stop = not stop
+#     print("stop")
 
-GPIO.add_event_detect(15, GPIO.FALLING, callback=emergency_stop, bouncetime=200)
+#GPIO.add_event_detect(15, GPIO.FALLING, callback=emergency_stop, bouncetime=200)
 
 GPIO.setmode(GPIO.BCM)
 
