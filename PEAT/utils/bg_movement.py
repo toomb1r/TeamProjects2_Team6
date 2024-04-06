@@ -46,6 +46,24 @@ def stop():
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
+def start_up():
+    """
+    Turns on movement motors
+
+    Turns on the output for both inputs of the motor, which turns the motor on and turns off the return to home stuff
+
+    Args:
+        None
+    Returns:
+        None
+    """
+
+    with open("returntohome.txt", "w") as file:
+        file.write("notStopped")
+        file.close()
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+
 def start():
     """
     Beings motion for the movement motors
@@ -75,3 +93,15 @@ def reverse():
     """
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.HIGH)
+
+def return_to_home():
+    """
+    Activates return to home GPIO boolean
+
+    Turns the return to home pin (pin 8) to high
+    """
+
+    with open("returntohome.txt", "w") as file:
+        file.write("home")
+        file.close()
+        print(f"Returning to home")

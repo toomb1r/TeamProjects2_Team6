@@ -17,8 +17,6 @@ from utils.bg_files.algaecide import *
 from utils.gps import *
 #from utils.pins import *
 
-GPIO.setmode(GPIO.BCM)
-
 #turn = get_turn()
 #turnpwm = GPIO.PWM(turn,50)
 #turnpwm.start(0)
@@ -87,14 +85,22 @@ def receive_state():
             stopped = not stopped
             stop()
             stop_dispense()
+        elif (received_sig == "40"):
+            break
+        elif (received_sig == "50"):
+            print("Error: Receive failed (signal 50)")
+            continue
         if not stopped:
             if received_sig == "5":
                 setHome()
+            elif received_sig == "7":
+                stop_dispense()
+                return_to_home()
             elif received_sig == "9":
                 if GPIO.input(in1):
                     stop()
                 else:
-                    start()
+                    start_up()
             elif received_sig == "11":
                 if GPIO.input(auger1):
                     stop_dispense()
@@ -120,11 +126,6 @@ def receive_state():
                 change_dispense_speed(98)
             elif received_sig == "30":
                 change_dispense_speed(99)
-        elif (received_sig == "40"):
-            break
-        elif (received_sig == "50"):
-            print("Error: Receive failed (signal 50)")
-            continue
     # while True:
     #     received_sig = receive(40.0).strip()
     #     if (received_sig == "1"):
@@ -187,6 +188,7 @@ def main():
 
     Returns: None
     """
+
     global start_time
     # enc_msg = encrypt("this is encrypted")
     # dec_msg = decrypt(enc_msg)
@@ -194,6 +196,7 @@ def main():
     #sleep(5)
 
     #slee
+
 
     # transmit_and_receive()
 
