@@ -80,7 +80,9 @@ def receive_state():
             print("Error: Receive failed\n")
             continue
         print(received_sig)
-        if received_sig == "9":
+        if received_sig == "5":
+            setHome()
+        elif received_sig == "9":
             if GPIO.input(in1):
                 stop()
             else:
