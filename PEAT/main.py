@@ -88,11 +88,14 @@ def receive_state():
         if not stopped:
             if received_sig == "5":
                 setHome()
+            elif received_sig == "7":
+                stop_dispense()
+                return_to_home()
             elif received_sig == "9":
                 if GPIO.input(in1):
                     stop()
                 else:
-                    start()
+                    start_up()
             elif received_sig == "11":
                 if GPIO.input(auger1):
                     stop_dispense()

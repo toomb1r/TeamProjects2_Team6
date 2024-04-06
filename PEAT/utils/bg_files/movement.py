@@ -129,24 +129,6 @@ def stop():
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
-def start_up():
-    """
-    Turns on movement motors
-
-    Turns on the output for both inputs of the motor, which turns the motor on and turns off the return to home stuff
-
-    Args:
-        None
-    Returns:
-        None
-    """
-
-    with open("returntohome.txt", "w") as file:
-        file.write("notStopped")
-        file.close()
-    GPIO.output(in1,GPIO.HIGH)
-    GPIO.output(in2,GPIO.LOW)
-
 def start():
     """
     Beings motion for the movement motors
@@ -241,13 +223,25 @@ def edgeOfPond():
     # If edge of pond detected
     # consult Anmol about progress on the ultrasonic sensor code
     if GPIO.input(in1):
-        print("not stopped")
+        data = ""
+        with open("returntohome.txt", "r") as file:
+            data = file.read().strip()
+            file.close()
+            print(f"Data: {data}\n\n")
+        working = data == "home"
+        print(f"not stopped {data} working? {working}")
         left = left_dist()
         if(left <= 25 and left > 5):
-            turn_left()
+            if data == "home":
+                stop()
+            else:
+                turn_left()
         right = right_dist()
         if(right <= 25 and right > 5):
-            turn_right()
+            if data == "home":
+                stop()
+            else:
+                turn_right()
         # Stop all movement and turn the correct direction
         # stop()
         # if(rorl):
