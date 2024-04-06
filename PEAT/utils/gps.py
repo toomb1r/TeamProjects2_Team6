@@ -136,7 +136,7 @@ def setHome():
     home = [lat, lon]
     print(f"Home: {home}\n")
     with open("home.txt","a") as file:
-        file.write(f"{lat}\n")
+        file.write(f"{lat}")
         file.write(lon)
         file.close()
 
