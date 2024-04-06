@@ -133,7 +133,7 @@ def setHome():
     if len(home) > 0:
         home.pop()
     lat, lon = get_location()
-    home = [lat, lon]
+    home = [lat.strip(), lon.strip()]
     print(f"Home: {home}\n")
     with open("home.txt","a") as file:
         file.write(f"{lat}")
