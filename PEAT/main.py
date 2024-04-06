@@ -64,12 +64,12 @@ def find_distance():
         print(f"{distances}\n")
 
 def receive_state():
-    print("receive state")
     global stopped
     start_receive = time()
     zero = False
     sixty = False
     while True:
+        print("while loop")
         received_sig = ""
         if time() - start_receive > 0 and not zero:
             find_distance()
