@@ -130,7 +130,7 @@ def setHome():
     if len(home) > 0:
         home.pop()
     lat, lon = get_location()
-    if lat == 0 or lon == 0:
+    if lat == 0 and lon == 0:
         print("Error: Couldnt gather GPS data")
         return
     home = [lat.strip(), lon.strip()]
