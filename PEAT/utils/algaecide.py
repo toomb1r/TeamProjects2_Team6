@@ -47,6 +47,7 @@ def stop_dispense():
     Returns:
         None
     """
+    print("STOPPING ALGACIDE")
     GPIO.output(auger1, GPIO.LOW)
     GPIO.output(auger2, GPIO.LOW)
     GPIO.output(dispenser1, GPIO.LOW)

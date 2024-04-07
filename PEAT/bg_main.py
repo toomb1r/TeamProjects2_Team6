@@ -8,12 +8,12 @@ from gps3 import gps3
 
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
+
 from utils.communications import *
 from utils.bg_files.movement import *
 #from utils.algaecide import *
 # from utils.pins import *
-
-GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
     """

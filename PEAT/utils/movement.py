@@ -12,6 +12,7 @@ TRIGl = 12
 ECHOl = 19
 TRIGr = 23
 ECHOr = 24
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(en, GPIO.OUT)
 GPIO.setup(turn, GPIO.OUT)
 GPIO.setup(in1, GPIO.OUT)
@@ -26,14 +27,9 @@ movepwm=GPIO.PWM(en,1000)
 movepwm.start(25)
 turnpwm.start(0)
 
-#turnpwm.ChangeDutyCycle(5)
 movepwm.ChangeDutyCycle(100)
 
-# This code probably should be in the main method although this will probably be run first so it doesnt matter?
-# Consult with team
-GPIO.output(in1,GPIO.LOW)
-GPIO.output(in2,GPIO.LOW)
-
+retToHome = False
 def left_dist():
     """
     Returns distance of left ultrasonic sensor
@@ -46,6 +42,7 @@ def left_dist():
     Returns:
         distance (int): Distance in front of ultrasonic sensor in cm
     """
+
     distance = 0
 
     #print("Distance Measurement In Progress")
@@ -70,7 +67,7 @@ def left_dist():
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    # print(f"left Distance: {distance} cm")
+    print(f"left Distance: {distance} cm")
     return distance
 
 def right_dist():
@@ -110,7 +107,7 @@ def right_dist():
     distance = pulse_duration * 17150 # speed of sound in air
     # distance = pulse_duration * 75000 # speed of sound in water
     distance = round(distance, 2)
-    # print(f"right Distance: {distance} cm")
+    print(f"right Distance: {distance} cm")
     return distance
 
 def stop():
@@ -127,6 +124,23 @@ def stop():
     """
 
     GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
+
+def start_up():
+    """
+    Turns on movement motors
+
+    Turns on the output for both inputs of the motor, which turns the motor on and turns off the return to home stuff
+
+    Args:
+        None
+    Returns:
+        None
+    """
+
+    with open("returntohome.txt", "w") as file:
+        file.write("notStopped")
+    GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
 
 def start():
@@ -162,7 +176,7 @@ def reverse():
     GPIO.output(in2,GPIO.HIGH)
 
 def turn_left():
-    '''
+    """
     Turns PEAT to the left
 
     moves the rudder so PEAT can move to the left
@@ -171,7 +185,8 @@ def turn_left():
         None
     Returns:
         None
-    '''
+    """
+
     print("turn left")
     reverse()
     sleep(5)
@@ -183,7 +198,7 @@ def turn_left():
     turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
-    '''
+    """
     Turns PEAT to the right
     moves the rudder so PEAT can move to the right
 
@@ -191,7 +206,8 @@ def turn_right():
         None
     Returns:
         None
-    '''
+    """
+
     print("turn right")
     reverse()
     sleep(5)
@@ -217,56 +233,23 @@ def edgeOfPond():
         None
     """
 
-    # During testing we can determine whether or not this is needed
-    # constant = 20
-
-    # If edge of pond detected
-    # consult Anmol about progress on the ultrasonic sensor code
     if GPIO.input(in1):
         data = ""
         with open("returntohome.txt", "r") as file:
             data = file.read().strip()
             file.close()
-            # print(f"Data: {data}\n\n")
+            print(f"Data: {data}\n\n")
         working = data == "home"
-        print(f"working? {working}")
+        print(f"not stopped {data} working? {working}")
         left = left_dist()
-        if(left <= 25 and left > 5):
+        if left <= 25 and left > 5.5:
             if data == "home":
                 stop()
             else:
                 turn_left()
         right = right_dist()
-        if(right <= 25 and right > 5):
+        if right <= 25 and right > 5.5:
             if data == "home":
                 stop()
             else:
                 turn_right()
-        # Stop all movement and turn the correct direction
-        # stop()
-        # if(rorl):
-        #     turning(10)
-        # else:
-        #     turning(0)
-
-        # # Move for a constant time
-        # start()
-
-        # Uncomment this if constant is needed
-        # sleep(constant)
-
-        # Stop all movement and turn the correct direction
-        # stop()
-        # turning(5)
-        # if(rorl):
-        #     turning(10)
-        # else:
-        #     turning(0)
-
-        # Change the turning direction unless the edge of pond is still in front of PEAT
-        # rorl = not rorl
-        # if(GPIO.input(24)):
-        #     rorl = not rorl
-
-        # Check if the edge of pond is still in front of PEAT
-        # edgeOfPond()
