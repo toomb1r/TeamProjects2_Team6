@@ -110,25 +110,25 @@ def receive_state():
                 else:
                     dispense_algae()
             elif received_sig == "21":
-                change_dispense_speed(90)
+                change_dispense_speed(100)
             elif received_sig == "22":
-                change_dispense_speed(91)
+                change_dispense_speed(97.5)
             elif received_sig == "23":
-                change_dispense_speed(92)
-            elif received_sig == "24":
-                change_dispense_speed(93)
-            elif received_sig == "25":
-                change_dispense_speed(94)
-            elif received_sig == "26":
                 change_dispense_speed(95)
+            elif received_sig == "24":
+                change_dispense_speed(92.5)
+            elif received_sig == "25":
+                change_dispense_speed(90)
+            elif received_sig == "26":
+                change_dispense_speed(87.5)
             elif received_sig == "27":
-                change_dispense_speed(96)
+                change_dispense_speed(85)
             elif received_sig == "28":
-                change_dispense_speed(97)
+                change_dispense_speed(82.5)
             elif received_sig == "29":
-                change_dispense_speed(98)
+                change_dispense_speed(80)
             elif received_sig == "30":
-                change_dispense_speed(99)
+                change_dispense_speed(77.5)
     # while True:
     #     received_sig = receive(40.0).strip()
     #     if (received_sig == "1"):
