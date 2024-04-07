@@ -112,23 +112,23 @@ def receive_state():
             elif received_sig == "21":
                 change_dispense_speed(100)
             elif received_sig == "22":
-                change_dispense_speed(97.5)
+                change_dispense_speed(98)
             elif received_sig == "23":
-                change_dispense_speed(95)
+                change_dispense_speed(96)
             elif received_sig == "24":
-                change_dispense_speed(92.5)
+                change_dispense_speed(94)
             elif received_sig == "25":
-                change_dispense_speed(90)
+                change_dispense_speed(92)
             elif received_sig == "26":
-                change_dispense_speed(87.5)
+                change_dispense_speed(90)
             elif received_sig == "27":
-                change_dispense_speed(85)
+                change_dispense_speed(88)
             elif received_sig == "28":
-                change_dispense_speed(82.5)
+                change_dispense_speed(86)
             elif received_sig == "29":
-                change_dispense_speed(80)
+                change_dispense_speed(84)
             elif received_sig == "30":
-                change_dispense_speed(77.5)
+                change_dispense_speed(82)
     # while True:
     #     received_sig = receive(40.0).strip()
     #     if (received_sig == "1"):
