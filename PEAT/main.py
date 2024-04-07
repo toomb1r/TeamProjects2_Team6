@@ -73,9 +73,11 @@ def receive_state():
         received_sig = ""
         if time() - start_receive > 0 and not zero:
             # find_distance()
+            print("SKIPPING GPS")
             zero = True
         elif time() - start_receive > 60 and not sixty:
             # find_distance()
+            print("SKIPPING GPS")
             sixty = True
         try:
             received_sig = receive(60.0).strip()
