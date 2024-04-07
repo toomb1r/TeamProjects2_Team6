@@ -32,10 +32,10 @@ def GPS_Info():
     #print("NMEA Time: ", nmea_time,'\n')
     #print ("NMEA Latitude:", nmea_latitude,"NMEA Longitude:", nmea_longitude,'\n')
 
-    # if nmea_latitude == "" or nmea_longitude == "":
-    #     long_in_degrees = 0
-    #     lat_in_degrees = 0
-    #     return
+    if nmea_latitude == "" or nmea_longitude == "":
+        long_in_degrees = 0
+        lat_in_degrees = 0
+        return
 
     lat = float(nmea_latitude)                  #convert string into float for calculation
     longi = float(nmea_longitude)               #convertr string into float for calculation
@@ -139,9 +139,9 @@ def setHome():
     if len(home) > 0:
         home.pop()
     lat, lon = get_location()
-    # if lat == 0 or lon == 0:
-    #     print("Error: Couldnt gather GPS data")
-    #     return
+    if lat == 0 or lon == 0:
+        print("Error: Couldnt gather GPS data")
+        return
     home = [lat.strip(), lon.strip()]
     print(f"Home: {home}\n")
     with open("home.txt","a") as file:
