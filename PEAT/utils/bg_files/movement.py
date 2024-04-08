@@ -174,7 +174,7 @@ def turn_left():
     '''
     print("turn left")
     reverse()
-    sleep(5)
+    sleep(10)
     start()
     turnpwm.ChangeDutyCycle(7.5)
     sleep_time = random.randint(5,10)
@@ -194,7 +194,7 @@ def turn_right():
     '''
     print("turn right")
     reverse()
-    sleep(5)
+    sleep(10)
     start()
     turnpwm.ChangeDutyCycle(2.5)
     sleep_time = random.randint(5,10)
