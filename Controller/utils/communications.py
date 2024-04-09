@@ -6,7 +6,6 @@ import busio
 from digitalio import DigitalInOut
 import rsa # pip install rsa
 import RPi.GPIO as GPIO
-from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 
@@ -51,11 +50,16 @@ channel = AnalogIn(ads, ADS.P0)
 
 in_transmit_state = False
 
-# def get_in_transmit_state():
-#     global in_transmit_state
-#     return in_transmit_state
-
 def set_in_transmit_state(bool):
+    """Setter for the in_transmit_state bool
+
+    Args:
+        bool (bool): the bool to which in_transmit_state is set
+
+    Returns:
+        None
+    """
+
     global in_transmit_state
     in_transmit_state = bool
 
@@ -68,7 +72,7 @@ def encrypt(msg):
         msg (str): The message to be encrypted
 
     Returns:
-        bytes: The encrypted message
+        encrypted_msg (bytes): The encrypted message
     """
 
     # `ssh-keygen` to generate RSA key pairs
@@ -89,7 +93,7 @@ def decrypt(encrypted_msg):
         encrypted_msg (bytes): The message to be decrypted
 
     Returns:
-        str: The decrypted message
+        decoded_msg (str): The decrypted message
     """
 
     # `ssh-keygen -p -m PEM -f /path/to/your/private-key` to convert the private key into pem format
@@ -157,7 +161,6 @@ def receive(timeout):
     if packet is not None:
         while True:
             fail_count = 0
-            # packet = rfm9x.receive()
             print(f"received packet: {packet}")
             fail_list.append(packet)
             for fail in fail_list[-10:]:
@@ -177,60 +180,6 @@ def receive(timeout):
                     print(f"decrypted packet: {packet_text}")
                     return packet_text
             packet = rfm9x.receive()
-
-# def transmit(signal):
-#     """Transmits a signal using the transciever
-#     Converts a signal into bytes and transmits it 3 times (to ensure receipt)
-
-#     Args:
-#         signal (Any): The signal to be sent
-
-#     Returns:
-#         None
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     num_sends = 0
-
-#     while num_sends <= 0:
-#         data = bytes(f"{signal}\r\n","utf-8")
-#         rfm9x.send(data)
-#         num_sends+=1
-
-# def receive(timeout):
-#     """Receives a signal using the transciever
-#     Listens for a signal until one is recieved. Converts this signal into a string.
-#     Returns this string signal to the calling method
-
-#     Args:
-#         None
-
-#     Returns:
-#         packet_text (string): The data received
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     prev_packet = None
-
-#     while True:
-#         packet = rfm9x.receive(timeout=timeout)
-#         if packet is None:
-#             print("packet = None")
-#         else:
-#             prev_packet = packet
-#             packet_text = str(prev_packet, "utf-8")
-#             print(f"packet = {packet_text}")
-#             return packet_text
 
 def OUT_OF_ALGAECIDE_LIGHT_off():
     """Turns light signaling out of algaecide status off
@@ -292,7 +241,7 @@ def SET_HOME_BUTTON_pressed_callback(channel):
     Transmits a signal to trigger PEAT's set home point functionality
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -300,6 +249,7 @@ def SET_HOME_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("5")
@@ -311,7 +261,7 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
     Transmits a signal to trigger PEAT'S return to home functionality
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -319,6 +269,7 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("7")
@@ -330,7 +281,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
     Transmits a signal to trigger PEAT's start and stop movement functionality
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -338,6 +289,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("9")
@@ -349,7 +301,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
     Transmits a signal to trigger PEAT's start and stop dispensing functionality
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -357,6 +309,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("11")
@@ -368,7 +321,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
     Transmits a signal to trigger PEAT's emergency stop functionality
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -376,6 +329,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("13")
@@ -390,7 +344,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
     Transmits this signal.
 
     Args:
-        channel:
+        channel: ??
 
     Returns:
         None
@@ -398,6 +352,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         # Initialize the I2C interface
         i2c = busio.I2C(board.SCL, board.SDA)
