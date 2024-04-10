@@ -114,6 +114,9 @@ def transmit(signal):
 
     Returns:
         None
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
@@ -145,6 +148,9 @@ def receive(timeout):
 
     Returns:
         packet_text (str): The data received
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
