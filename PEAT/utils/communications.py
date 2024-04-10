@@ -8,7 +8,9 @@ import rsa # pip install rsa
 GPIO.setmode(GPIO.BCM)
 
 def encrypt(msg):
-    """Encrypts a message using the controller's public key.
+    """
+    Encrypts a message using the controller's public key.
+
     Gets the RSA public key of the controller. Encodes the message in UTF-8 and encrypts it.
     Returns the encrypted message.
 
@@ -29,7 +31,9 @@ def encrypt(msg):
     return encrypted_msg
 
 def decrypt(encrypted_msg):
-    """Decrypts a message using PEAT's private key.
+    """
+    Decrypts a message using PEAT's private key.
+
     Gets the RSA private key of PEAT. Decrypts the message and decodes it from UTF-8.
     Returns the decrypted message.
 
@@ -48,7 +52,9 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def transmit(signal):
-    """Transmits a signal using the transceiver.
+    """
+    Transmits a signal using the transceiver.
+
     Encrypts a signal. Segments signal into 200 character packets.
     Sends a newline character at the end to symbolize end of signal.
     Transmits each packet 3 times (to ensure receipt).
@@ -79,7 +85,9 @@ def transmit(signal):
             num_sends+=1
 
 def receive(timeout):
-    """Receives a signal using the transceiver.
+    """
+    Receives a signal using the transceiver.
+    
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
     Decrypts this signal. Returns this string signal to the calling method.
