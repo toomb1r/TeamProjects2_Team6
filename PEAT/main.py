@@ -3,12 +3,12 @@ import signal
 import sys
 from time import time
 
+GPIO.setmode(GPIO.BCM)
+
 from utils.algaecide import *
 from utils.communications import *
 from utils.gps import *
 from utils.movement import *
-
-GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
     """Handles CTRL+C inputs.

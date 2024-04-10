@@ -3,9 +3,9 @@ import signal
 import sys
 from time import time
 
-from utils.communications import *
-
 GPIO.setmode(GPIO.BCM)
+
+from utils.communications import *
 
 def signal_handler(sig, frame):
     """
