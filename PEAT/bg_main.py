@@ -1,12 +1,11 @@
+import RPi.GPIO as GPIO
 import signal
 import sys
 
-import RPi.GPIO as GPIO
+from utils.bg_files.movement import *
+from utils.communications import *
 
 GPIO.setmode(GPIO.BCM)
-
-from utils.communications import *
-from utils.bg_files.movement import *
 
 def signal_handler(sig, frame):
     """Handles CTRL+C inputs

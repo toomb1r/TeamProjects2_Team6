@@ -2,8 +2,8 @@
 GPS Interfacing with Raspberry Pi using Pyhton
 http://www.electronicwings.com
 '''
-import serial               #import serial pacakge
 import math
+import serial               #import serial pacakge
 
 gpgga_info = "$GPGGA,"
 ser = serial.Serial ("/dev/ttyAMA0")              #Open port with baud rate

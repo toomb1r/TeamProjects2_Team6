@@ -4,8 +4,8 @@ import adafruit_rfm9x
 import board
 import busio
 from digitalio import DigitalInOut
-import rsa # pip install rsa
 import RPi.GPIO as GPIO
+import rsa # pip install rsa
 
 GPIO.setmode(GPIO.BCM)
 
