@@ -30,7 +30,9 @@ GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
 
 def left_dist():
-    """Returns distance of left ultrasonic sensor.
+    """
+    Returns distance of left ultrasonic sensor.
+
     Measures the distance in front of the left ultrasonic sensor.
     returns the distance in the form of cms.
 
@@ -38,7 +40,10 @@ def left_dist():
         None
 
     Returns:
-        distance (int): Distance in front of ultrasonic sensor in cm
+        distance (float): Distance in front of ultrasonic sensor in cm
+
+    Citation:
+        https://thepihut.com/blogs/raspberry-pi-tutorials/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
     """
 
     distance = 0
@@ -63,7 +68,9 @@ def left_dist():
     return distance
 
 def right_dist():
-    """Returns distance of right ultrasonic sensor.
+    """
+    Returns distance of right ultrasonic sensor.
+
     Measures the distance in front of the right ultrasonic sensor.
     returns the distance in the form of cms.
 
@@ -71,7 +78,10 @@ def right_dist():
         None
 
     Returns:
-        distance (int): Distance in front of ultrasonic sensor in cm
+        distance (float): Distance in front of ultrasonic sensor in cm
+
+    Citation:
+        https://thepihut.com/blogs/raspberry-pi-tutorials/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
     """
 
     distance = 0
@@ -96,7 +106,9 @@ def right_dist():
     return distance
 
 def stop():
-    """Ceases motion for the movement motors.
+    """
+    Ceases motion for the movement motors.
+
     Turns off the output for both inputs of the motor, which turns the motor off.
 
     Args:
@@ -110,7 +122,9 @@ def stop():
     GPIO.output(in2,GPIO.LOW)
 
 def start():
-    """Beings motion for the movement motors.
+    """
+    Beings motion for the movement motors.
+
     Turns on the output for both inputs of the motor, which turns the motor on.
 
     Args:
@@ -124,7 +138,9 @@ def start():
     GPIO.output(in2,GPIO.LOW)
 
 def reverse():
-    """Makes the motor move in reverse.
+    """
+    Makes the motor move in reverse.
+
     Turns on the output for both inputs of the motor in reverse order, which reverses the motor.
 
     Args:
@@ -138,7 +154,9 @@ def reverse():
     GPIO.output(in2,GPIO.HIGH)
 
 def turn_left():
-    """Turns PEAT to the left.
+    """
+    Turns PEAT to the left.
+
     Moves the rudder so PEAT can move to the left.
 
     Args:
@@ -159,7 +177,9 @@ def turn_left():
     turnpwm.ChangeDutyCycle(5)
 
 def turn_right():
-    """Turns PEAT to the right.
+    """
+    Turns PEAT to the right.
+
     Moves the rudder so PEAT can move to the right.
 
     Args:
@@ -180,7 +200,9 @@ def turn_right():
     turnpwm.ChangeDutyCycle(5)
 
 def edgeOfPond():
-    """Turns PEAT if the edge of the pond is detected.
+    """
+    Turns PEAT if the edge of the pond is detected.
+
     Determines if the edge of the pond is detected.
     If so, it will turn the boat and move it a constant time.
     After moving this constant time, it will turn back in the direction it came from.

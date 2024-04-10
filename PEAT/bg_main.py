@@ -8,7 +8,9 @@ from utils.communications import *
 GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
-    """Handles CTRL+C inputs
+    """
+    Handles CTRL+C inputs
+
     This will clean up GPIO whenever the command CTRL+C is sent
     This will allow us to actually use CTRL+C without erroring next time the code is run
 
@@ -19,14 +21,17 @@ def signal_handler(sig, frame):
     Returns:
         None
 
-    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    Citation:
+        https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
 
     GPIO.cleanup()
     sys.exit(0)
 
 def main():
-    """Executes the main functionality of PEAT.
+    """
+    Executes the background functionality of PEAT.
+
     Repeatedly checks if the edge of the pond is detected.
 
     Args:

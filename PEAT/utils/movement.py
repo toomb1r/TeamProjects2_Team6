@@ -24,7 +24,9 @@ movepwm.start(25)
 movepwm.ChangeDutyCycle(100)
 
 def stop():
-    """Ceases motion for the movement motors.
+    """
+    Turns off movement motors.
+
     Turns off the output for both inputs of the motor, which turns the motor off.
 
     Args:
@@ -38,8 +40,10 @@ def stop():
     GPIO.output(in2,GPIO.LOW)
 
 def start_up():
-    """Turns on movement motors.
-    Turns on the output for both inputs of the motor, which turns the motor on and turns off the return to home stuff.
+    """
+    Turns on movement motors.
+
+    Turns on the output for both inputs of the motor, which turns the motor on and stops return to home functionality.
 
     Args:
         None
@@ -56,7 +60,9 @@ def start_up():
     GPIO.output(in2,GPIO.LOW)
 
 def start():
-    """Begins motion for the movement motors.
+    """
+    Turns on movement motors.
+
     Turns on the output for both inputs of the motor, which turns the motor on.
 
     Args:
@@ -70,7 +76,9 @@ def start():
     GPIO.output(in2,GPIO.LOW)
 
 def reverse():
-    """Makes the motor move in reverse.
+    """
+    Makes the motor move in reverse.
+
     Turns on the output for both inputs of the motor in reverse order, which reverses the motor.
 
     Args:
@@ -84,8 +92,10 @@ def reverse():
     GPIO.output(in2,GPIO.HIGH)
 
 def return_to_home():
-    """Activates return to home GPIO boolean.
-    Turns the return to home pin (pin 8) to high.
+    """
+    Turns on return to home functionality.
+
+    Writes to the returntohome.txt file to allow PEAT to use return to home functionality.
 
     Args:
         None

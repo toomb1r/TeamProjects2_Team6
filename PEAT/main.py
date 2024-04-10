@@ -11,9 +11,10 @@ from utils.movement import *
 GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
-    """Handles CTRL+C inputs
-    This will clean up GPIO whenever the command CTRL+C is sent
-    This will allow us to actually use CTRL+C without erroring next time the code is run
+    """Handles CTRL+C inputs.
+
+    This will clean up GPIO whenever the command CTRL+C is sent.
+    This will allow us to actually use CTRL+C without erroring next time the code is run.
 
     Args:
         sig: ??
@@ -22,7 +23,8 @@ def signal_handler(sig, frame):
     Returns:
         None
 
-    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    Citation:
+        https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
 
     GPIO.cleanup()
@@ -33,6 +35,18 @@ distances = [[0, 0], [0, 0], [0, 0], [90, 90]]
 stopped = False
 
 def find_distance():
+    """
+    Gathers GPS data point for the current location and stores it.
+
+    Gathers the current GPS data point and stores it into the distances list.
+    If the distances list has 4 items in it, it will remove the first item and add the new location.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     global start_time
     global ser
 
@@ -49,7 +63,9 @@ def find_distance():
         print(f"{distances}\n")
 
 def receive_state():
-    """State in which PEAT will receive signals from the Controller.
+    """
+    State in which PEAT will receive signals from the Controller.
+
     Loops until signal 40 is received (generally every 120 seconds).
     Performs various functions based on other received signals.
     Records a GPS coordinate upon start and after 60 seconds.
@@ -130,7 +146,9 @@ def receive_state():
                 change_dispense_speed(82)
 
 def transmit_state():
-    """State in which PEAT will transmit signals to the Controller.
+    """
+    State in which PEAT will transmit signals to the Controller.
+
     Transmits a signal to the Controller to determine which lights to turn on.
 
     Args:
@@ -173,8 +191,9 @@ def transmit_state():
             print("Error: Transmit signal 4 failed\n")
 
 def main():
-    """Executes the main functionality of PEAT.
-    Sets PEAT's home location.
+    """
+    Executes the main functionality of PEAT.
+
     Alternates calling PEAT's receive and transmit states.
 
     Args:

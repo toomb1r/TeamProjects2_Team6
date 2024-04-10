@@ -1,7 +1,3 @@
-'''
-GPS Interfacing with Raspberry Pi using Python
-http://www.electronicwings.com
-'''
 import math
 import serial               #import serial pacakge
 
@@ -14,7 +10,9 @@ long_in_degrees = 0
 home = []
 
 def GPS_Info():
-    """Gathers raw NMEA GPS data from the current location and stores the lat and lon in degrees.
+    """
+    Gathers raw NMEA GPS data from the current location and stores the lat and lon in degrees.
+
     Gathers the raw NMEA GPS data from the current location.
     Converts the NMEA GPS data to degrees and splits it into latitude and longitude.
 
@@ -23,6 +21,9 @@ def GPS_Info():
 
     Returns:
         None
+
+    Citation:
+        https://www.electronicwings.com/raspberry-pi/gps-module-interfacing-with-raspberry-pi
     """
 
     global NMEA_buff
@@ -46,7 +47,9 @@ def GPS_Info():
 
 #convert raw NMEA string into degree decimal format
 def convert_to_degrees(raw_value):
-    """Converts raw GPS data into degree format.
+    """
+    Converts raw GPS data into degree format.
+
     Converts raw NMEA GPS data into degree format.
 
     Args:
@@ -54,6 +57,9 @@ def convert_to_degrees(raw_value):
 
     Returns:
         position (str): the GPS data in decimal format
+
+    Citation:
+        https://www.electronicwings.com/raspberry-pi/gps-module-interfacing-with-raspberry-pi
     """
 
     decimal_value = raw_value/100.00
@@ -64,7 +70,9 @@ def convert_to_degrees(raw_value):
     return position
 
 def convert_to_meters(lat1, lon1, lat2, lon2):
-    """Finds the distance of two coordinates in meters.
+    """
+    Finds the distance of two coordinates in meters.
+
     Finds the distance between two coordinates in meters using the Pythagorean theorem.
 
     Args:
@@ -75,6 +83,9 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
 
     Returns:
         c (float): distance between the two coordinate in meters
+
+    Citation:
+        https://en.wikipedia.org/wiki/Geographic_coordinate_system#Latitude_and_longitude
     """
 
     midLat = (float(lat1) + float(lat2)) / 2
@@ -86,7 +97,9 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
     return c
 
 def get_location():
-    """Gathers the GPS data from the current location.
+    """
+    Gathers the GPS data from the current location.
+
     Gathers the GPS data from the current location and returns the latitude and longitude in degrees.
 
     Args:
@@ -95,6 +108,9 @@ def get_location():
     Returns:
         lat_in_degrees (str): latitude of current location in degrees
         long_in_degrees (str): longitude of current location in degrees
+
+    Citation:
+        https://www.electronicwings.com/raspberry-pi/gps-module-interfacing-with-raspberry-pi
     """
 
     global GPGGA_buffer
@@ -115,7 +131,9 @@ def get_location():
             return lat_in_degrees, long_in_degrees
 
 def readHome():
-    """Sets the bot's home coordinates from a read in string.
+    """
+    Sets the bot's home coordinates from a read in string.
+
     Uses a file to get the latitude and longitude data for the Home.
     Sets the latitude and longitude data to the global home variable.
 
@@ -132,7 +150,9 @@ def readHome():
     print(f"Home: {home}")
 
 def setHome():
-    """Sets the bot's home coordinates.
+    """
+    Sets the bot's home coordinates.
+
     Gathers GPS coordinates from the current location.
     Saves the GPS coordinates to the global home variable.
 
@@ -164,7 +184,9 @@ def setHome():
         file.close()
 
 def check_distances(distances):
-    """Adds up the distances in meters between the plotted coordinates.
+    """
+    Adds up the distances in meters between the plotted coordinates.
+
     Calls in a list called distances and converts the distance between each item to meters.
     Adds each distance to the distance variable and returns it.
 

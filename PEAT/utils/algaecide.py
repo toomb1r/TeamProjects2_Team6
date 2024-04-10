@@ -27,7 +27,9 @@ augerpwm.start(100)
 dispenserpwm.start(75)
 
 def ultson_algae():
-    """Measures algaecide left.
+    """
+    Measures algaecide left.
+
     Uses an ultrasonic sensor to measure how much algaecide is left.
     Returns the distance from the ultrasonic sensor.
 
@@ -35,7 +37,10 @@ def ultson_algae():
         None
 
     Returns:
-        distance (int): distance from the ultrasonic sensor
+        distance (float): distance from the ultrasonic sensor
+
+    Citation:
+        https://thepihut.com/blogs/raspberry-pi-tutorials/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
     """
 
     distance = 0
@@ -66,7 +71,9 @@ def ultson_algae():
     return distance
 
 def detect_out():
-    """Detects when PEAT is out of algaecide.
+    """
+    Detects when PEAT is out of algaecide.
+
     Uses an ultrasonic sensor to detect whether it is > 6cm.
     If so, it returns True.
 
@@ -84,7 +91,9 @@ def detect_out():
     return out
 
 def dispense_algae():
-    """Starts the dispensing of algaecide.
+    """
+    Starts the dispensing of algaecide.
+
     Turns on the auger and dispenser motors.
 
     Args:
@@ -100,7 +109,9 @@ def dispense_algae():
     GPIO.output(dispenser2, GPIO.LOW)
 
 def stop_dispense():
-    """Stops the dispensing of algaecide.
+    """
+    Stops the dispensing of algaecide.
+
     Turns off the auger and dispenser motors.
 
     Args:
@@ -116,7 +127,9 @@ def stop_dispense():
     GPIO.output(dispenser2, GPIO.LOW)
 
 def change_dispense_speed(speed):
-    """Changes the speed of the dispenser.
+    """
+    Changes the speed of the dispenser.
+
     Changes the speed of the auger and the dispenser based on the speed argument.
 
     Args:
@@ -125,5 +138,5 @@ def change_dispense_speed(speed):
     Returns:
         None
     """
-    
+
     augerpwm.ChangeDutyCycle(speed)

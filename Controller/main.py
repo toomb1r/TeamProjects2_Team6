@@ -8,7 +8,9 @@ from utils.communications import *
 GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
-    """Handles CTRL+C inputs.
+    """
+    Handles CTRL+C inputs.
+
     This will clean up GPIO whenever the command CTRL+C is sent.
     This will allow us to actually use CTRL+C without erroring next time the code is run.
 
@@ -19,14 +21,17 @@ def signal_handler(sig, frame):
     Returns:
         None
 
-    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    Citation:
+        https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
 
     GPIO.cleanup()
     sys.exit(0)
 
 def receive_state():
-    """State in which the Controller will receive signals from PEAT.
+    """
+    State in which the Controller will receive signals from PEAT.
+
     Receives a signal from PEAT to determine which lights to turn on.
 
     Args:
@@ -64,7 +69,9 @@ def receive_state():
         print("Error: Receive failed (signal 50)")
 
 def transmit_state(start_time):
-    """State in which the Controller will transmit signals to PEAT.
+    """
+    State in which the Controller will transmit signals to PEAT.
+
     Loops for 120 seconds before transmitting signal 40 and exiting.
     Buttons on the Controller can be pressed during this time.
 
@@ -87,7 +94,9 @@ def transmit_state(start_time):
             break
 
 def main():
-    """Executes the main functionality of the Controller.
+    """
+    Executes the main functionality of the Controller.
+    
     Alternates calling the Controller's transmit and receive states.
 
     Args:
