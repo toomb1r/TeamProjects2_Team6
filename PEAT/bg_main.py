@@ -2,10 +2,10 @@ import RPi.GPIO as GPIO
 import signal
 import sys
 
+GPIO.setmode(GPIO.BCM)
+
 from utils.bg_files.movement import *
 from utils.communications import *
-
-GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
     """
