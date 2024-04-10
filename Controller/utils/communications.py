@@ -51,7 +51,7 @@ channel = AnalogIn(ads, ADS.P0)
 in_transmit_state = False
 
 def set_in_transmit_state(bool):
-    """Setter for the in_transmit_state bool
+    """Setter for the in_transmit_state bool.
 
     Args:
         bool (bool): the bool to which in_transmit_state is set
@@ -64,7 +64,7 @@ def set_in_transmit_state(bool):
     in_transmit_state = bool
 
 def encrypt(msg):
-    """Encrypts a message using PEAT's public key
+    """Encrypts a message using PEAT's public key.
     Gets the RSA public key of PEAT. Encodes the message in UTF-8 and encrypts it.
     Returns the encrypted message.
 
@@ -85,7 +85,7 @@ def encrypt(msg):
     return encrypted_msg
 
 def decrypt(encrypted_msg):
-    """Decrypts a message using the controller's private key
+    """Decrypts a message using the controller's private key.
     Gets the RSA private key of the controller. Decrypts the message and decodes it from UTF-8.
     Returns the decrypted message.
 
@@ -104,7 +104,7 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def transmit(signal):
-    """Transmits a signal using the transciever
+    """Transmits a signal using the transceiver.
     Encrypts a signal. Segments signal into 200 character packets.
     Sends a newline character at the end to symbolize end of signal.
     Transmits each packet 3 times (to ensure receipt).
@@ -135,16 +135,16 @@ def transmit(signal):
             num_sends+=1
 
 def receive(timeout):
-    """Receives a signal using the transciever
+    """Receives a signal using the transceiver.
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
-    Decrypts this signal. Returns this string signal to the calling method
+    Decrypts this signal. Returns this string signal to the calling method.
 
     Args:
         None
 
     Returns:
-        packet_text (string): The data received
+        packet_text (str): The data received
     """
 
     # Configure LoRa Radio
@@ -182,7 +182,7 @@ def receive(timeout):
             packet = rfm9x.receive()
 
 def OUT_OF_ALGAECIDE_LIGHT_off():
-    """Turns light signaling out of algaecide status off
+    """Turns light signaling out of algaecide status off.
     Turns the out of algaecide light off.
 
     Args:
@@ -196,7 +196,7 @@ def OUT_OF_ALGAECIDE_LIGHT_off():
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
 
 def OUT_OF_ALGAECIDE_LIGHT_on():
-    """Turns light signaling out of algaecide status on
+    """Turns light signaling out of algaecide status on.
     Turns the out of algaecide light on.
 
     Args:
@@ -210,7 +210,7 @@ def OUT_OF_ALGAECIDE_LIGHT_on():
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
 
 def IMMOBILIZED_LIGHT_off():
-    """Turns light signaling immobilized status off
+    """Turns light signaling immobilized status off.
     Turns the immobilized light off.
 
 
@@ -224,7 +224,7 @@ def IMMOBILIZED_LIGHT_off():
     GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
 
 def IMMOBILIZED_LIGHT_on():
-    """Turns light signaling immobilized status on
+    """Turns light signaling immobilized status on.
     Turns the immobilized light on.
 
     Args:
@@ -237,8 +237,8 @@ def IMMOBILIZED_LIGHT_on():
     GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
 def SET_HOME_BUTTON_pressed_callback(channel):
-    """Callback for the set home button
-    Transmits a signal to trigger PEAT's set home point functionality
+    """Callback for the set home button.
+    Transmits a signal to trigger PEAT's set home point functionality.
 
     Args:
         channel: ??
@@ -257,8 +257,8 @@ def SET_HOME_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 5 failed\n")
 
 def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
-    """Callback for the return to home button
-    Transmits a signal to trigger PEAT'S return to home functionality
+    """Callback for the return to home button.
+    Transmits a signal to trigger PEAT'S return to home functionality.
 
     Args:
         channel: ??
@@ -277,8 +277,8 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 7 failed\n")
 
 def START_STOP_MOVE_BUTTON_pressed_callback(channel):
-    """Callback for the start and stop move button
-    Transmits a signal to trigger PEAT's start and stop movement functionality
+    """Callback for the start and stop move button.
+    Transmits a signal to trigger PEAT's start and stop movement functionality.
 
     Args:
         channel: ??
@@ -297,8 +297,8 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 9 failed\n")
 
 def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
-    """Callback for the start and stop algaecide dispensing button
-    Transmits a signal to trigger PEAT's start and stop dispensing functionality
+    """Callback for the start and stop algaecide dispensing button.
+    Transmits a signal to trigger PEAT's start and stop dispensing functionality.
 
     Args:
         channel: ??
@@ -317,8 +317,8 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 11 failed\n")
 
 def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
-    """Callback for the emergency stop button
-    Transmits a signal to trigger PEAT's emergency stop functionality
+    """Callback for the emergency stop button.
+    Transmits a signal to trigger PEAT's emergency stop functionality.
 
     Args:
         channel: ??
@@ -337,7 +337,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 13 failed\n")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
-    """Callback for the button setting the algaecide dispensing rate
+    """Callback for the button setting the algaecide dispensing rate.
     Divides the max voltage into 10 distinct dispense rate settings.
     Determines the setting corresponding to the current measured voltage.
     Determines the signal to be sent based on this setting.

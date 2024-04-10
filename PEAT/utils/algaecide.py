@@ -120,7 +120,7 @@ def change_dispense_speed(speed):
     Changes the speed of the auger and the dispenser based on the speed argument.
 
     Args:
-        speed (double): changes the speed of the auger and dispenser motors
+        speed (float): changes the speed of the auger and dispenser motors
 
     Returns:
         None

@@ -8,10 +8,9 @@ from utils.communications import *
 GPIO.setmode(GPIO.BCM)
 
 def signal_handler(sig, frame):
-    """Handles CTRL+C inputs
-
-    This will clean up GPIO whenever the command CTRL+C is sent
-    This will allow us to actually use CTRL+C without erroring next time the code is run
+    """Handles CTRL+C inputs.
+    This will clean up GPIO whenever the command CTRL+C is sent.
+    This will allow us to actually use CTRL+C without erroring next time the code is run.
 
     Args:
         sig: ??

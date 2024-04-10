@@ -1,5 +1,5 @@
 '''
-GPS Interfacing with Raspberry Pi using Pyhton
+GPS Interfacing with Raspberry Pi using Python
 http://www.electronicwings.com
 '''
 import math
@@ -14,11 +14,9 @@ long_in_degrees = 0
 home = []
 
 def GPS_Info():
-    """
-    Gathers raw NMEA GPS data from the current location and stores the lat and lon in degrees
-
-    Gathers the raw NMEA GPS data from the current location
-    Converts the NMEA GPS data to degrees and splits it into latitude and longitude
+    """Gathers raw NMEA GPS data from the current location and stores the lat and lon in degrees.
+    Gathers the raw NMEA GPS data from the current location.
+    Converts the NMEA GPS data to degrees and splits it into latitude and longitude.
 
     Args:
         None
@@ -26,13 +24,12 @@ def GPS_Info():
     Returns:
         None
     """
+
     global NMEA_buff
     global lat_in_degrees
     global long_in_degrees
-    nmea_time = []
     nmea_latitude = []
     nmea_longitude = []
-    nmea_time = NMEA_buff[0]                    #extract time from GPGGA string
     nmea_latitude = NMEA_buff[1]                #extract latitude from GPGGA string
     nmea_longitude = NMEA_buff[3]               #extract longitude from GPGGA string
 
@@ -49,17 +46,16 @@ def GPS_Info():
 
 #convert raw NMEA string into degree decimal format
 def convert_to_degrees(raw_value):
-    """
-    Converts raw GPS data into degree format
-
-    Converts raw NMEA GPS data into degree format
+    """Converts raw GPS data into degree format.
+    Converts raw NMEA GPS data into degree format.
 
     Args:
-        raw_value (string) : the raw NMEA GPS data
+        raw_value (float): the raw NMEA GPS data
 
     Returns:
-        position (string) : the GPS data in decimal format
+        position (str): the GPS data in decimal format
     """
+
     decimal_value = raw_value/100.00
     degrees = int(decimal_value)
     mm_mmmm = (decimal_value - int(decimal_value))/0.6
@@ -68,20 +64,19 @@ def convert_to_degrees(raw_value):
     return position
 
 def convert_to_meters(lat1, lon1, lat2, lon2):
-    """
-    Finds the distance of two coordinates in meters
-
-    Finds the distance between two coordinates in meters using the pythagorean theorem
+    """Finds the distance of two coordinates in meters.
+    Finds the distance between two coordinates in meters using the Pythagorean theorem.
 
     Args:
-        lat1 (string) : latitude of the first coordinate in degrees
-        lon1 (string) : longitude of the first coordinate in degrees
-        lat2 (string) : latitude of the second coordinate in degrees
-        lon2 (string) : longitude of the second coordinate in degrees
+        lat1 (str): latitude of the first coordinate in degrees
+        lon1 (str): longitude of the first coordinate in degrees
+        lat2 (str): latitude of the second coordinate in degrees
+        lon2 (str): longitude of the second coordinate in degrees
 
     Returns:
-        c (double) : distance between the two coordinate in meters
+        c (float): distance between the two coordinate in meters
     """
+
     midLat = (float(lat1) + float(lat2)) / 2
     mLat = 111132.954 - 559.822 * math.cos( 2.0 * midLat ) + 1.175 * math.cos( 4.0 * midLat)
     mLon = (math.pi/180 ) * 6367449 * math.cos( midLat )
@@ -91,18 +86,17 @@ def convert_to_meters(lat1, lon1, lat2, lon2):
     return c
 
 def get_location():
-    """
-    Gathers the GPS data from the current location
-
-    Gathers the GPS data from the current location and returns the latitude and longitude in degrees
+    """Gathers the GPS data from the current location.
+    Gathers the GPS data from the current location and returns the latitude and longitude in degrees.
 
     Args:
         None
 
     Returns:
-        lat_in_degrees (string) : latitude of current location in degrees
-        long_in_degrees (string) : longitude of current location in degrees
+        lat_in_degrees (str): latitude of current location in degrees
+        long_in_degrees (str): longitude of current location in degrees
     """
+
     global GPGGA_buffer
     global ser
     global NMEA_buff
@@ -170,17 +164,15 @@ def setHome():
         file.close()
 
 def check_distances(distances):
-    """
-    Adds up the distances in meters between the plotted coordinates
-
-    Calls in a list called distances and converts the distance between each item to meters
-    Adds each distance to the distance variable and returns it
+    """Adds up the distances in meters between the plotted coordinates.
+    Calls in a list called distances and converts the distance between each item to meters.
+    Adds each distance to the distance variable and returns it.
 
     Args:
-        distances (list[list[string,string]]) : coordinates gathered by the robot
+        distances (list[list[string,string]]): coordinates gathered by the robot
 
     Returns:
-        distance (int) : difference in meters between each coordinate added together
+        distance (float): difference in meters between each coordinate added together
     """
     distance = 0
     for i in range(0, len(distances)-1):

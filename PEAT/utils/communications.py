@@ -48,7 +48,7 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def transmit(signal):
-    """Transmits a signal using the transciever.
+    """Transmits a signal using the transceiver.
     Encrypts a signal. Segments signal into 200 character packets.
     Sends a newline character at the end to symbolize end of signal.
     Transmits each packet 3 times (to ensure receipt).
@@ -79,7 +79,7 @@ def transmit(signal):
             num_sends+=1
 
 def receive(timeout):
-    """Receives a signal using the transciever.
+    """Receives a signal using the transceiver.
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
     Decrypts this signal. Returns this string signal to the calling method.
@@ -88,7 +88,7 @@ def receive(timeout):
         None
 
     Returns:
-        packet_text (string): The data received
+        packet_text (str): The data received
     """
 
     # Configure LoRa Radio
