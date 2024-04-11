@@ -9,6 +9,7 @@ Welcome to Pond Enhancer and Algae Terminator (PEAT)'s documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
    support
    boat
    controller
