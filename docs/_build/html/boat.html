@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Boat &#8212; PEAT  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Controller" href="controller.html" />
+    <link rel="prev" title="Support" href="support.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="boat">
+<h1>Boat<a class="headerlink" href="#boat" title="Link to this heading">¶</a></h1>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
+<section id="module-PEAT.utils.algaecide">
+<span id="algaecide"></span><h3>Algaecide<a class="headerlink" href="#module-PEAT.utils.algaecide" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.algaecide.change_dispense_speed">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.algaecide.</span></span><span class="sig-name descname"><span class="pre">change_dispense_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.algaecide.change_dispense_speed" title="Link to this definition">¶</a></dt>
+<dd><p>Changes the speed of the dispenser</p>
+<p>Changes the speed of the auger and the dispenser based on the speed argument</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>speed (double): changes the speed of the auger and dispenser motors</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.algaecide.detect_out">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.algaecide.</span></span><span class="sig-name descname"><span class="pre">detect_out</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.algaecide.detect_out" title="Link to this definition">¶</a></dt>
+<dd><p>Detects when PEAT is out of algaecide</p>
+<p>Uses an ultrasonic sensor to detect whether it is &gt; 6cm
+If so it returns True</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>out (boolean): Whether PEAT is out of algaecide</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.algaecide.dispense_algae">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.algaecide.</span></span><span class="sig-name descname"><span class="pre">dispense_algae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.algaecide.dispense_algae" title="Link to this definition">¶</a></dt>
+<dd><p>Starts the dispensing of algaecide</p>
+<p>Turns on the auger and dispenser motors</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.algaecide.stop_dispense">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.algaecide.</span></span><span class="sig-name descname"><span class="pre">stop_dispense</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.algaecide.stop_dispense" title="Link to this definition">¶</a></dt>
+<dd><p>Stops the dispensing of algaecide</p>
+<p>Turns off the auger and dispenser motors</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.algaecide.ultson_algae">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.algaecide.</span></span><span class="sig-name descname"><span class="pre">ultson_algae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.algaecide.ultson_algae" title="Link to this definition">¶</a></dt>
+<dd><p>Measures algaecide left</p>
+<p>Uses an ultrasonic sensor to measure how much algaecide is left
+Returns the distance from the ultrasonic sensor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>distance (int): distance from the ultrasonic sensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-PEAT.utils.movement">
+<span id="movement"></span><h3>Movement<a class="headerlink" href="#module-PEAT.utils.movement" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.edgeOfPond">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">edgeOfPond</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.edgeOfPond" title="Link to this definition">¶</a></dt>
+<dd><p>Turns PEAT if the edge of the pond is detected</p>
+<p>Determines if the edge of the pond is detected
+If so it will turn the boat and move it a constant time
+After moving this constant time it will turn back in the direction it came from</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.left_dist">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">left_dist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.left_dist" title="Link to this definition">¶</a></dt>
+<dd><p>Returns distance of left ultrasonic sensor</p>
+<p>Measures the distance in front of the left ultrasonic sensor
+returns the distance in the form of cms</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>distance (int): Distance in front of ultrasonic sensor in cm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.reverse">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">reverse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.reverse" title="Link to this definition">¶</a></dt>
+<dd><p>Makes the motor move in reverse</p>
+<p>Turns on the output for both inputs of the motor in reverse order, which reverses the motor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.right_dist">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">right_dist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.right_dist" title="Link to this definition">¶</a></dt>
+<dd><p>Returns distance of right ultrasonic sensor</p>
+<p>Measures the distance in front of the right ultrasonic sensor
+returns the distance in the form of cms</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>distance (int): Distance in front of ultrasonic sensor in cm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.start">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.start" title="Link to this definition">¶</a></dt>
+<dd><p>Beings motion for the movement motors</p>
+<p>Turns on the output for both inputs of the motor, which turns the motor on</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.stop">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.stop" title="Link to this definition">¶</a></dt>
+<dd><p>Ceases motion for the movement motors</p>
+<p>Turns off the output for both inputs of the motor, which turns the motor off</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.turn_left">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">turn_left</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.turn_left" title="Link to this definition">¶</a></dt>
+<dd><p>Turns PEAT to the left</p>
+<p>moves the rudder so PEAT can move to the left</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.movement.turn_right">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.movement.</span></span><span class="sig-name descname"><span class="pre">turn_right</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.movement.turn_right" title="Link to this definition">¶</a></dt>
+<dd><p>Turns PEAT to the right
+moves the rudder so PEAT can move to the right</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-PEAT.utils.communications">
+<span id="communications"></span><h3>Communications<a class="headerlink" href="#module-PEAT.utils.communications" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.communications.decrypt">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.communications.</span></span><span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encrypted_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.communications.decrypt" title="Link to this definition">¶</a></dt>
+<dd><p>Decrypts a message using PEAT’s private key
+Gets the RSA private key of PEAT. Decrypts the message and decodes it from UTF-8.
+Returns the decrypted message.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>encrypted_msg (bytes): The message to be decrypted</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The decrypted message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.communications.encrypt">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.communications.</span></span><span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.communications.encrypt" title="Link to this definition">¶</a></dt>
+<dd><p>Encrypts a message using the controller’s public key
+Gets the RSA public key of the controller. Encodes the message in UTF-8 and encrypts it.
+Returns the encrypted message.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>msg (str): The message to be encrypted</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytes: The encrypted message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.communications.receive">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.communications.</span></span><span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.communications.receive" title="Link to this definition">¶</a></dt>
+<dd><p>Receives a signal using the transciever
+Listens for a signal until one is recieved. Converts this signal into a string.
+Returns this string signal to the calling method</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>packet_text (string): The data received</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.communications.transmit">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.communications.</span></span><span class="sig-name descname"><span class="pre">transmit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.communications.transmit" title="Link to this definition">¶</a></dt>
+<dd><p>Transmits a signal using the transciever
+Converts a signal into bytes and transmits it 3 times (to ensure receipt)</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>signal (Any): The signal to be sent</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="pins">
+<h3>Pins<a class="headerlink" href="#pins" title="Link to this heading">¶</a></h3>
+<p>Dictionary of all the different pins and what features are connected to it.</p>
+<section id="module-PEAT.utils.bg_files.movement">
+<span id="background-movement"></span><span id="module-PEAT.utils.pins"></span><h4>Background Movement<a class="headerlink" href="#module-PEAT.utils.bg_files.movement" title="Link to this heading">¶</a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.bg_files.movement.reverse">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.bg_files.movement.</span></span><span class="sig-name descname"><span class="pre">reverse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.bg_files.movement.reverse" title="Link to this definition">¶</a></dt>
+<dd><p>Makes the motor move in reverse</p>
+<p>Turns on the output for both inputs of the motor in reverse order, which reverses the motor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.bg_files.movement.start">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.bg_files.movement.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.bg_files.movement.start" title="Link to this definition">¶</a></dt>
+<dd><p>Beings motion for the movement motors</p>
+<p>Turns on the output for both inputs of the motor, which turns the motor on</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.utils.bg_files.movement.stop">
+<span class="sig-prename descclassname"><span class="pre">PEAT.utils.bg_files.movement.</span></span><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.utils.bg_files.movement.stop" title="Link to this definition">¶</a></dt>
+<dd><p>Ceases motion for the movement motors</p>
+<p>Turns off the output for both inputs of the motor, which turns the motor off</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>None</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="main-functionality">
+<h2>Main Functionality<a class="headerlink" href="#main-functionality" title="Link to this heading">¶</a></h2>
+<section id="module-PEAT.main">
+<span id="main"></span><h3>Main<a class="headerlink" href="#module-PEAT.main" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.main.main">
+<span class="sig-prename descclassname"><span class="pre">PEAT.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.main.main" title="Link to this definition">¶</a></dt>
+<dd><p>Executes the main functionality of PEAT</p>
+<p>Args: None</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.main.signal_handler">
+<span class="sig-prename descclassname"><span class="pre">PEAT.main.</span></span><span class="sig-name descname"><span class="pre">signal_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.main.signal_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Handles CTRL+C inputs</p>
+<p>This will clean up GPIO whenever the command CTRL+C is sent
+This will allow us to actually use CTRL+C without erroring next time the code is run</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>sig: ??
+frame: ??</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+<p>Cited: <a class="reference external" href="https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/">https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/</a></p>
+</dd></dl>
+
+</section>
+<section id="module-PEAT.bg_main">
+<span id="background-processes-for-main"></span><h3>Background Processes for Main<a class="headerlink" href="#module-PEAT.bg_main" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.bg_main.main">
+<span class="sig-prename descclassname"><span class="pre">PEAT.bg_main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.bg_main.main" title="Link to this definition">¶</a></dt>
+<dd><p>Executes the main functionality of PEAT</p>
+<p>Args: None</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PEAT.bg_main.signal_handler">
+<span class="sig-prename descclassname"><span class="pre">PEAT.bg_main.</span></span><span class="sig-name descname"><span class="pre">signal_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PEAT.bg_main.signal_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Handles CTRL+C inputs</p>
+<p>This will clean up GPIO whenever the command CTRL+C is sent
+This will allow us to actually use CTRL+C without erroring next time the code is run</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>sig: ??
+frame: ??</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+<p>Cited: <a class="reference external" href="https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/">https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/</a></p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">PEAT</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Boat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-functionality">Main Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">Controller</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="support.html" title="previous chapter">Support</a></li>
+      <li>Next: <a href="controller.html" title="next chapter">Controller</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Regin Potter, Anmol Saini, Tiffany Behr, Matthew Sanders, Kyle Bruns.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/boat.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
