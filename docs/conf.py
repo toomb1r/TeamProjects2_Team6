@@ -14,7 +14,7 @@ author = 'Regin Potter, Anmol Saini, Tiffany Behr, Matthew Sanders, Kyle Bruns'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = ['sphinx.ext.autodoc']
-
+autodoc_mock_imports = ["RPi", "rsa", "gpiozero", "busio", "digitalio", "board", "adafruit_rfm9x", "gps3", "utils", "adafruit_ads1x15", "RPI"]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 

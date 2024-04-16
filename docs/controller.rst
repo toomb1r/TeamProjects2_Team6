@@ -1,15 +1,25 @@
 =================
 Controller
 =================
-This is controller's main code
-.. literalinclude::../../Controller/main.py
-   :language: python
-   :linenos:
 
-.. literalinclude::../../Controller/utils/communications.py
-:language: python
-:linenos:
 
-.. literalinclude::../../Controller/utils/pins.py
-:language: python
-:linenos:
+Utilities
+------------------
+
+Communications
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: Controller.utils.communications
+   :members:
+
+Pins
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: Controller.utils.pins
+   :members:
+
+Main
+-------
+
+.. automodule:: Controller.main
+   :members:

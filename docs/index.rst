@@ -4,12 +4,12 @@
    contain the root `toctree` directive.
 
 Welcome to Pond Enhancer and Algae Terminator (PEAT)'s documentation!
-================================
+=======================================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
    support
    boat
    controller
@@ -17,7 +17,7 @@ Welcome to Pond Enhancer and Algae Terminator (PEAT)'s documentation!
 
 
 Indices and tables
-==================
+===================
 
 * :ref:`genindex`
 * :ref:`modindex`
