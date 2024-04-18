@@ -4,9 +4,8 @@ import adafruit_rfm9x
 import board
 import busio
 from digitalio import DigitalInOut
-import rsa # pip install rsa
 import RPi.GPIO as GPIO
-from time import sleep
+import rsa # pip install rsa
 
 GPIO.setmode(GPIO.BCM)
 
@@ -51,16 +50,24 @@ channel = AnalogIn(ads, ADS.P0)
 
 in_transmit_state = False
 
-# def get_in_transmit_state():
-#     global in_transmit_state
-#     return in_transmit_state
-
 def set_in_transmit_state(bool):
+    """
+    Setter for the in_transmit_state bool.
+
+    Args:
+        bool (bool): the bool to which in_transmit_state is set
+
+    Returns:
+        None
+    """
+
     global in_transmit_state
     in_transmit_state = bool
 
 def encrypt(msg):
-    """Encrypts a message using PEAT's public key
+    """
+    Encrypts a message using PEAT's public key.
+
     Gets the RSA public key of PEAT. Encodes the message in UTF-8 and encrypts it.
     Returns the encrypted message.
 
@@ -68,7 +75,7 @@ def encrypt(msg):
         msg (str): The message to be encrypted
 
     Returns:
-        bytes: The encrypted message
+        encrypted_msg (bytes): The encrypted message
     """
 
     # `ssh-keygen` to generate RSA key pairs
@@ -81,7 +88,9 @@ def encrypt(msg):
     return encrypted_msg
 
 def decrypt(encrypted_msg):
-    """Decrypts a message using the controller's private key
+    """
+    Decrypts a message using the controller's private key.
+
     Gets the RSA private key of the controller. Decrypts the message and decodes it from UTF-8.
     Returns the decrypted message.
 
@@ -89,7 +98,7 @@ def decrypt(encrypted_msg):
         encrypted_msg (bytes): The message to be decrypted
 
     Returns:
-        str: The decrypted message
+        decoded_msg (str): The decrypted message
     """
 
     # `ssh-keygen -p -m PEM -f /path/to/your/private-key` to convert the private key into pem format
@@ -100,7 +109,9 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def transmit(signal):
-    """Transmits a signal using the transciever
+    """
+    Transmits a signal using the transceiver.
+
     Encrypts a signal. Segments signal into 200 character packets.
     Sends a newline character at the end to symbolize end of signal.
     Transmits each packet 3 times (to ensure receipt).
@@ -110,6 +121,9 @@ def transmit(signal):
 
     Returns:
         None
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
@@ -131,16 +145,21 @@ def transmit(signal):
             num_sends+=1
 
 def receive(timeout):
-    """Receives a signal using the transciever
+    """
+    Receives a signal using the transceiver.
+
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
-    Decrypts this signal. Returns this string signal to the calling method
+    Decrypts this signal. Returns this string signal to the calling method.
 
     Args:
         None
 
     Returns:
-        packet_text (string): The data received
+        packet_text (str): The data received
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
@@ -157,7 +176,6 @@ def receive(timeout):
     if packet is not None:
         while True:
             fail_count = 0
-            # packet = rfm9x.receive()
             print(f"received packet: {packet}")
             fail_list.append(packet)
             for fail in fail_list[-10:]:
@@ -178,62 +196,10 @@ def receive(timeout):
                     return packet_text
             packet = rfm9x.receive()
 
-# def transmit(signal):
-#     """Transmits a signal using the transciever
-#     Converts a signal into bytes and transmits it 3 times (to ensure receipt)
-
-#     Args:
-#         signal (Any): The signal to be sent
-
-#     Returns:
-#         None
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     num_sends = 0
-
-#     while num_sends <= 0:
-#         data = bytes(f"{signal}\r\n","utf-8")
-#         rfm9x.send(data)
-#         num_sends+=1
-
-# def receive(timeout):
-#     """Receives a signal using the transciever
-#     Listens for a signal until one is recieved. Converts this signal into a string.
-#     Returns this string signal to the calling method
-
-#     Args:
-#         None
-
-#     Returns:
-#         packet_text (string): The data received
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     prev_packet = None
-
-#     while True:
-#         packet = rfm9x.receive(timeout=timeout)
-#         if packet is None:
-#             print("packet = None")
-#         else:
-#             prev_packet = packet
-#             packet_text = str(prev_packet, "utf-8")
-#             print(f"packet = {packet_text}")
-#             return packet_text
-
 def OUT_OF_ALGAECIDE_LIGHT_off():
-    """Turns light signaling out of algaecide status off
+    """
+    Turns light signaling out of algaecide status off.
+
     Turns the out of algaecide light off.
 
     Args:
@@ -247,7 +213,9 @@ def OUT_OF_ALGAECIDE_LIGHT_off():
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
 
 def OUT_OF_ALGAECIDE_LIGHT_on():
-    """Turns light signaling out of algaecide status on
+    """
+    Turns light signaling out of algaecide status on.
+
     Turns the out of algaecide light on.
 
     Args:
@@ -261,7 +229,9 @@ def OUT_OF_ALGAECIDE_LIGHT_on():
     GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
 
 def IMMOBILIZED_LIGHT_off():
-    """Turns light signaling immobilized status off
+    """
+    Turns light signaling immobilized status off.
+
     Turns the immobilized light off.
 
 
@@ -275,7 +245,9 @@ def IMMOBILIZED_LIGHT_off():
     GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
 
 def IMMOBILIZED_LIGHT_on():
-    """Turns light signaling immobilized status on
+    """
+    Turns light signaling immobilized status on.
+
     Turns the immobilized light on.
 
     Args:
@@ -288,11 +260,13 @@ def IMMOBILIZED_LIGHT_on():
     GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
 
 def SET_HOME_BUTTON_pressed_callback(channel):
-    """Callback for the set home button
-    Transmits a signal to trigger PEAT's set home point functionality
+    """
+    Callback for the set home button.
+
+    Transmits a signal to trigger PEAT's set home point functionality.
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -300,6 +274,7 @@ def SET_HOME_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("5")
@@ -307,11 +282,13 @@ def SET_HOME_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 5 failed\n")
 
 def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
-    """Callback for the return to home button
-    Transmits a signal to trigger PEAT'S return to home functionality
+    """
+    Callback for the return to home button.
+
+    Transmits a signal to trigger PEAT'S return to home functionality.
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -319,6 +296,7 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("7")
@@ -326,11 +304,13 @@ def RETURN_TO_HOME_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 7 failed\n")
 
 def START_STOP_MOVE_BUTTON_pressed_callback(channel):
-    """Callback for the start and stop move button
-    Transmits a signal to trigger PEAT's start and stop movement functionality
+    """
+    Callback for the start and stop move button.
+
+    Transmits a signal to trigger PEAT's start and stop movement functionality.
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -338,6 +318,7 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("9")
@@ -345,11 +326,13 @@ def START_STOP_MOVE_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 9 failed\n")
 
 def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
-    """Callback for the start and stop algaecide dispensing button
-    Transmits a signal to trigger PEAT's start and stop dispensing functionality
+    """
+    Callback for the start and stop algaecide dispensing button.
+
+    Transmits a signal to trigger PEAT's start and stop dispensing functionality.
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -357,6 +340,7 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("11")
@@ -364,11 +348,13 @@ def START_STOP_DISPENSING_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 11 failed\n")
 
 def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
-    """Callback for the emergency stop button
-    Transmits a signal to trigger PEAT's emergency stop functionality
+    """
+    Callback for the emergency stop button.
+
+    Transmits a signal to trigger PEAT's emergency stop functionality.
 
     Args:
-        None
+        channel: ??
 
     Returns:
         None
@@ -376,6 +362,7 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         try:
             transmit("13")
@@ -383,14 +370,16 @@ def EMERGENCY_STOP_BUTTON_pressed_callback(channel):
             print("Error: Transmit signal 13 failed\n")
 
 def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
-    """Callback for the button setting the algaecide dispensing rate
+    """
+    Callback for the button setting the algaecide dispensing rate.
+    
     Divides the max voltage into 10 distinct dispense rate settings.
     Determines the setting corresponding to the current measured voltage.
     Determines the signal to be sent based on this setting.
     Transmits this signal.
 
     Args:
-        channel:
+        channel: ??
 
     Returns:
         None
@@ -398,6 +387,7 @@ def DISPENSE_RATE_POTENTIOMETER_button_pressed_callback(channel):
 
     global in_transmit_state
     print(f"in transmit state? {in_transmit_state}\n")
+
     if in_transmit_state:
         # Initialize the I2C interface
         i2c = busio.I2C(board.SCL, board.SDA)

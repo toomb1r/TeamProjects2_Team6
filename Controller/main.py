@@ -1,22 +1,18 @@
-import adafruit_rfm9x
-import board
-import busio
-import digitalio
 import RPi.GPIO as GPIO
 import signal
 import sys
-from time import sleep, time
-
-from utils.communications import *
+from time import time
 
 GPIO.setmode(GPIO.BCM)
 
+from utils.communications import *
+
 def signal_handler(sig, frame):
     """
-    Handles CTRL+C inputs
+    Handles CTRL+C inputs.
 
-    This will clean up GPIO whenever the command CTRL+C is sent
-    This will allow us to actually use CTRL+C without erroring next time the code is run
+    This will clean up GPIO whenever the command CTRL+C is sent.
+    This will allow us to actually use CTRL+C without erroring next time the code is run.
 
     Args:
         sig: ??
@@ -25,29 +21,35 @@ def signal_handler(sig, frame):
     Returns:
         None
 
-    Cited: https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
+    Citation:
+        https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
     """
+
     GPIO.cleanup()
     sys.exit(0)
 
 def receive_state():
-    # 1: has algaecide and is moving
-    # 2: has algaecide and is not moving
-    # 3: has no algaecide and is moving
-    # 4: has no algaecide and is not moving
+    """
+    State in which the Controller will receive signals from PEAT.
+
+    Receives a signal from PEAT to determine which lights to turn on.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
 
     set_in_transmit_state(False)
-    # while True:
     received_sig = ""
     try:
         received_sig = receive(30).strip()
     except:
         print("Error: Receive failed")
-        # return
     print(received_sig)
+
     if received_sig == "1":
-        # trigger_IMMOBILIZED_LIGHT()
-        # print("triggered immobilized light")
         OUT_OF_ALGAECIDE_LIGHT_off()
         IMMOBILIZED_LIGHT_off()
         print("out of algaecide: off\timmobilized: off\n")
@@ -56,14 +58,10 @@ def receive_state():
         IMMOBILIZED_LIGHT_on()
         print("out of algaecide: off\timmobilized: on\n")
     elif (received_sig == "3"):
-        # trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-        # print("triggered out of algaecide light")
         OUT_OF_ALGAECIDE_LIGHT_on()
         IMMOBILIZED_LIGHT_off()
         print("out of algaecide: on\timmobilized: off\n")
     elif (received_sig == "4"):
-        # trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-        # print("Turned algaecide light off")
         OUT_OF_ALGAECIDE_LIGHT_on()
         IMMOBILIZED_LIGHT_on()
         print("out of algaecide: on\timmobilized: on\n")
@@ -71,6 +69,19 @@ def receive_state():
         print("Error: Receive failed (signal 50)")
 
 def transmit_state(start_time):
+    """
+    State in which the Controller will transmit signals to PEAT.
+
+    Loops for 120 seconds before transmitting signal 40 and exiting.
+    Buttons on the Controller can be pressed during this time.
+
+    Args:
+        start_time (float): The time at which this round of transmit and receive states began
+
+    Returns:
+        None
+    """
+
     set_in_transmit_state(True)
     while True:
         traversed_time = time() - start_time
@@ -83,24 +94,19 @@ def transmit_state(start_time):
             break
 
 def main():
-    """Executes the main functionality of the Controller
+    """
+    Executes the main functionality of the Controller.
+    
+    Alternates calling the Controller's transmit and receive states.
 
-    Args: None
+    Args:
+        None
 
-    Returns: None
+    Returns:
+        None
     """
 
-    # enc_msg = encrypt("this is encrypted")
-    # dec_msg = decrypt(enc_msg)
-
-    # transmit("hi")
-    # receive()
-
-    #transmit_and_receive()
-    # This handles CTRL+C stuff and signal.pause pauses the main method (think while(true) loop)
     signal.signal(signal.SIGINT, signal_handler)
-    # This only exists in unix
-    # signal.pause()
 
     while True:
         start_time = time()
@@ -110,37 +116,6 @@ def main():
         print(f"starting receive on controller. time = {time() - start_time}\n")
         receive_state()
         print(f"finishing receive on controller. time = {time() - start_time}\n")
-        # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
-        # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.LOW)
-        # sleep(1)
-        # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
-        # GPIO.output(OUT_OF_ALGAECIDE_LIGHT, GPIO.HIGH)
-        # sleep(1)
-
-        # print("Analog Value: ", channel.value, "Voltage: ", channel.voltage)
-        # sleep(0.2)
-
-        # GPIO.output(IMMOBILIZED_LIGHT, GPIO.HIGH)
-        # sleep(1)
-        #received_sig = receive().strip()
-        #if (received_sig == "1"):
-        #    trigger_IMMOBILIZED_LIGHT()
-        #    print("triggered immobilized light")
-        #elif (received_sig == "3"):
-        #    trigger_OUT_OF_ALGAECIDE_LIGHT(True)
-        #    print("triggered out of algaecide light")
-        #elif (received_sig == "4"):
-        #    trigger_OUT_OF_ALGAECIDE_LIGHT(False)
-        #    print("Turned algaecide light off")
-        # sleep(5)
-        # GPIO.output(IMMOBILIZED_LIGHT, GPIO.LOW)
-        # sleep(1)
 
 if __name__ == "__main__":
     main()
-
-
-# controller in transmit state for 120 s                                            PEAT in receive state for 120 s
-# 1. controller transmits signal 40 at end and switches to receive                  2. PEAT receives signal 40 at end and switches to transmit
-# 2. controller receives what it needs to and switches from receive to transmit     1. PEAT transmits what it needs to and switches from transmit to receive
-# controller in transmit state for 120 s                                            PEAT in receive state for 120 s

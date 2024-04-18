@@ -1,16 +1,16 @@
-import rsa # pip install rsa
-
-# import time
+import adafruit_rfm9x
+import board
 import busio
 from digitalio import DigitalInOut
-import board
-import adafruit_rfm9x
 import RPi.GPIO as GPIO
+import rsa # pip install rsa
 
 GPIO.setmode(GPIO.BCM)
 
 def encrypt(msg):
-    """Encrypts a message using the controller's public key
+    """
+    Encrypts a message using the controller's public key.
+
     Gets the RSA public key of the controller. Encodes the message in UTF-8 and encrypts it.
     Returns the encrypted message.
 
@@ -18,7 +18,7 @@ def encrypt(msg):
         msg (str): The message to be encrypted
 
     Returns:
-        bytes: The encrypted message
+        encrypted_msg (bytes): The encrypted message
     """
 
     # `ssh-keygen` to generate RSA key pairs
@@ -31,7 +31,9 @@ def encrypt(msg):
     return encrypted_msg
 
 def decrypt(encrypted_msg):
-    """Decrypts a message using PEAT's private key
+    """
+    Decrypts a message using PEAT's private key.
+
     Gets the RSA private key of PEAT. Decrypts the message and decodes it from UTF-8.
     Returns the decrypted message.
 
@@ -39,7 +41,7 @@ def decrypt(encrypted_msg):
         encrypted_msg (bytes): The message to be decrypted
 
     Returns:
-        str: The decrypted message
+        decoded_msg (str): The decrypted message
     """
 
     # `ssh-keygen -p -m PEM -f /path/to/your/private-key` to convert the private key into pem format
@@ -50,7 +52,9 @@ def decrypt(encrypted_msg):
     return decoded_msg
 
 def transmit(signal):
-    """Transmits a signal using the transciever
+    """
+    Transmits a signal using the transceiver.
+
     Encrypts a signal. Segments signal into 200 character packets.
     Sends a newline character at the end to symbolize end of signal.
     Transmits each packet 3 times (to ensure receipt).
@@ -60,6 +64,9 @@ def transmit(signal):
 
     Returns:
         None
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
@@ -81,16 +88,21 @@ def transmit(signal):
             num_sends+=1
 
 def receive(timeout):
-    """Receives a signal using the transciever
+    """
+    Receives a signal using the transceiver.
+    
     Listens for a signal until one is received.
     Joins all received packets until a packet with the newline character is received.
-    Decrypts this signal. Returns this string signal to the calling method
+    Decrypts this signal. Returns this string signal to the calling method.
 
     Args:
         None
 
     Returns:
-        packet_text (string): The data received
+        packet_text (str): The data received
+
+    Citation:
+        https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
     """
 
     # Configure LoRa Radio
@@ -107,7 +119,6 @@ def receive(timeout):
     if packet is not None:
         while True:
             fail_count = 0
-            # packet = rfm9x.receive()
             print(f"received packet: {packet}")
             fail_list.append(packet)
             for fail in fail_list[-10:]:
@@ -126,58 +137,3 @@ def receive(timeout):
                     packet_text = decrypt(packet_text.strip())
                     return packet_text
             packet = rfm9x.receive()
-
-# def transmit(signal):
-#     """Transmits a signal using the transciever
-#     Converts a signal into bytes and transmits it 3 times (to ensure receipt)
-
-#     Args:
-#         signal (Any): The signal to be sent
-
-#     Returns:
-#         None
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     num_sends = 0
-
-#     while num_sends <= 2:
-#         data = bytes(f"{signal}\r\n","utf-8")
-#         rfm9x.send(data)
-#         num_sends+=1
-
-# def receive(timeout):
-#     """Receives a signal using the transciever
-#     Listens for a signal until one is recieved. Converts this signal into a string.
-#     Returns this string signal to the calling method
-
-#     Args:
-#         None
-
-#     Returns:
-#         packet_text (string): The data received
-#     """
-
-#     # Configure LoRa Radio
-#     CS = DigitalInOut(board.CE1)
-#     RESET = DigitalInOut(board.D25)
-#     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-#     rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
-#     rfm9x.tx_power = 23
-#     prev_packet = None
-
-#     while True:
-#         packet = rfm9x.receive(timeout=timeout)
-#         if packet is None:
-#             print("packet = None")
-#         else:
-#             prev_packet = packet
-#             packet_text = str(prev_packet, "utf-8")
-#             print(f"packet = {packet_text}")
-#             return packet_text
-
